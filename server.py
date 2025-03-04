@@ -4,12 +4,6 @@ import os
 
 app = Flask(__name__)
 
-import os
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Obtém a porta do ambiente do Render
-    app.run(host="0.0.0.0", port=port)  # Executa na rede para ser acessível
-
 # Cria o banco de dados e a tabela
 def init_db():
     with sqlite3.connect("chat.db") as conn:
@@ -50,6 +44,7 @@ def get_messages():
 
     return jsonify(messages)
 
+# 🚀 Inicia o servidor Flask na porta correta para o Render
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Obtém a porta do ambiente do Render
-    app.run(host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 10000))  # Usa a variável de ambiente do Render
+    app.run(host="0.0.0.0", port=port, debug=True)
