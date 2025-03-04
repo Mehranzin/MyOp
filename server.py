@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import sqlite3
+import os
 
 app = Flask(__name__)
 
@@ -44,4 +45,5 @@ def get_messages():
     return jsonify(messages)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Obtém a porta do ambiente do Render
+    app.run(host="0.0.0.0", port=port)
