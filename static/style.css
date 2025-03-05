@@ -1,153 +1,17 @@
-/* Garantir que o fundo encoste nas bordas da página */
 body {
     font-family: Arial, sans-serif;
-    background-color: #ebebeb;
-    color: black;
+    text-align: center;
+    margin: 50px;
+}
+
+form {
+    display: inline-block;
     text-align: left;
-    margin: 0;
-    padding: 0;
 }
 
-/* Estilos para o formulário de login e registro */
-.form-container {
-    background-color: #ff7f32;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 320px;
-    margin: 50px auto;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h2 {
-    color: white;
-    margin-bottom: 20px;
-}
-
-/* Ajustando os inputs para ficarem centralizados */
-.form-container form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-input {
-    width: 90%;  /* Reduzi um pouco para não encostar na borda */
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 5px;
-    border: 1px solid #ffffff;
-    background-color: #222;
-    color: white;
-    text-align: center; /* Centraliza o texto dentro do input */
-}
-
-button {
-    width: 95%;
-    padding: 12px;
-    background-color: #ff4500;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #e04000;
-}
-
-a {
-    color: #fff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Estilizando a navbar */
-nav {
-    background-color: rgb(214, 146, 0);
-    padding: 16px 0;
-    margin: 0;
-    width: 100%;
-    text-align: center;
-}
-
-/* Estilos da navbar */
-nav .faq {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav .faq li {
-    display: inline;
-}
-
-nav .faq li a {
-    text-decoration: none;
-    color: white;
-    font-size: 19px;
-    font-weight: bold;
-    padding: 10px 15px;
-    transition: 0.3s;
-}
-
-nav .faq li a:hover {
-    background-color: darkorange;
-    border-radius: 5px;
-}
-
-/* Estilos do chat (não será necessário para o login, mas incluído por precaução) */
-.chat-container {
-    position: fixed;
-    bottom: 1%;
-    right: 1%;
-    max-width: 400px;
-    margin: 0;
-    background: #333;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-#chat-box {
-    height: 300px;
-    overflow-y: auto;
-    background: #6e6e6e;
+input, select, button {
+    display: block;
+    margin: 10px auto;
     padding: 10px;
-    border-radius: 8px;
-}
-
-input, button {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: none;
-    border-radius: 5px;
-}
-
-input {
-    background: #222;
-    color: white;
-}
-
-button {
-    background: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #45a049;
+    width: 200px;
 }

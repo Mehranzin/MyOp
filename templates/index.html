@@ -1,71 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt">
-
-<!-- COMEÇO DO SITE-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat of Mehran</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Bem-vindo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
-<!--CORPO FAQ-->
-
-<nav>
-<ul class="faq">
-    <li><a href="home.html">Home</a></li>
-    <li><a href="login.html">Login</a></li>
-    <li><a href="register.html">Register</a></li>
-    <li><a href="ceo.html">CEO</a></li>
-    <li><a href="faq.html">Faq</a></li>
-</ul>
-</nav>
-
-<br>
-
-<!--CORPO DO CHAT-->
 <body>
-    <div class="chat-container">
-        <h1>Chat of Mehran</h1>
-        <div id="chat-box"></div>
-
-        <input type="text" id="username" placeholder="Seu nome">
-        <input type="text" id="message" placeholder="Digite uma mensagem">
-        <button onclick="sendMessage()">Enviar</button>
-    </div>
-
-    <script>
-        function loadMessages() {
-            fetch("/messages")
-                .then(response => response.json())
-                .then(data => {
-                    let chatBox = document.getElementById("chat-box");
-                    chatBox.innerHTML = "";
-                    data.forEach(msg => {
-                        chatBox.innerHTML += `<p><strong>${msg[0]}:</strong> ${msg[1]}</p>`;
-                    });
-                });
-        }
-
-        function sendMessage() {
-            let user = document.getElementById("username").value;
-            let text = document.getElementById("message").value;
-
-            if (user && text) {
-                fetch("/send", {
-                    method: "POST",
-                    body: new URLSearchParams({ user: user, text: text }),
-                    headers: { "Content-Type": "application/x-www-form-urlencoded" }
-                }).then(() => {
-                    document.getElementById("message").value = "";
-                    loadMessages();
-                });
-            }
-        }
-
-        setInterval(loadMessages, 1000);
-    </script>
-
-
+    <h2>Bem-vindo, {{ user }}!</h2>
+    <a href="{{ url_for('logout') }}">Sair</a>
 </body>
 </html>

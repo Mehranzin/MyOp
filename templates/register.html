@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Registro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="form-container">
-        <h2>Registro</h2>
-        <form method="POST">
-            <input type="text" name="username" placeholder="Usuário" required>
-            <input type="password" name="password" placeholder="Senha" required>
-            <button type="submit">Registrar</button>
-        </form>
-        <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça login aqui</a></p>
-    </div>
+    <h2>Registro</h2>
+    <form method="POST">
+        <input type="text" name="nome" placeholder="Nome" required><br>
+        <input type="number" name="idade" placeholder="Idade" required><br>
+        <select name="sexualidade" required>
+            <option value="Homem">Homem</option>
+            <option value="Mulher">Mulher</option>
+            <option value="Outro">Outro</option>
+        </select><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="password" name="senha" placeholder="Senha" required><br>
+        <button type="submit">Registrar</button>
+    </form>
+    <a href="{{ url_for('login') }}">Já tem uma conta? Faça login</a>
 </body>
 </html>
