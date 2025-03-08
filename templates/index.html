@@ -1,13 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
+<!--CÓDIGO GERAL-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bem-vindo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+<!--CÓDIGO DE NAVEGAÇÃO-->
+
+<style>
+    * {
+        text-decoration: none;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .navbar {
+        background-color: red;
+        font-family: Arial Black, sans-serif;
+        padding: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    .nav-items {
+        display: flex;
+        gap: 50px;
+    }
+    .nav-items li {
+        list-style: none;
+    }
+    .nav-items li a {
+        color: white;
+        font-weight: bold;
+    }
+    .user-info {
+        position: absolute;
+        right: 15px;
+        bottom: 5px;
+        text-align: center;
+    }
+    .user-info img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        position: relative;
+        top: 10px;
+    }
+    .user-info p {
+        color: white;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+</style>
+
 <body>
-    <h2>Bem-vindo, {{ user }}!</h2>
+    <nav class="navbar">
+        <ul class="nav-items">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search</a></li>
+            <li><a href="faq.html">Faq</a></li>
+        </ul>
+        <div class="user-info">
+            <img src="WebSite Icon.png" alt="User Profile">
+            <p>{{ user }}</p>
+        </div>
+    </nav>
     <a href="{{ url_for('logout') }}">Sair</a>
 </body>
+
 </html>
