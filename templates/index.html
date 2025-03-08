@@ -48,12 +48,36 @@
         border-radius: 50%;
         position: relative;
         top: 10px;
+        outline: 3px solid rgb(255, 0, 0);
     }
     .user-info p {
         color: white;
         font-size: 14px;
         margin-top: 5px;
     }
+
+    @media (max-width: 768px) {
+    .navbar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        justify-content: center;
+        padding: 10px 0;
+    }
+    .nav-items {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 20px;
+    }
+    .user-info {
+        position: fixed;
+        top: 1px;
+        right: 1px;
+        text-align: center;
+    }
+}
+
 </style>
 
 <body>
@@ -63,12 +87,14 @@
             <li><a href="search.html">Search</a></li>
             <li><a href="faq.html">Faq</a></li>
         </ul>
+
         <div class="user-info">
+            <a href="perfil.html">
             <img src="WebSite Icon.png" alt="User Profile">
+        </a>
             <p>{{ user }}</p>
         </div>
     </nav>
-    <a href="{{ url_for('logout') }}">Sair</a>
 </body>
 
 </html>
