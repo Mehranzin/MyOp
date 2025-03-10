@@ -117,7 +117,7 @@ def logout():
 if __name__ == '__main__':
     # Configurar para escutar no endereço 0.0.0.0
     app.run(host='0.0.0.0', port=8000, debug=True)
-    
+
     import os
 from werkzeug.utils import secure_filename
 
@@ -163,3 +163,12 @@ def register():
     
     return render_template('register.html')
 
+#FUNÇÃO APAGAR REGISTROS
+@app.route('/limpar_registros')
+def limpar_registros():
+    conn = get_db_connection()
+    c = conn.cursor()
+    c.execute("DELETE FROM users")  # Apaga todos os registros
+    conn.commit()
+    conn.close()
+    return "Todos os registros foram apagados!"
