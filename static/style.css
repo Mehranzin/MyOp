@@ -27,16 +27,20 @@ input, select, button {
 .navbar {
     background-color: red;
     font-family: Arial Black, sans-serif;
-    padding: 25px;
+    padding: 25px 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 /* Itens do menu */
 .nav-items {
     display: flex;
+    justify-content: center;
     gap: 50px;
 }
 
@@ -47,14 +51,27 @@ input, select, button {
 .nav-items li a {
     color: white;
     font-weight: bold;
+    font-size: 25px;
+    padding: 10px 20px; /* Adicionando preenchimento para o botão */
+    border-radius: 8px; /* Arredondando os cantos */
+    transition: background-color 0.3s; /* Suaviza a transição de cor */
+    text-align: center;
+    display: inline-block;
+    cursor: pointer; /* Torna o cursor como uma mão ao passar por cima */
+    text-decoration: none; /* Remove o sublinhado do link */
+}
+
+.nav-items li a:hover {
+    background-color: #ff6e6e; /* Cor ao passar o mouse */
 }
 
 /* Informações do usuário */
 .user-info {
-    position: absolute;
-    right: 15px;
-    bottom: 5px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
     text-align: center;
+    font-size: 18px;
 }
 
 .user-info img {
@@ -75,24 +92,28 @@ input, select, button {
 /* Responsividade */
 @media (max-width: 768px) {
     .navbar {
-        position: fixed;
+        position: absolute;
         bottom: 0;
-        width: 100%;
+        left: 0;
+        right: 0;
+        display: flex;
         justify-content: center;
-        padding: 15px 0;
+        padding: 10px 0;
+        height: 50px;
+        box-sizing: border-box;
+        color: white;
     }
 
     .nav-items {
         display: flex;
         justify-content: center;
-        width: 100%;
-        gap: 100px;
+        gap: 30px; /* Ajusta o espaçamento entre os itens */
     }
 
     .user-info {
         position: fixed;
-        top: 1px;
-        right: 1px;
+        top: 10px;
+        right: 10px;
         text-align: center;
     }
 }

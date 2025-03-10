@@ -93,6 +93,21 @@ def index():
         return render_template('index.html', user=session['user'])
     return redirect(url_for('login'))
 
+# Rota para a página de pesquisa
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
+# Rota para a página FAQ
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+# Rota para a página de perfil
+@app.route('/perfil')
+def perfil():
+    return render_template('perfil.html')  # Se você tiver uma página de perfil
+
 # Logout
 @app.route('/logout')
 def logout():

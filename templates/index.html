@@ -10,17 +10,17 @@
 <body>
     <nav class="navbar">
         <ul class="nav-items">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="search.html">Search</a></li>
-            <li><a href="faq.html">Faq</a></li>
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('search') }}">Search</a></li>
+            <li><a href="{{ url_for('faq') }}">Faq</a></li>
         </ul>
-
+    
         <div class="user-info">
-            <a href="perfil.html">
-                <img src="WebSite Icon.png" alt="User Profile">
+            <a href="{{ url_for('perfil') }}">
+                <img src="{{ url_for('static', filename='WebSite Icon.png') }}" alt="User Profile">
             </a>
             <p>{{ user }}</p>
         </div>
-    </nav>
+    </nav>    
 </body>
 </html>
