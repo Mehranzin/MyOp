@@ -2,32 +2,36 @@
 <html>
 <head>
     <title>Perfil</title>
-    <style>
-        .sair-btn {
-            position: fixed;
-            bottom: 15px; /* Fixa o botão na parte inferior */
-            right: 15px; /* Fixa o botão na parte direita */
-        }
-
-        .voltar-btn {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h2>Perfil de {{ username }}</h2>
+    <div class="perfil-container">
+        <h2>Perfil de {{ user }}</h2>
 
-    <div class="sair-btn">
-        <a href="{{ url_for('logout') }}">
-            <button>Sair da Conta de {{ username }}</button>
-        </a>
+        <!-- Foto de Perfil -->
+        <div class="foto-perfil">
+            <img src="{{ user.foto }}" alt="Foto de Perfil">
+        </div>
+
+        <!-- Informações do Usuário -->
+        <div class="informacoes">
+            <p><strong>Nome:</strong> {{ user.nome }}</p>
+            <p><strong>Idade:</strong> {{ user.idade }}</p>
+            <p><strong>Sexualidade:</strong> {{ user.sexualidade }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+
+        <div class="sair-btn">
+            <a href="{{ url_for('logout') }}">
+                <button>Sair da Conta de {{ user }}</button>
+            </a>
+        </div>
+
+        <div class="voltar-btn">
+            <a href="/">
+                <button>Voltar</button>
+            </a>
+        </div>
     </div>
-
-    <div class="voltar-btn">
-        <a href="/">
-            <button>Voltar</button>
-        </a>
-    </div>
-
 </body>
 </html>

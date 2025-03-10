@@ -117,3 +117,49 @@ def logout():
 if __name__ == '__main__':
     # Configurar para escutar no endereço 0.0.0.0
     app.run(host='0.0.0.0', port=8000, debug=True)
+    
+    import os
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Modificando a função de registro para lidar com upload de foto
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        idade = request.form['idade']
+        sexualidade = request.form['sexualidade']
+        email = request.form['email']
+        senha = request.form['senha']
+
+        foto = request.files['foto']
+        if foto and allowed_file(foto.filename):
+            filename = secure_filename(foto.filename)
+            foto_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            foto.save(foto_path)
+        else:
+            foto_path = 'static/uploads/default.jpg'  # Caso não envie uma foto
+
+        senha_hash = generate_password_hash(senha)  # Criptografa a senha
+
+        conn = get_db_connection()
+        c = conn.cursor()
+        try:
+            c.execute("INSERT INTO users (nome, idade, sexualidade, email, senha, foto) VALUES (?, ?, ?, ?, ?, ?)",
+                      (nome, idade, sexualidade, email, senha_hash, foto_path))
+            conn.commit()
+            return redirect(url_for('login'))
+        except sqlite3.IntegrityError:
+            return "Email já cadastrado!"
+        finally:
+            conn.close()
+    
+    return render_template('register.html')
+
