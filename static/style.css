@@ -15,3 +15,84 @@ input, select, button {
     padding: 10px;
     width: 200px;
 }
+
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar */
+.navbar {
+    background-color: red;
+    font-family: Arial Black, sans-serif;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Itens do menu */
+.nav-items {
+    display: flex;
+    gap: 50px;
+}
+
+.nav-items li {
+    list-style: none;
+}
+
+.nav-items li a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Informações do usuário */
+.user-info {
+    position: absolute;
+    right: 15px;
+    bottom: 5px;
+    text-align: center;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: relative;
+    top: 10px;
+    outline: 3px solid rgb(255, 0, 0);
+}
+
+.user-info p {
+    color: white;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .navbar {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        justify-content: center;
+        padding: 15px 0;
+    }
+
+    .nav-items {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 100px;
+    }
+
+    .user-info {
+        position: fixed;
+        top: 1px;
+        right: 1px;
+        text-align: center;
+    }
+}
