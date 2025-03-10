@@ -148,7 +148,7 @@ input, select, button {
 
 /* Estilo dos botões */
 button {
-    background-color: #4CAF50;
+    background-color: #ff0000;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -156,5 +156,5 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #ff0000;
 }
