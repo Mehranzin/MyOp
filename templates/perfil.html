@@ -1,32 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="perfil-container">
-        <h2>Perfil de {{ user }}</h2>
+        <!-- Título -->
+        <h2>Perfil de {{ user['nome'] }}</h2>
 
         <!-- Foto de Perfil -->
         <div class="foto-perfil">
-            <img src="{{ user.foto }}" alt="Foto de Perfil">
+            <!-- Verifica se o usuário tem uma foto, senão usa a padrão -->
+            <img src="{{ user['foto'] if user['foto'] else url_for('static', filename='uploads/default.jpg') }}" alt="Foto de Perfil">
         </div>
 
         <!-- Informações do Usuário -->
         <div class="informacoes">
-            <p><strong>Nome:</strong> {{ user.nome }}</p>
-            <p><strong>Idade:</strong> {{ user.idade }}</p>
-            <p><strong>Sexualidade:</strong> {{ user.sexualidade }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Nome:</strong> {{ user['nome'] }}</p>
+            <p><strong>Idade:</strong> {{ user['idade'] }}</p>
+            <p><strong>Sexualidade:</strong> {{ user['sexualidade'] }}</p>
+            <p><strong>Email:</strong> {{ user['email'] }}</p>
         </div>
 
+        <!-- Botão para Logout -->
         <div class="sair-btn">
             <a href="{{ url_for('logout') }}">
-                <button>Sair da Conta de {{ user }}</button>
+                <button>Sair da Conta</button>
             </a>
         </div>
 
+        <!-- Botão para Voltar -->
         <div class="voltar-btn">
             <a href="/">
                 <button>Voltar</button>
