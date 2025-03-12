@@ -29,7 +29,7 @@ def init_db():
                     sexualidade TEXT CHECK(sexualidade IN ('Homem', 'Mulher', 'Outro')),
                     email TEXT UNIQUE,
                     senha TEXT,
-                    foto TEXT
+                    foto TEXT DEFAULT 'static/uploads/default.jpg' -- Corrigido para incluir a coluna foto
                 )''')
     conn.commit()
     conn.close()
@@ -58,6 +58,11 @@ def register():
         if foto and allowed_file(foto.filename):
             filename = secure_filename(foto.filename)
             foto_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            
+            # Verifica se a pasta de uploads existe, se não, cria
+            if not os.path.exists(app.config['UPLOAD_FOLDER']):
+                os.makedirs(app.config['UPLOAD_FOLDER'])
+            
             foto.save(foto_path)
         else:
             foto_path = 'static/uploads/default.jpg'
@@ -116,21 +121,3 @@ def faq():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
-
-# Verifica se o formulário foi enviado com uma foto
-foto = request.files.get('foto')
-if foto and allowed_file(foto.filename):
-    # Verifica se a pasta de uploads existe, se não, cria
-    upload_folder = app.config['UPLOAD_FOLDER']
-    if not os.path.exists(upload_folder):
-        os.makedirs(upload_folder)
-
-    # Garante que o nome do arquivo seja seguro
-    filename = secure_filename(foto.filename)
-    foto_path = os.path.join(upload_folder, filename)
-    
-    # Salva a foto no diretório de uploads
-    foto.save(foto_path)
-else:
-    # Se não houver foto, define um caminho padrão
-    foto_path = 'static/uploads/default.jpg'
