@@ -1,26 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=2">
+    <title>Index</title>
 </head>
-
 <body>
-    <nav class="navbar">
-        <ul class="nav-items">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('search') }}">Search</a></li>
-            <li><a href="{{ url_for('faq') }}">Faq</a></li>
-        </ul>
-    
-        <div class="user-info">
-            <a href="{{ url_for('perfil') }}">
-                <img src="{{ url_for('static', filename='WebSite Icon.png') }}" alt="User Profile">
-            </a>
-            <p>{{ user }}</p>
-        </div>
-    </nav>    
+    <h1>Bem-vindo, {{ user[0] }}!</h1>
+    <a href='/perfil'><img src='/static/uploads/{{ user[1] }}' width='50'></a>
+    <a href='/logout'>Sair</a>
 </body>
 </html>

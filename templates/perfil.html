@@ -1,43 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="perfil-container">
-        <!-- Título -->
-        <h2>Perfil de {{ user['nome'] }}</h2>
-
-        <!-- Foto de Perfil -->
-        <div class="foto-perfil">
-            <!-- Verifica se o usuário tem uma foto, senão usa a padrão -->
-            <img src="{{ user['foto'] if user['foto'] else url_for('static', filename='uploads/default.jpg') }}" alt="Foto de Perfil">
-        </div>
-
-        <!-- Informações do Usuário -->
-        <div class="informacoes">
-            <p><strong>Nome:</strong> {{ user['nome'] }}</p>
-            <p><strong>Idade:</strong> {{ user['idade'] }}</p>
-            <p><strong>Sexualidade:</strong> {{ user['sexualidade'] }}</p>
-            <p><strong>Email:</strong> {{ user['email'] }}</p>
-        </div>
-
-        <!-- Botão para Logout -->
-        <div class="sair-btn">
-            <a href="{{ url_for('logout') }}">
-                <button>Sair da Conta</button>
-            </a>
-        </div>
-
-        <!-- Botão para Voltar -->
-        <div class="voltar-btn">
-            <a href="/">
-                <button>Voltar</button>
-            </a>
-        </div>
-    </div>
+    <h1>Perfil de {{ user[0] }}</h1>
+    <p>Email: {{ user[1] }}</p>
+    <p>Idade: {{ user[2] }}</p>
+    <p>Nacionalidade: {{ user[3] }}</p>
+    <p>Gênero: {{ user[4] }}</p>
+    <p>Data de criação: {{ user[6][:10] }}</p>
+    <a href='/logout'>Sair</a>
 </body>
 </html>
