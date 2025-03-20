@@ -102,5 +102,6 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    init_db()  # Agora a função init_db é chamada após a definição do app
-    app.run(debug=True)
+    init_db()  # Inicializa o banco de dados
+    port = int(os.getenv('PORT', 5000))  # Pega a porta do ambiente ou usa 5000
+    app.run(host='0.0.0.0', port=port, debug=True)
