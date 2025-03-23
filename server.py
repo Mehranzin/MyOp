@@ -24,7 +24,42 @@ def init_db():
                           senha TEXT,
                           foto TEXT,
                           data_criacao TEXT)''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS messages (
+                          id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          user_id INTEGER,
+                          mensagem TEXT,
+                          data_postagem TEXT,
+                          FOREIGN KEY(user_id) REFERENCES users(id))''')
         conn.commit()
+
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        mensagem = request.form['mensagem']
+        user_id = session['user_id']
+        data_postagem = datetime.now().strftime('%Y-%m-%d %H:%M')
+
+        with sqlite3.connect('users.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO messages (user_id, mensagem, data_postagem) VALUES (?, ?, ?)", 
+                           (user_id, mensagem, data_postagem))
+            conn.commit()
+
+    # Exibir mensagens
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT m.mensagem, m.data_postagem, u.nome FROM messages m JOIN users u ON m.user_id = u.id ORDER BY m.data_postagem DESC")
+        mensagens = cursor.fetchall()
+
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT nome, foto FROM users WHERE id=?", (session['user_id'],))
+        user = cursor.fetchone()
+
+    return render_template('index.html', user=user, mensagens=mensagens)
 
 @app.route('/')
 def home():
@@ -75,16 +110,6 @@ def login():
                 session['user_id'] = user[0]
                 return redirect(url_for('index'))
     return render_template('login.html')
-
-@app.route('/index')
-def index():
-    if 'user_id' not in session:
-        return redirect(url_for('login'))
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT nome, foto FROM users WHERE id=?", (session['user_id'],))
-        user = cursor.fetchone()
-    return render_template('index.html', user=user)
 
 @app.route('/perfil')
 def perfil():

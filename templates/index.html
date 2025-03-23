@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>My Opinion</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
+<!--NAV BAR-->
     <div class="navbar">
         <div class="nav-links">
             <a href="/faq">FAQ</a>
@@ -17,7 +19,31 @@
             <a href="/perfil"><img src="{{ url_for('static', filename='uploads/' + user[1]) }}"></a>
         </div>
     </div>
+<!--END NAV BAR-->
 
+<!--MESSAGES-->
+<div class="form-message">
+    <form action="/index" method="POST">
+        <textarea name="mensagem" placeholder="Escreva sua mensagem..." required></textarea>
+        <button type="submit">Postar</button>
+    </form>
+</div>
+<!--END MESSAGES-->
+
+<!--DISPLAY MESSAGES-->
+<div class="display-messages">
+    {% for mensagem, data_postagem, nome in mensagens %}
+        <div class="message">
+            <p><strong>{{ nome }}</strong> | {{ data_postagem.split()[1] }}</p>
+            <p>{{ mensagem }}</p>
+        </div>
+    {% endfor %}
+</div>
+<!--END DISPLAY MESSAGES-->
+<br>
+<br>
+<br>
     <h1>Bem-vindo, {{ user[0] }}!</h1>
 </body>
+
 </html>
