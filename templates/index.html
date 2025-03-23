@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="navbar">
@@ -12,7 +14,7 @@
             <a href="/search">Search</a>
         </div>
         <div class="profile">
-            <a href='/perfil'><img src='/static/uploads/{{ user[1] }}'></a>
+            <a href="/perfil"><img src="{{ url_for('static', filename='uploads/' + user[1]) }}"></a>
         </div>
     </div>
 
