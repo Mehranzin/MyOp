@@ -154,6 +154,10 @@ button:hover {
 .message p strong {
     font-size: 20px;
 }
+.endpag {
+    display: flex;
+    align-items: center;
+}
 
 
 /* Posicionamento do formulário de mensagens */
