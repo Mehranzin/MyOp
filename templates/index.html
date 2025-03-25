@@ -1,47 +1,118 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Opinion</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+from flask import Flask, render_template, request, redirect, url_for, session
+import sqlite3
+import os
+from werkzeug.utils import secure_filename
+from datetime import datetime
 
-<body>
-<!--NAV BAR-->
-    <div class="navbar">
-        <div class="nav-links">
-            <a href="/faq">FAQ</a>
-            <a href="/perfil">Perfil</a>
-            <a href="/search">Search</a>
-        </div>
-        <div class="profile">
-            <a href="/perfil"><img src="{{ url_for('static', filename='uploads/' + user[1]) }}"></a>
-        </div>
-    </div>
-<!--END NAV BAR-->
+app = Flask(__name__)
+app.secret_key = 'secreto'
+UPLOAD_FOLDER = 'static/uploads/'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-<!--MESSAGES-->
-<div class="form-message">
-    <form action="/index" method="POST">
-        <textarea name="mensagem" placeholder="Escreva sua mensagem..." required></textarea>
-        <button type="submit">Postar</button>
-    </form>
-</div>
-<!--END MESSAGES-->
+# Inicializar bancos de dados
 
-<!--DISPLAY MESSAGES-->
-<div class="display-messages">
-    {% for mensagem, data_postagem, nome in mensagens %}
-        <div class="message">
-            <p><strong>{{ nome }}</strong> | {{ data_postagem.split()[1] }}</p>
-            <p>{{ mensagem }}</p>
-        </div>
-    {% endfor %}
-</div>
-<!--END DISPLAY MESSAGES-->
+def init_users_db():
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS users (
+                          id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          nome TEXT,
+                          email TEXT UNIQUE,
+                          idade INTEGER,
+                          nacionalidade TEXT,
+                          genero TEXT,
+                          senha TEXT,
+                          foto TEXT,
+                          data_criacao TEXT)''')
+        conn.commit()
 
-<div class="EndPag">
-    <p>Fim da página</p>
-</div>
-</html>
+def init_messages_db():
+    with sqlite3.connect('messages.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('''CREATE TABLE IF NOT EXISTS messages (
+                          id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          user_id INTEGER,
+                          mensagem TEXT,
+                          data_postagem TEXT)''')
+        conn.commit()
+
+@app.route('/index', methods=['GET', 'POST'])
+def index():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        mensagem = request.form['mensagem']
+        user_id = session['user_id']
+        data_postagem = datetime.now().strftime('%Y-%m-%d %H:%M')
+
+        with sqlite3.connect('messages.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO messages (user_id, mensagem, data_postagem) VALUES (?, ?, ?)",
+                           (user_id, mensagem, data_postagem))
+            conn.commit()
+
+    mensagens = []
+    with sqlite3.connect('messages.db') as msg_conn:
+        msg_cursor = msg_conn.cursor()
+        msg_cursor.execute("SELECT user_id, mensagem, data_postagem FROM messages ORDER BY data_postagem DESC")
+        mensagens_brutas = msg_cursor.fetchall()
+
+    with sqlite3.connect('users.db') as user_conn:
+        user_cursor = user_conn.cursor()
+        for user_id, mensagem, data_postagem in mensagens_brutas:
+            user_cursor.execute("SELECT nome FROM users WHERE id=?", (user_id,))
+            user = user_cursor.fetchone()
+            nome = user[0] if user else "Desconhecido"
+            mensagens.append((mensagem, data_postagem, nome))
+
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT nome, foto FROM users WHERE id=?", (session['user_id'],))
+        user = cursor.fetchone()
+
+    return render_template('index.html', user=user, mensagens=mensagens)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        senha = request.form['senha']
+        with sqlite3.connect('users.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM users WHERE email=? AND senha=?", (email, senha))
+            user = cursor.fetchone()
+            if user:
+                session['user_id'] = user[0]
+                return redirect(url_for('index'))
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('login'))
+
+@app.route('/perfil')
+def perfil():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT nome, email, idade, nacionalidade, genero, foto, data_criacao FROM users WHERE id=?", (session['user_id'],))
+        user = cursor.fetchone()
+    return render_template('perfil.html', user=user)
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
+if __name__ == '__main__':
+    init_users_db()
+    init_messages_db()
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
