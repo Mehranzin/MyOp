@@ -11,7 +11,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Inicializar bancos de dados
-
 def init_users_db():
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
@@ -37,21 +36,28 @@ def init_messages_db():
                           data_postagem TEXT)''')
         conn.commit()
 
+@app.route('/')
+def home():
+    if 'user_id' in session:
+        return redirect(url_for('index'))
+    return redirect(url_for('login'))
+
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if 'user_id' not in session:
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        mensagem = request.form['mensagem']
-        user_id = session['user_id']
-        data_postagem = datetime.now().strftime('%Y-%m-%d %H:%M')
+        mensagem = request.form.get('mensagem')
+        if mensagem:
+            user_id = session['user_id']
+            data_postagem = datetime.now().strftime('%Y-%m-%d %H:%M')
 
-        with sqlite3.connect('messages.db') as conn:
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO messages (user_id, mensagem, data_postagem) VALUES (?, ?, ?)",
-                           (user_id, mensagem, data_postagem))
-            conn.commit()
+            with sqlite3.connect('messages.db') as conn:
+                cursor = conn.cursor()
+                cursor.execute("INSERT INTO messages (user_id, mensagem, data_postagem) VALUES (?, ?, ?)",
+                               (user_id, mensagem, data_postagem))
+                conn.commit()
 
     mensagens = []
     with sqlite3.connect('messages.db') as msg_conn:
@@ -76,17 +82,21 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    mensagem = None
     if request.method == 'POST':
-        email = request.form['email']
-        senha = request.form['senha']
+        email = request.form.get('email')
+        senha = request.form.get('senha')
         with sqlite3.connect('users.db') as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM users WHERE email=? AND senha=?", (email, senha))
+            cursor.execute("SELECT id FROM users WHERE email=? AND senha=?", (email, senha))
             user = cursor.fetchone()
             if user:
                 session['user_id'] = user[0]
                 return redirect(url_for('index'))
-    return render_template('login.html')
+            else:
+                mensagem = "E-mail ou senha incorretos."
+
+    return render_template('login.html', mensagem=mensagem)
 
 @app.route('/logout')
 def logout():
