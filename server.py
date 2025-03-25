@@ -11,7 +11,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Inicializar bancos de dados
-
 def init_users_db():
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
@@ -36,6 +35,13 @@ def init_messages_db():
                           mensagem TEXT,
                           data_postagem TEXT)''')
         conn.commit()
+
+# Página inicial redirecionando para o login se o usuário não estiver autenticado
+@app.route('/')
+def home():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 @app.route('/index', methods=['GET', 'POST'])
 def index():
@@ -87,6 +93,35 @@ def login():
                 session['user_id'] = user[0]
                 return redirect(url_for('index'))
     return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        senha = request.form['senha']
+        idade = request.form['idade']
+        nacionalidade = request.form['nacionalidade']
+        genero = request.form['genero']
+        foto = request.files['foto']
+        data_criacao = datetime.now().strftime('%Y-%m-%d %H:%M')
+
+        if foto:
+            foto_filename = secure_filename(foto.filename)
+            foto_path = os.path.join(app.config['UPLOAD_FOLDER'], foto_filename)
+            foto.save(foto_path)
+        else:
+            foto_path = None
+
+        with sqlite3.connect('users.db') as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO users (nome, email, senha, idade, nacionalidade, genero, foto, data_criacao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                           (nome, email, senha, idade, nacionalidade, genero, foto_path, data_criacao))
+            conn.commit()
+
+        return redirect(url_for('login'))
+
+    return render_template('register.html')
 
 @app.route('/logout')
 def logout():
