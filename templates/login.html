@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Login</title>
-</head>
-<body>
-    <form method='POST'>
-        Email: <input type='email' name='email' required><br>
-        Senha: <input type='password' name='senha' required><br>
-        <button type='submit'>Entrar</button>
+  </head>
+  <body>
+    <h2>Login</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <ul>
+      {% for category, msg in messages %}
+      <li style="color: red">{{ msg }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+
+    <form method="post">
+      Email: <input type="email" name="email" required /><br />
+      Senha: <input type="password" name="senha" required /><br />
+      <button type="submit">Entrar</button>
     </form>
-    <p>Não tem uma conta? <a href="{{ url_for('register') }}">Registre-se aqui</a></p>
-</body>
+    <p><a href="/registro">Registrar</a></p>
+  </body>
 </html>

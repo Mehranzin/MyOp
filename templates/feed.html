@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Feed</title>
+  </head>
+  <body>
+    <h2>Bem-vindo, {{ user.apelido }}</h2>
+    <form method="post" action="/postar">
+      <textarea
+        name="conteudo"
+        placeholder="O que você quer dizer?"
+        required
+      ></textarea
+      ><br />
+      <button type="submit">Postar</button>
+    </form>
+    <hr />
+    {% for post in posts %}
+    <b>{{ post.apelido }}</b> disse:<br />
+    {{ post.conteudo }}<br />
+    <small>{{ post.data }}</small>
+    <hr />
+    {% else %}
+    <p>Nada publicado ainda.</p>
+    {% endfor %}
+    <p><a href="/logout">Sair</a></p>
+  </body>
+</html>
