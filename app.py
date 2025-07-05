@@ -7,10 +7,31 @@ from psycopg2.extras import RealDictCursor
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY')
+app.secret_key = os.environ.get('SECRET_KEY') or 'colocaumvaloraquipratestes'
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+
+# CRIA AS TABELAS AUTOMATICAMENTE SE NÃO EXISTIREM
+with conn.cursor() as cur:
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            nome_real VARCHAR(150) NOT NULL,
+            apelido VARCHAR(100) NOT NULL,
+            email VARCHAR(150) UNIQUE NOT NULL,
+            senha_hash TEXT NOT NULL
+        );
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS posts (
+            id SERIAL PRIMARY KEY,
+            user_id INTEGER REFERENCES users(id),
+            conteudo TEXT NOT NULL,
+            data TIMESTAMP NOT NULL DEFAULT NOW()
+        );
+    """)
+    conn.commit()
 
 login_manager = LoginManager()
 login_manager.init_app(app)
