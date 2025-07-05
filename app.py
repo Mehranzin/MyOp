@@ -70,8 +70,8 @@ def feed():
         posts = cur.fetchall()
     return render_template('feed.html', posts=posts, user=current_user)
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/registro', methods=['GET', 'POST'])
+def registro():
     if request.method == 'POST':
         nome_real = request.form.get('nome_real').strip()
         apelido = request.form.get('apelido').strip()
@@ -81,7 +81,7 @@ def register():
 
         if senha != senha_confirm:
             flash("Senhas não conferem.", "error")
-            return redirect(url_for('register'))
+            return redirect(url_for('registro'))
 
         if apelido == '':
             apelido = gerar_anonimo()
@@ -92,7 +92,7 @@ def register():
             cur.execute("SELECT id FROM users WHERE email = %s", (email,))
             if cur.fetchone():
                 flash("Email já cadastrado.", "error")
-                return redirect(url_for('register'))
+                return redirect(url_for('registro'))
 
             cur.execute("""
                 INSERT INTO users (nome_real, apelido, email, senha_hash)
@@ -105,7 +105,7 @@ def register():
         login_user(user)
         return redirect(url_for('feed'))
 
-    return render_template('register.html')
+    return render_template('registro.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
