@@ -9,16 +9,21 @@
   </head>
   <body>
     <h2>Bem-vindo, {{ user.nickname }}</h2>
+
     <form method="post" action="/">
       {{ form.hidden_tag() }} {{ form.content.label }} {{ form.content() }}<br />
       <button type="submit">Postar</button>
     </form>
+
     <hr />
+
     {% if posts %} {% for post in posts %}
     <div class="post">
       <b>{{ post.user.nickname }}</b> disse:<br />
       {{ post.content|e }}<br />
       <small>{{ post.id }}</small><br />
+
+      <!-- BOTÕES CURTIR -->
       <form
         action="{{ url_for('like', post_id=post.id) }}"
         method="POST"
@@ -26,6 +31,27 @@
       >
         <button type="submit">❤️ Curtir ({{ post.likes|length }})</button>
       </form>
+
+      <!-- BOTÃO DE TRÊS PONTINHOS -->
+      <div class="dropdown" style="display: inline">
+        <button type="button" onclick="toggleDropdown({{ post.id }})">⋮</button>
+        <div
+          id="dropdown-{{ post.id }}"
+          class="dropdown-content"
+          style="display: none"
+        >
+          <form
+            action="{{ url_for('delete_post', post_id=post.id) }}"
+            method="POST"
+            style="margin: 0"
+          >
+            <button type="submit">Deletar</button>
+          </form>
+          <a href="{{ url_for('edit_post', post_id=post.id) }}">Editar</a>
+        </div>
+      </div>
+
+      <!-- FORM COMENTAR -->
       <form
         action="{{ url_for('comment', post_id=post.id) }}"
         method="POST"
@@ -40,6 +66,8 @@
         ><br />
         <button type="submit">Comentar</button>
       </form>
+
+      <!-- COMENTÁRIOS -->
       {% for comment in post.comments %}
       <p>
         <small
@@ -53,6 +81,16 @@
     {% endfor %} {% else %}
     <p>Nada publicado ainda.</p>
     {% endif %}
+
     <p><a href="{{ url_for('logout') }}">Sair</a></p>
+
+    <!-- JS só uma vez -->
+    <script>
+      function toggleDropdown(postId) {
+        var dropdown = document.getElementById("dropdown-" + postId);
+        dropdown.style.display =
+          dropdown.style.display === "none" ? "block" : "none";
+      }
+    </script>
   </body>
 </html>

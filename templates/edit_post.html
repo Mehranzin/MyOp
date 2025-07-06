@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Editar Post</title>
+  </head>
+  <body>
+    <form method="POST">
+      <textarea name="content">{{ post.content }}</textarea>
+      <button type="submit">Salvar</button>
+    </form>
+    <a href="{{ url_for('feed') }}">Cancelar</a>
+  </body>
+</html>
