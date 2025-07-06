@@ -1,146 +1,91 @@
-import os
+from flask import Flask, render_template, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from forms import RegisterForm, LoginForm, PostForm
+from models import db, User, Post
 import random
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-import psycopg2
-from psycopg2.extras import RealDictCursor
-from werkzeug.security import generate_password_hash, check_password_hash
+from config import Config
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY') or 'colocaumvaloraquipratestes'
+app.config.from_object(Config)
 
-DATABASE_URL = os.getenv('DATABASE_URL')
-conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+db.init_app(app)
 
-# CRIA AS TABELAS AUTOMATICAMENTE SE NÃO EXISTIREM
-with conn.cursor() as cur:
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            nome_real VARCHAR(150) NOT NULL,
-            apelido VARCHAR(100) NOT NULL,
-            email VARCHAR(150) UNIQUE NOT NULL,
-            senha_hash TEXT NOT NULL
-        );
-    """)
-    cur.execute("""
-        CREATE TABLE IF NOT EXISTS posts (
-            id SERIAL PRIMARY KEY,
-            user_id INTEGER REFERENCES users(id),
-            conteudo TEXT NOT NULL,
-            data TIMESTAMP NOT NULL DEFAULT NOW()
-        );
-    """)
-    conn.commit()
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
-
-class User(UserMixin):
-    def __init__(self, user_dict):
-        self.id = user_dict['id']
-        self.nome_real = user_dict['nome_real']
-        self.apelido = user_dict['apelido']
-        self.email = user_dict['email']
-        self.senha_hash = user_dict['senha_hash']
+login_manager = LoginManager(app)
+login_manager.login_view = "login"
 
 @login_manager.user_loader
 def load_user(user_id):
-    with conn.cursor() as cur:
-        cur.execute("SELECT * FROM users WHERE id = %s", (int(user_id),))
-        user = cur.fetchone()
-        if user:
-            return User(user)
-    return None
+    return User.query.get(int(user_id))
 
-def gerar_anonimo():
-    return f"Any{random.randint(1000,9999)}"
-
-@app.route('/')
+@app.route("/", methods=["GET", "POST"])
 @login_required
 def feed():
-    with conn.cursor() as cur:
-        cur.execute("""
-            SELECT posts.id, posts.conteudo, posts.data, users.apelido
-            FROM posts
-            JOIN users ON posts.user_id = users.id
-            ORDER BY posts.data DESC
-        """)
-        posts = cur.fetchall()
-    return render_template('feed.html', posts=posts, user=current_user)
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(content=form.content.data, user_id=current_user.id)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for("feed"))
+    posts = Post.query.order_by(Post.id.desc()).all()
+    return render_template("feed.html", form=form, posts=posts)
 
-@app.route('/registro', methods=['GET', 'POST'])
-def registro():
-    if request.method == 'POST':
-        nome_real = request.form.get('nome_real').strip()
-        apelido = request.form.get('apelido').strip()
-        email = request.form.get('email').strip()
-        senha = request.form.get('senha')
-        senha_confirm = request.form.get('senha_confirm')
-
-        if senha != senha_confirm:
-            flash("Senhas não conferem.", "error")
-            return redirect(url_for('registro'))
-
-        if apelido == '':
-            apelido = gerar_anonimo()
-
-        senha_hash = generate_password_hash(senha)
-
-        with conn.cursor() as cur:
-            cur.execute("SELECT id FROM users WHERE email = %s", (email,))
-            if cur.fetchone():
-                flash("Email já cadastrado.", "error")
-                return redirect(url_for('registro'))
-
-            cur.execute("""
-                INSERT INTO users (nome_real, apelido, email, senha_hash)
-                VALUES (%s, %s, %s, %s) RETURNING id
-            """, (nome_real, apelido, email, senha_hash))
-            user_id = cur.fetchone()['id']
-            conn.commit()
-
-        user = User({'id': user_id, 'nome_real': nome_real, 'apelido': apelido, 'email': email, 'senha_hash': senha_hash})
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        nickname = form.nickname.data or f"Any{random.randint(1,1000):03}"
+        user = User(
+            name=form.name.data,
+            surname=form.surname.data,
+            email=form.email.data,
+            age=form.age.data,
+            nickname=nickname
+        )
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
         login_user(user)
-        return redirect(url_for('feed'))
+        return redirect(url_for("feed"))
+    return render_template("register.html", form=form)
 
-    return render_template('registro.html')
-
-@app.route('/login', methods=['GET', 'POST'])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == 'POST':
-        email = request.form.get('email').strip()
-        senha = request.form.get('senha')
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            return redirect(url_for("feed"))
+        flash("Login inválido")
+    return render_template("login.html", form=form)
 
-        with conn.cursor() as cur:
-            cur.execute("SELECT * FROM users WHERE email = %s", (email,))
-            user_data = cur.fetchone()
-            if user_data and check_password_hash(user_data['senha_hash'], senha):
-                user = User(user_data)
-                login_user(user)
-                return redirect(url_for('feed'))
-            else:
-                flash("Login inválido.", "error")
-                return redirect(url_for('login'))
-
-    return render_template('login.html')
-
-@app.route('/logout')
-@login_required
+@app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for("login"))
 
-@app.route('/postar', methods=['POST'])
+@app.route("/comment/<int:post_id>", methods=["POST"])
 @login_required
-def postar():
-    conteudo = request.form.get('conteudo').strip()
-    if conteudo:
-        with conn.cursor() as cur:
-            cur.execute("INSERT INTO posts (user_id, conteudo, data) VALUES (%s, %s, NOW())", (current_user.id, conteudo))
-            conn.commit()
-    return redirect(url_for('feed'))
+def comment(post_id):
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(content=form.content.data, user_id=current_user.id, post_id=post_id)
+        db.session.add(comment)
+        db.session.commit()
+    return redirect(url_for("feed"))
 
-if __name__ == '__main__':
-    app.run(debug=True)
+@app.route("/like/<int:post_id>", methods=["POST"])
+@login_required
+def like(post_id):
+    if not Like.query.filter_by(user_id=current_user.id, post_id=post_id).first():
+        like = Like(user_id=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+    return redirect(url_for("feed"))
+
+@app.route("/perfil/<string:nickname>")
+@login_required
+def perfil(nickname):
+    user = User.query.filter_by(nickname=nickname).first_or_404()
+    return render_template("perfil.html", user=user)

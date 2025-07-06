@@ -25,6 +25,9 @@
     <small>{{ post.data }}</small>
     <hr />
     {% else %}
+    <form action="{{ url_for('like', post_id=post.id) }}" method="POST">
+      <button type="submit">❤️ Curtir ({{ post.likes | length }})</button>
+    </form>
     <p>Nada publicado ainda.</p>
     {% endfor %}
     <p><a href="/logout">Sair</a></p>
