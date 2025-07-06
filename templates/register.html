@@ -18,15 +18,15 @@
     </ul>
     {% endif %} {% endwith %}
 
-    <form method="post">
-      Nome real: <input type="text" name="nome_real" required /><br />
-      Apelido (opcional): <input type="text" name="apelido" /><br />
-      Email: <input type="email" name="email" required /><br />
-      Senha: <input type="password" name="senha" required /><br />
-      Confirmar senha:
-      <input type="password" name="senha_confirm" required /><br />
+    <form method="POST">
+      {{ form.hidden_tag() }} {{ form.name.label }} {{ form.name(size=32) }}<br />
+      {{ form.surname.label }} {{ form.surname(size=32) }}<br />
+      {{ form.nickname.label }} {{ form.nickname(size=32) }}<br />
+      {{ form.email.label }} {{ form.email(size=32) }}<br />
+      {{ form.age.label }} {{ form.age() }}<br />
+      {{ form.password.label }} {{ form.password(size=32) }}<br />
       <button type="submit">Registrar</button>
     </form>
-    <p><a href="/login">Já tenho conta</a></p>
+    <p><a href="{{ url_for('login') }}">Já tenho conta</a></p>
   </body>
 </html>

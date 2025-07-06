@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from forms import RegisterForm, LoginForm, PostForm
 from models import db, User, Post
+from flask import request
 import random
 
 app = Flask(__name__)
@@ -84,3 +85,26 @@ def like(post_id):
         db.session.add(like)
         db.session.commit()
     return redirect(url_for("feed"))
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        nome_real = request.form.get("nome_real")
+        apelido = request.form.get("apelido") or f"Any{random.randint(1,1000):03}"
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+        idade = request.form.get("idade")
+
+        user = User(
+            name=nome_real,
+            surname="",  # ou você pode adicionar outro campo
+            email=email,
+            age=int(idade),
+            nickname=apelido
+        )
+        user.set_password(senha)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return redirect(url_for("feed"))
+    return render_template("register.html")
