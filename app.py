@@ -15,7 +15,7 @@ db.init_app(app)
 with app.app_context():
     db.drop_all()
     db.create_all()
-    
+
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
@@ -99,3 +99,28 @@ def like(post_id):
         db.session.add(like)
         db.session.commit()
     return redirect(url_for("feed"))
+
+@app.route("/edit_post/<int:post_id>", methods=["GET", "POST"])
+@login_required
+def edit_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.user_id != current_user.id:
+        flash("Você não tem permissão.")
+        return redirect(url_for("feed"))
+    if request.method == "POST":
+        post.content = request.form["content"]
+        db.session.commit()
+        return redirect(url_for("feed"))
+    return render_template("edit_post.html", post=post)
+
+@app.route("/delete_post/<int:post_id>", methods=["POST"])
+@login_required
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.user_id != current_user.id:
+        flash("Você não tem permissão.")
+        return redirect(url_for("feed"))
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for("feed"))
+
