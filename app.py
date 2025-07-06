@@ -12,11 +12,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
-with app.app_context():
-    db.drop_all()
-    db.create_all()
-
-
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 
@@ -41,7 +36,16 @@ def feed():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        nickname = form.nickname.data or f"Any{random.randint(1,1000):03}"
+        if form.nickname.data:
+            nickname = form.nickname.data
+        else:
+            last_user = User.query.filter(User.nickname.like('Any%')).order_by(User.id.desc()).first()
+            if last_user and last_user.nickname[3:].isdigit():
+                last_num = int(last_user.nickname[3:])
+            else:
+                last_num = 0
+            nickname = f"Any {last_num + 1:02d}"
+
         user = User(
             name=form.name.data,
             surname=form.surname.data,
