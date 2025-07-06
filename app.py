@@ -25,6 +25,11 @@ login.login_view = 'login'
 def load_user(id):
     return User.query.get(int(id))
 
+from your_app import db
+
+db.drop_all()
+db.create_all()
+
 @app.route('/')
 @app.route('/feed', methods=['GET', 'POST'])
 @login_required
