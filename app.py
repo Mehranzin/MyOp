@@ -9,6 +9,7 @@ from config import Config
 from models import db, User, Post, Comment, Like
 from forms import RegistrationForm, LoginForm, PostForm, CommentForm
 
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -16,6 +17,7 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 with app.app_context():
+    db.drop_all()
     db.create_all()
 
 login = LoginManager(app)
@@ -24,11 +26,6 @@ login.login_view = 'login'
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
-
-from your_app import db
-
-db.drop_all()
-db.create_all()
 
 @app.route('/')
 @app.route('/feed', methods=['GET', 'POST'])
@@ -46,7 +43,7 @@ def feed():
     posts = sorted(posts, key=lambda p: p.timestamp, reverse=True)
 
     comment_forms = {post.id: CommentForm(prefix=str(post.id)) for post in posts}
-    
+
     for post in posts:
         post.comments_ordered = post.comments.order_by(text('timestamp desc')).all()
 
