@@ -1,61 +1,66 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Opinion</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
 
-<body>
-
-<!--NAV BAR-->
-<div id="header">
-    <div class="navbar">
+  <body>
+    <!--NAV BAR-->
+    <div id="header">
+      <div class="navbar">
         <div class="nav-links">
-            <a href="/faq">FAQ</a>
-            <a href="/perfil">Perfil</a>
-            <a href="/search">Search</a>
+          <a href="/faq">FAQ</a>
+          <a href="/perfil">Perfil</a>
+          <a href="/search">Search</a>
         </div>
         <div class="profile">
-            <a href="/perfil"><img src="{{ url_for('static', filename='uploads/' + user[1]) }}"></a>
+          <a href="/perfil"
+            ><img src="{{ url_for('static', filename='uploads/' + user[1]) }}"
+          /></a>
         </div>
+      </div>
     </div>
-</div>
-<!--END NAV BAR-->
+    <!--END NAV BAR-->
 
-<!--MESSAGES-->
-<div id="messagesbar">
-    <div class="form-message">
-       <form action="/index" method="POST">
-         <textarea name="mensagem" placeholder="Escreva sua mensagem..." required></textarea>
-         <button type="submit">Postar</button>
-       </form>
+    <!--MESSAGES-->
+    <div id="messagesbar">
+      <div class="form-message">
+        <form action="/index" method="POST">
+          <textarea
+            name="mensagem"
+            placeholder="Escreva sua mensagem..."
+            required
+          ></textarea>
+          <button type="submit">Postar</button>
+        </form>
+      </div>
     </div>
-</div>
-<!--END MESSAGES-->
+    <!--END MESSAGES-->
 
-<!--DISPLAY MESSAGES-->
-<div id="main">
-    <div class="display-messages">
+    <!--DISPLAY MESSAGES-->
+    <div id="main">
+      <div class="display-messages">
         {% for mensagem, data_postagem, nome in mensagens %}
-           <div class="message">
-             <p><strong>{{ nome }}</strong> | {{ data_postagem.split()[1] }}</p>
-             <p>{{ mensagem }}</p>
-           </div>
+        <div class="message">
+          <p><strong>{{ nome }}</strong> | {{ data_postagem.split()[1] }}</p>
+          <p>{{ mensagem }}</p>
+        </div>
         {% endfor %}
+      </div>
     </div>
-</div>
 
-<!--SEARCH BAR-->
-<div id="searchbar">
-Aside
-</div>
-<!--END SEARCH BAR-->
+    <!--SEARCH BAR-->
+    <div id="searchbar">Aside</div>
+    <!--END SEARCH BAR-->
 
-<!--FOOTER-->
-<div id="footer">
-Footer
-</div>
-<!--END FOOTER-->
+    <!--FOOTER-->
+    <div id="footer">Footer</div>
+    <!--END FOOTER-->
+  </body>
 </html>
