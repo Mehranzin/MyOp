@@ -25,7 +25,6 @@ login.login_view = 'login'
 def load_user(id):
     return User.query.get(int(id))
 
-@app.route('/')
 @app.route('/feed', methods=['GET', 'POST'])
 @login_required
 def feed():
@@ -39,11 +38,10 @@ def feed():
 
     posts = current_user.followed_posts().all() + current_user.posts.order_by(Post.timestamp.desc()).all()
     posts = sorted(posts, key=lambda p: p.timestamp, reverse=True)
-    comment_forms = {}
-    # Ordenar comentários corretamente usando .order_by() com text() no Python
+
+    comment_forms = {post.id: CommentForm(prefix=str(post.id)) for post in posts}
+    
     for post in posts:
-        comment_forms[post.id] = CommentForm(prefix=str(post.id))
-        # Aqui já ordena os comentários e passa pra template se quiser, mas no template você só itera
         post.comments_ordered = post.comments.order_by(text('timestamp desc')).all()
 
     return render_template('feed.html', posts=posts, form=form, comment_forms=comment_forms)

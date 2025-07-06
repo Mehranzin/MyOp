@@ -49,7 +49,7 @@
 
       <div class="comments">
         <h4>Comentários</h4>
-        {% for comment in post.comments.order_by('timestamp desc') %}
+        {% for comment in post.comments_ordered %}
         <p><strong>{{ comment.author.apelido }}</strong>: {{ comment.body }}</p>
         {% endfor %}
         <form method="POST" action="{{ url_for('comment', post_id=post.id) }}">
