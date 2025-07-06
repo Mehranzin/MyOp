@@ -18,11 +18,12 @@
     </ul>
     {% endif %} {% endwith %}
 
-    <form method="post">
-      Email: <input type="email" name="email" required /><br />
-      Senha: <input type="password" name="senha" required /><br />
+    <form method="POST" action="{{ url_for('login') }}">
+      {{ form.hidden_tag() }} {{ form.email.label }} {{ form.email(size=32)
+      }}<br />
+      {{ form.password.label }} {{ form.password(size=32) }}<br />
       <button type="submit">Entrar</button>
     </form>
-<form method="POST" action="{{ url_for('register_user') }}">
+    <p><a href="{{ url_for('register') }}">Criar conta</a></p>
   </body>
 </html>

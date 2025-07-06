@@ -18,7 +18,7 @@
     </ul>
     {% endif %} {% endwith %}
 
-    <form method="POST">
+    <form method="POST" action="{{ url_for('register') }}">
       {{ form.hidden_tag() }} {{ form.name.label }} {{ form.name(size=32) }}<br />
       {{ form.surname.label }} {{ form.surname(size=32) }}<br />
       {{ form.nickname.label }} {{ form.nickname(size=32) }}<br />
