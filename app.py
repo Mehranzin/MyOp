@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from urllib.parse import urlparse
+from sqlalchemy import text
 from config import Config
 from models import db, User, Post, Comment, Like
 from forms import RegistrationForm, LoginForm, PostForm, CommentForm
@@ -35,9 +36,16 @@ def feed():
         db.session.commit()
         flash('Post publicado.')
         return redirect(url_for('feed'))
+
     posts = current_user.followed_posts().all() + current_user.posts.order_by(Post.timestamp.desc()).all()
     posts = sorted(posts, key=lambda p: p.timestamp, reverse=True)
-    comment_forms = {post.id: CommentForm(prefix=str(post.id)) for post in posts}
+    comment_forms = {}
+    # Ordenar comentários corretamente usando .order_by() com text() no Python
+    for post in posts:
+        comment_forms[post.id] = CommentForm(prefix=str(post.id))
+        # Aqui já ordena os comentários e passa pra template se quiser, mas no template você só itera
+        post.comments_ordered = post.comments.order_by(text('timestamp desc')).all()
+
     return render_template('feed.html', posts=posts, form=form, comment_forms=comment_forms)
 
 @app.route('/comment/<int:post_id>', methods=['POST'])
