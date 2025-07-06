@@ -83,9 +83,3 @@ def like(post_id):
         db.session.add(like)
         db.session.commit()
     return redirect(url_for("feed"))
-
-@app.route("/perfil/<string:nickname>")
-@login_required
-def perfil(nickname):
-    user = User.query.filter_by(nickname=nickname).first_or_404()
-    return render_template("perfil.html", user=user)
