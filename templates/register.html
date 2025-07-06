@@ -1,32 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
-    <title>Registro</title>
+    <meta charset="UTF-8" />
+    <title>Registrar</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <h2>Registro</h2>
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
-    <ul>
-      {% for category, msg in messages %}
-      <li style="color: red">{{ msg }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
+    <nav>
+      <a href="{{ url_for('login') }}">Login</a> |
+      <a href="{{ url_for('register') }}">Registrar</a>
+    </nav>
+    <hr />
 
+    <h2>Registrar</h2>
     <form method="POST" action="{{ url_for('register') }}">
-      {{ form.hidden_tag() }} {{ form.name.label }} {{ form.name(size=32) }}<br />
-      {{ form.surname.label }} {{ form.surname(size=32) }}<br />
-      {{ form.nickname.label }} {{ form.nickname(size=32) }}<br />
-      {{ form.email.label }} {{ form.email(size=32) }}<br />
-      {{ form.age.label }} {{ form.age() }}<br />
-      {{ form.password.label }} {{ form.password(size=32) }}<br />
-      <button type="submit">Registrar</button>
+      {{ form.hidden_tag() }}
+      <p>{{ form.nome.label }}<br />{{ form.nome(size=32) }}</p>
+      <p>{{ form.sobrenome.label }}<br />{{ form.sobrenome(size=32) }}</p>
+      <p>{{ form.apelido.label }}<br />{{ form.apelido(size=32) }}</p>
+      <p>{{ form.email.label }}<br />{{ form.email(size=32) }}</p>
+      <p>{{ form.idade.label }}<br />{{ form.idade() }}</p>
+      <p>{{ form.password.label }}<br />{{ form.password(size=32) }}</p>
+      <p>{{ form.password2.label }}<br />{{ form.password2(size=32) }}</p>
+      <p>{{ form.submit() }}</p>
     </form>
-    <p><a href="{{ url_for('login') }}">Já tenho conta</a></p>
+
+    <p><a href="{{ url_for('login') }}">Já tem conta? Entre aqui</a></p>
   </body>
 </html>

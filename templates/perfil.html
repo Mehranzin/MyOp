@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Perfil de {{ user.apelido }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <nav>
+      <a href="{{ url_for('feed') }}">Feed</a> |
+      <a href="{{ url_for('perfil', apelido=current_user.apelido) }}">Perfil</a>
+      |
+      <a href="{{ url_for('logout') }}">Sair</a>
+    </nav>
+    <hr />
+
+    <h2>Perfil de {{ user.apelido }}</h2>
+    <p>Nome completo: {{ user.nome }} {{ user.sobrenome }}</p>
+    <p>Idade: {{ user.idade }}</p>
+
+    <h3>Posts</h3>
+    {% for post in posts %}
+    <div class="post">
+      <p>{{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</p>
+      <p>{{ post.body }}</p>
+    </div>
+    <hr />
+    {% endfor %}
+  </body>
+</html>

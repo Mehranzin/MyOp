@@ -1,21 +1,38 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, IntegerField, TextAreaField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms import StringField, PasswordField, SubmitField, IntegerField, BooleanField, TextAreaField
+from wtforms.validators import DataRequired, Email, EqualTo, ValidationError, Length, NumberRange
+from models import User
 
-class RegisterForm(FlaskForm):
-    name = StringField("Nome", validators=[DataRequired()])
-    surname = StringField("Sobrenome", validators=[DataRequired()])
-    email = StringField("Email", validators=[Email(), DataRequired()])
-    password = PasswordField("Senha", validators=[DataRequired(), Length(min=6)])
-    age = IntegerField("Idade", validators=[DataRequired()])
-    nickname = StringField("Apelido (ou deixe em branco)")
+class RegistrationForm(FlaskForm):
+    nome = StringField('Nome', validators=[DataRequired(), Length(max=64)])
+    sobrenome = StringField('Sobrenome', validators=[DataRequired(), Length(max=64)])
+    apelido = StringField('Apelido/Anônimo', validators=[DataRequired(), Length(max=64)])
+    email = StringField('Email', validators=[DataRequired(), Email(), Length(max=120)])
+    idade = IntegerField('Idade', validators=[DataRequired(), NumberRange(min=13, max=120)])
+    password = PasswordField('Senha', validators=[DataRequired(), Length(min=6)])
+    password2 = PasswordField('Repita a senha', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Registrar')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('Email já está em uso.')
+
+    def validate_apelido(self, apelido):
+        user = User.query.filter_by(apelido=apelido.data).first()
+        if user:
+            raise ValidationError('Apelido já está em uso.')
 
 class LoginForm(FlaskForm):
-    email = StringField("Email", validators=[Email(), DataRequired()])
-    password = PasswordField("Senha", validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Senha', validators=[DataRequired()])
+    remember_me = BooleanField('Lembrar-me')
+    submit = SubmitField('Entrar')
 
 class PostForm(FlaskForm):
-    content = TextAreaField("O que você pensa hoje?", validators=[DataRequired()])
+    body = TextAreaField('O que está pensando?', validators=[DataRequired(), Length(max=280)])
+    submit = SubmitField('Publicar')
 
 class CommentForm(FlaskForm):
-    content = TextAreaField("Comentário", validators=[DataRequired()])
+    body = TextAreaField('Comentário', validators=[DataRequired(), Length(max=280)])
+    submit = SubmitField('Comentar')

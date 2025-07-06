@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
+    <meta charset="UTF-8" />
     <title>Login</title>
     <link
       rel="stylesheet"
@@ -8,22 +9,21 @@
     />
   </head>
   <body>
-    <h2>Login</h2>
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %}
-    <ul>
-      {% for category, msg in messages %}
-      <li style="color: red">{{ msg }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
+    <nav>
+      <a href="{{ url_for('login') }}">Login</a> |
+      <a href="{{ url_for('register') }}">Registrar</a>
+    </nav>
+    <hr />
 
+    <h2>Login</h2>
     <form method="POST" action="{{ url_for('login') }}">
-      {{ form.hidden_tag() }} {{ form.email.label }} {{ form.email(size=32)
-      }}<br />
-      {{ form.password.label }} {{ form.password(size=32) }}<br />
-      <button type="submit">Entrar</button>
+      {{ form.hidden_tag() }}
+      <p>{{ form.email.label }}<br />{{ form.email(size=32) }}</p>
+      <p>{{ form.password.label }}<br />{{ form.password(size=32) }}</p>
+      <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+      <p>{{ form.submit() }}</p>
     </form>
-    <p><a href="{{ url_for('register') }}">Criar conta</a></p>
+
+    <p><a href="{{ url_for('register') }}">Não tem conta? Registre-se</a></p>
   </body>
 </html>

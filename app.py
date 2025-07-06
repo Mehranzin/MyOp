@@ -1,126 +1,139 @@
-from flask import Flask, render_template, redirect, url_for, flash, request
+import os
+from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from forms import RegisterForm, LoginForm, PostForm, CommentForm
+from werkzeug.urls import url_parse
+from config import Config
 from models import db, User, Post, Comment, Like
-import random
+from forms import RegistrationForm, LoginForm, PostForm, CommentForm
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'dacertoDeus'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://database_6r2f_user:YJPPAJFPOfazeJ6kq1ot6NYUYc2NNWlp@dpg-d1kvif6r433s73d39rsg-a.virginia-postgres.render.com:5432/database_6r2f'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
 
 db.init_app(app)
+migrate = Migrate(app, db)
 
-with app.app_context():
-    db.drop_all()
-    db.create_all()
+login = LoginManager(app)
+login.login_view = 'login'
 
-login_manager = LoginManager(app)
-login_manager.login_view = "login"
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
-
-@app.route("/", methods=["GET", "POST"])
+@app.route('/')
+@app.route('/feed', methods=['GET', 'POST'])
 @login_required
 def feed():
     form = PostForm()
-    comment_form = CommentForm()
     if form.validate_on_submit():
-        post = Post(content=form.content.data, user_id=current_user.id)
+        post = Post(body=form.body.data, author=current_user)
         db.session.add(post)
         db.session.commit()
-        return redirect(url_for("feed"))
-    posts = Post.query.order_by(Post.id.desc()).all()
-    return render_template("feed.html", form=form, posts=posts, user=current_user, comment_form=comment_form)
+        flash('Post publicado.')
+        return redirect(url_for('feed'))
+    # Mostrar posts do usuário e seguidos, ordenados
+    posts = current_user.followed_posts().all() + current_user.posts.order_by(Post.timestamp.desc()).all()
+    posts = sorted(posts, key=lambda p: p.timestamp, reverse=True)
+    comment_forms = {post.id: CommentForm(prefix=str(post.id)) for post in posts}
+    return render_template('feed.html', posts=posts, form=form, comment_forms=comment_forms)
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    form = RegisterForm()
+@app.route('/comment/<int:post_id>', methods=['POST'])
+@login_required
+def comment(post_id):
+    post = Post.query.get_or_404(post_id)
+    form = CommentForm(prefix=str(post_id))
     if form.validate_on_submit():
-        if form.nickname.data:
-            nickname = form.nickname.data
-        else:
-            last_user = User.query.filter(User.nickname.like('Any%')).order_by(User.id.desc()).first()
-            if last_user and last_user.nickname[3:].isdigit():
-                last_num = int(last_user.nickname[3:])
-            else:
-                last_num = 0
-            nickname = f"Any {last_num + 1:02d}"
+        comment = Comment(body=form.body.data, author=current_user, post=post)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comentário publicado.')
+    else:
+        flash('Erro no comentário.')
+    return redirect(url_for('feed'))
 
+@app.route('/like/<int:post_id>', methods=['POST'])
+@login_required
+def like(post_id):
+    post = Post.query.get_or_404(post_id)
+    like = Like.query.filter_by(user_id=current_user.id, post_id=post.id).first()
+    if like:
+        db.session.delete(like)
+        db.session.commit()
+        flash('Like removido.')
+    else:
+        like = Like(user_id=current_user.id, post_id=post.id)
+        db.session.add(like)
+        db.session.commit()
+        flash('Like adicionado.')
+    return redirect(url_for('feed'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('feed'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
         user = User(
-            name=form.name.data,
-            surname=form.surname.data,
+            nome=form.nome.data,
+            sobrenome=form.sobrenome.data,
+            apelido=form.apelido.data,
             email=form.email.data,
-            age=form.age.data,
-            nickname=nickname
+            idade=form.idade.data
         )
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        login_user(user)
-        return redirect(url_for("feed"))
-    return render_template("register.html", form=form)
+        flash('Cadastro realizado com sucesso. Agora faça login.')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('feed'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and user.check_password(form.password.data):
-            login_user(user)
-            return redirect(url_for("feed"))
-        flash("Login inválido")
-    return render_template("login.html", form=form)
+        if user is None or not user.check_password(form.password.data):
+            flash('Email ou senha inválidos.')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('feed')
+        return redirect(next_page)
+    return render_template('login.html', form=form)
 
-@app.route("/logout")
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for("login"))
+    flash('Você saiu.')
+    return redirect(url_for('login'))
 
-@app.route("/comment/<int:post_id>", methods=["POST"])
+@app.route('/perfil/<apelido>')
 @login_required
-def comment(post_id):
-    form = CommentForm()
-    if form.validate_on_submit():
-        comment = Comment(content=form.content.data, user_id=current_user.id, post_id=post_id)
-        db.session.add(comment)
-        db.session.commit()
-    return redirect(url_for("feed"))
+def perfil(apelido):
+    user = User.query.filter_by(apelido=apelido).first_or_404()
+    posts = user.posts.order_by(Post.timestamp.desc()).all()
+    return render_template('perfil.html', user=user, posts=posts)
 
-@app.route("/like/<int:post_id>", methods=["POST"])
-@login_required
-def like(post_id):
-    if not Like.query.filter_by(user_id=current_user.id, post_id=post_id).first():
-        like = Like(user_id=current_user.id, post_id=post_id)
-        db.session.add(like)
-        db.session.commit()
-    return redirect(url_for("feed"))
-
-@app.route("/edit_post/<int:post_id>", methods=["GET", "POST"])
+@app.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.user_id != current_user.id:
-        flash("Você não tem permissão.")
-        return redirect(url_for("feed"))
-    if request.method == "POST":
-        post.content = request.form["content"]
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.body = form.body.data
         db.session.commit()
-        return redirect(url_for("feed"))
-    return render_template("edit_post.html", post=post)
+        flash('Post atualizado.')
+        return redirect(url_for('feed'))
+    elif request.method == 'GET':
+        form.body.data = post.body
+    return render_template('edit_post.html', form=form)
 
-@app.route("/delete_post/<int:post_id>", methods=["POST"])
-@login_required
-def delete_post(post_id):
-    post = Post.query.get_or_404(post_id)
-    if post.user_id != current_user.id:
-        flash("Você não tem permissão.")
-        return redirect(url_for("feed"))
-    db.session.delete(post)
-    db.session.commit()
-    return redirect(url_for("feed"))
-
+if __name__ == '__main__':
+    app.run()

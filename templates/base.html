@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Rede Social{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <nav>
+      {% if current_user.is_authenticated %}
+      <a href="{{ url_for('feed') }}">Feed</a> |
+      <a href="{{ url_for('perfil', apelido=current_user.apelido) }}">Perfil</a>
+      |
+      <a href="{{ url_for('logout') }}">Sair</a>
+      {% else %}
+      <a href="{{ url_for('login') }}">Login</a> |
+      <a href="{{ url_for('register') }}">Registrar</a>
+      {% endif %}
+    </nav>
+    <hr />
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class="flashes">
+      {% for msg in messages %}
+      <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %} {% block content %}{% endblock %}
+  </body>
+</html>

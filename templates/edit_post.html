@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
+    <meta charset="UTF-8" />
     <title>Editar Post</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
-    <form method="POST">
-      <textarea name="content">{{ post.content }}</textarea>
-      <button type="submit">Salvar</button>
+    <nav>
+      <a href="{{ url_for('feed') }}">Feed</a> |
+      <a href="{{ url_for('perfil', apelido=current_user.apelido) }}">Perfil</a>
+      |
+      <a href="{{ url_for('logout') }}">Sair</a>
+    </nav>
+    <hr />
+
+    <h2>Editar Post</h2>
+    <form
+      method="POST"
+      action="{{ url_for('edit_post', post_id=request.view_args['post_id']) }}"
+    >
+      {{ form.hidden_tag() }}
+      <p>{{ form.body(rows=3, cols=60) }}</p>
+      <p>{{ form.submit() }}</p>
     </form>
-    <a href="{{ url_for('feed') }}">Cancelar</a>
   </body>
 </html>
