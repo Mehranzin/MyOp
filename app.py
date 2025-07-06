@@ -33,7 +33,7 @@ def feed():
     return render_template("feed.html", form=form, posts=posts)
 
 @app.route("/register", methods=["GET", "POST"])
-def register():
+def register_user():
     form = RegisterForm()
     if form.validate_on_submit():
         nickname = form.nickname.data or f"Any{random.randint(1,1000):03}"
