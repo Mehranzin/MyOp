@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request, abo
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from werkzeug.urls import url_parse
+from urllib.parse import urlparse
 from config import Config
 from models import db, User, Post, Comment, Like
 from forms import RegistrationForm, LoginForm, PostForm, CommentForm
@@ -32,7 +32,6 @@ def feed():
         db.session.commit()
         flash('Post publicado.')
         return redirect(url_for('feed'))
-    # Mostrar posts do usuário e seguidos, ordenados
     posts = current_user.followed_posts().all() + current_user.posts.order_by(Post.timestamp.desc()).all()
     posts = sorted(posts, key=lambda p: p.timestamp, reverse=True)
     comment_forms = {post.id: CommentForm(prefix=str(post.id)) for post in posts}
@@ -100,7 +99,7 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
+        if not next_page or urlparse(next_page).netloc != '':
             next_page = url_for('feed')
         return redirect(next_page)
     return render_template('login.html', form=form)
