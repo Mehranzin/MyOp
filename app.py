@@ -23,13 +23,14 @@ def load_user(user_id):
 @login_required
 def feed():
     form = PostForm()
+    comment_form = CommentForm()
     if form.validate_on_submit():
         post = Post(content=form.content.data, user_id=current_user.id)
         db.session.add(post)
         db.session.commit()
         return redirect(url_for("feed"))
     posts = Post.query.order_by(Post.id.desc()).all()
-    return render_template("feed.html", form=form, posts=posts, user=current_user)
+    return render_template("feed.html", form=form, posts=posts, user=current_user, comment_form=comment_form)
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

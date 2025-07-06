@@ -5,13 +5,13 @@ from wtforms.validators import DataRequired, Email, Length
 class RegisterForm(FlaskForm):
     name = StringField("Nome", validators=[DataRequired()])
     surname = StringField("Sobrenome", validators=[DataRequired()])
-    email = StringField("Email", validators=[Email()])
+    email = StringField("Email", validators=[Email(), DataRequired()])
     password = PasswordField("Senha", validators=[DataRequired(), Length(min=6)])
     age = IntegerField("Idade", validators=[DataRequired()])
     nickname = StringField("Apelido (ou deixe em branco)")
 
 class LoginForm(FlaskForm):
-    email = StringField("Email", validators=[Email()])
+    email = StringField("Email", validators=[Email(), DataRequired()])
     password = PasswordField("Senha", validators=[DataRequired()])
 
 class PostForm(FlaskForm):

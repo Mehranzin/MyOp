@@ -9,7 +9,6 @@
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
-
   <body>
     <!--NAV BAR-->
     <div id="header">
@@ -20,9 +19,12 @@
           <a href="/search">Search</a>
         </div>
         <div class="profile">
-          <a href="/perfil"
-            ><img src="{{ url_for('static', filename='uploads/' + user[1]) }}"
-          /></a>
+          <a href="/perfil">
+            <img
+              src="{{ url_for('static', filename='uploads/' + user.nickname) }}"
+              alt="Profile"
+            />
+          </a>
         </div>
       </div>
     </div>
