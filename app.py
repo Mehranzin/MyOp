@@ -4,10 +4,11 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from forms import RegisterForm, LoginForm, PostForm
 from models import db, User, Post
 import random
-from config import Config
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config['SECRET_KEY'] = 'dacertoDeus'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://database_p9p6_user:Ckc9a2rVLAzho9rKIxP2hBzN2EJq1XVJ@dpg-d1kbadvdiees73e9gd2g-a/database_p9p6'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
