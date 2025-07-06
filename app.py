@@ -135,4 +135,6 @@ def edit_post(post_id):
     return render_template('edit_post.html', form=form)
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run()
