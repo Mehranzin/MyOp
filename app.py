@@ -1,14 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, flash
+from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from forms import RegisterForm, LoginForm, PostForm
-from models import db, User, Post
-from flask import request
+from forms import RegisterForm, LoginForm, PostForm, CommentForm
+from models import db, User, Post, Comment, Like
 import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dacertoDeus'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://database_p9p6_user:Ckc9a2rVLAzho9rKIxP2hBzN2EJq1XVJ@dpg-d1kbadvdiees73e9gd2g-a/database_p9p6'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://your_connection_string'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -30,10 +29,10 @@ def feed():
         db.session.commit()
         return redirect(url_for("feed"))
     posts = Post.query.order_by(Post.id.desc()).all()
-    return render_template("feed.html", form=form, posts=posts)
+    return render_template("feed.html", form=form, posts=posts, user=current_user)
 
 @app.route("/register", methods=["GET", "POST"])
-def register_user():
+def register():
     form = RegisterForm()
     if form.validate_on_submit():
         nickname = form.nickname.data or f"Any{random.randint(1,1000):03}"
@@ -63,6 +62,7 @@ def login():
     return render_template("login.html", form=form)
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for("login"))
@@ -85,26 +85,3 @@ def like(post_id):
         db.session.add(like)
         db.session.commit()
     return redirect(url_for("feed"))
-
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        nome_real = request.form.get("nome_real")
-        apelido = request.form.get("apelido") or f"Any{random.randint(1,1000):03}"
-        email = request.form.get("email")
-        senha = request.form.get("senha")
-        idade = request.form.get("idade")
-
-        user = User(
-            name=nome_real,
-            surname="",  # ou você pode adicionar outro campo
-            email=email,
-            age=int(idade),
-            nickname=apelido
-        )
-        user.set_password(senha)
-        db.session.add(user)
-        db.session.commit()
-        login_user(user)
-        return redirect(url_for("feed"))
-    return render_template("register.html")
