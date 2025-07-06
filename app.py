@@ -7,7 +7,7 @@ import random
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dacertoDeus'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://your_connection_string'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://database_6r2f_user:YJPPAJFPOfazeJ6kq1ot6NYUYc2NNWlp@dpg-d1kvif6r433s73d39rsg-a.virginia-postgres.render.com:5432/database_6r2f'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
