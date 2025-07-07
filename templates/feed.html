@@ -30,8 +30,9 @@
         <button type="submit">Postar</button>
       </form>
       <hr />
-      {% if posts %} {% for post in posts %}
+      {% if posts %} {% for post, tempo in posts %}
       <p><strong>{{ post.autor.apelido }}:</strong> {{ post.texto|e }}</p>
+      <small>{{ tempo }}</small>
       <hr />
       {% endfor %} {% else %}
       <p>Nenhuma postagem ainda.</p>

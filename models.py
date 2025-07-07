@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.sql import func
 
 db = SQLAlchemy()
 
@@ -23,3 +24,4 @@ class Post(db.Model):
     texto = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     autor = db.relationship('User', backref=db.backref('posts', lazy=True))
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())

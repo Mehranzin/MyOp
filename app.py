@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from models import db, User, Post
+from datetime import datetime
 import random
 import string
 
@@ -19,6 +20,25 @@ def gera_apelido():
         if not User.query.filter_by(apelido=apelido).first():
             return apelido
     return None
+
+def tempo_relativo(post_time):
+    agora = datetime.utcnow()
+    diff = agora - post_time
+
+    segundos = diff.total_seconds()
+    minutos = segundos // 60
+    horas = minutos // 60
+    dias = diff.days
+
+    if segundos < 60:
+        return f"Postado há {int(segundos)}s"
+    if minutos < 60:
+        return f"Postado há {int(minutos)}min"
+    if horas < 24:
+        return f"Postado há {int(horas)}h"
+    if dias < 7:
+        return f"Postado há {int(dias)} dia{'s' if dias > 1 else ''}"
+    return f"Postado em {post_time.strftime('%d/%m/%Y')}"
 
 @app.route('/')
 def index():
@@ -53,6 +73,9 @@ def register():
                 return redirect(url_for('register'))
         else:
             apelido = gera_apelido()
+            if not apelido:
+                flash('Limite de apelidos esgotado')
+                return redirect(url_for('register'))
 
         try:
             idade_int = int(idade)
@@ -113,7 +136,9 @@ def feed():
             return redirect(url_for('feed'))
 
     posts = Post.query.order_by(Post.id.desc()).all()
-    return render_template('feed.html', posts=posts, apelido=usuario.apelido)
+    posts_com_tempo = [(post, tempo_relativo(post.created_at)) for post in posts]
+
+    return render_template('feed.html', posts=posts_com_tempo, apelido=usuario.apelido)
 
 @app.route('/logout')
 def logout():
