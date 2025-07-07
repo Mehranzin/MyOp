@@ -5,9 +5,11 @@ import random
 import string
 from config import Config
 from flask import request
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.permanent_session_lifetime = timedelta(days=30)
 
 db.init_app(app)
 
@@ -102,6 +104,7 @@ def login():
 
         usuario = User.query.filter_by(email=email).first()
         if usuario and usuario.checa_senha(senha):
+            session.permanent = True
             session['user_id'] = usuario.id
             return redirect(url_for('feed'))
         else:
