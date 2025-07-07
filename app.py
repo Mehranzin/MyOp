@@ -16,6 +16,10 @@ def gera_apelido():
         if not User.query.filter_by(apelido=apelido).first():
             return apelido
 
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     if request.method == 'POST':
