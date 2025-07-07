@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 20px;
   background: #000000;
-  color: #333;
+  color: #5f5f5f;
 }
 .container {
   max-width: 600px;
@@ -85,7 +85,7 @@ a {
 }
 
 a:hover {
-  color: #1f1f1f;
+  color: #c0c0c0;
   text-decoration: underline;
   font-weight: bold;
 }
