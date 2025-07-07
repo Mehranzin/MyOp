@@ -10,6 +10,9 @@ app.config['SECRET_KEY'] = 'secretoqualquer'
 
 db.init_app(app)
 
+with app.app_context():
+    db.create_all()
+
 def gera_apelido():
     while True:
         apelido = 'Any' + ''.join(random.choices(string.digits, k=3))
@@ -20,8 +23,8 @@ def gera_apelido():
 def index():
     return redirect(url_for('login'))
 
-@app.route('/registro', methods=['GET', 'POST'])
-def registro():
+@app.route('/register', methods=['GET', 'POST'])
+def register():
     if request.method == 'POST':
         nome = request.form.get('nome')
         sobrenome = request.form.get('sobrenome')
@@ -33,20 +36,20 @@ def registro():
 
         if not (nome and sobrenome and email and idade and senha and confirma_senha):
             flash('Preencha todos os campos obrigatórios')
-            return redirect(url_for('registro'))
+            return redirect(url_for('register'))
 
         if senha != confirma_senha:
             flash('Senha e confirmação não conferem')
-            return redirect(url_for('registro'))
+            return redirect(url_for('register'))
 
         if User.query.filter_by(email=email).first():
             flash('Email já cadastrado')
-            return redirect(url_for('registro'))
+            return redirect(url_for('register'))
 
         if apelido:
             if User.query.filter_by(apelido=apelido).first():
                 flash('Apelido já em uso')
-                return redirect(url_for('registro'))
+                return redirect(url_for('register'))
         else:
             apelido = gera_apelido()
 
@@ -54,7 +57,7 @@ def registro():
             idade_int = int(idade)
         except:
             flash('Idade inválida')
-            return redirect(url_for('registro'))
+            return redirect(url_for('register'))
 
         novo = User(nome=nome, sobrenome=sobrenome, email=email, idade=idade_int, apelido=apelido)
         novo.set_senha(senha)
@@ -65,7 +68,7 @@ def registro():
         flash('Cadastro realizado com sucesso')
         return redirect(url_for('login'))
 
-    return render_template('registro.html')
+    return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -110,8 +113,3 @@ def feed():
 
     posts = Post.query.order_by(Post.id.desc()).all()
     return render_template('feed.html', posts=posts, apelido=usuario.apelido)
-
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-    app.run()
