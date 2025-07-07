@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from models import db, User, Post
-from datetime import datetime
+from datetime import datetime, timezone
 import random
 import string
 from config import Config
@@ -21,7 +21,7 @@ def gera_apelido():
     return None
 
 def tempo_relativo(post_time):
-    agora = datetime.utcnow()
+    agora = datetime.now(timezone.utc)
     diff = agora - post_time
 
     segundos = diff.total_seconds()
