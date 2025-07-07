@@ -14,10 +14,11 @@ with app.app_context():
     db.create_all()
 
 def gera_apelido():
-    while True:
-        apelido = 'Any' + ''.join(random.choices(string.digits, k=3))
+    for i in range(1, 1001):
+        apelido = f"Any{str(i).zfill(3)}"
         if not User.query.filter_by(apelido=apelido).first():
             return apelido
+    return None
 
 @app.route('/')
 def index():
@@ -79,7 +80,7 @@ def login():
         usuario = User.query.filter_by(email=email).first()
         if usuario and usuario.checa_senha(senha):
             session['user_id'] = usuario.id
-            return redirect(url_for('perfil'))
+            return redirect(url_for('feed'))
         else:
             flash('Email ou senha inválidos')
             return redirect(url_for('login'))
