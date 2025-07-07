@@ -113,3 +113,8 @@ def feed():
 
     posts = Post.query.order_by(Post.id.desc()).all()
     return render_template('feed.html', posts=posts, apelido=usuario.apelido)
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    return redirect(url_for('login'))
