@@ -4,27 +4,17 @@ import random
 import string
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meudb.db'  # muda se quiser outro banco
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meudb.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'secretoqualquer'
 
 db.init_app(app)
 
-with app.app_context():
-    db.drop_all()
-    db.create_all()
-    
 def gera_apelido():
     while True:
         apelido = 'Any' + ''.join(random.choices(string.digits, k=3))
         if not User.query.filter_by(apelido=apelido).first():
             return apelido
-
-
-@app.before_first_request
-def cria_bd():
-    db.create_all()
-
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -73,7 +63,6 @@ def registro():
 
     return render_template('registro.html')
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -90,7 +79,6 @@ def login():
 
     return render_template('login.html')
 
-
 @app.route('/perfil')
 def perfil():
     user_id = session.get('user_id')
@@ -99,7 +87,6 @@ def perfil():
 
     usuario = User.query.get(user_id)
     return render_template('perfil.html', apelido=usuario.apelido, idade=usuario.idade)
-
 
 @app.route('/feed', methods=['GET', 'POST'])
 def feed():
@@ -119,3 +106,8 @@ def feed():
 
     posts = Post.query.order_by(Post.id.desc()).all()
     return render_template('feed.html', posts=posts, apelido=usuario.apelido)
+
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+    app.run()
