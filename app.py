@@ -3,11 +3,10 @@ from models import db, User, Post
 from datetime import datetime
 import random
 import string
+from config import Config
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meudb.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'secretoqualquer'
+app.config.from_object(Config)
 
 db.init_app(app)
 
