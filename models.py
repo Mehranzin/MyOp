@@ -11,13 +11,13 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     idade = db.Column(db.Integer, nullable=False)
     apelido = db.Column(db.String(50), unique=True, nullable=False)
-    senha_hash = db.Column(db.String(500), nullable=False)
+    password_hash = db.Column(db.String(500), nullable=False)
 
     def set_senha(self, senha):
-        self.senha_hash = generate_password_hash(senha)
+        self.password_hash = generate_password_hash(senha)
 
     def checa_senha(self, senha):
-        return check_password_hash(self.senha_hash, senha)
+        return check_password_hash(self.password_hash, senha)
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
