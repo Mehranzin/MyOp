@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import random
 import string
 from config import Config
+from flask import request
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -115,7 +116,14 @@ def perfil():
     if not user_id:
         return redirect(url_for('login'))
 
-    usuario = User.query.get(user_id)
+    apelido_param = request.args.get('usuario')
+    if apelido_param:
+        usuario = User.query.filter_by(apelido=apelido_param).first()
+        if not usuario:
+            return "Usuário não encontrado", 404
+    else:
+        usuario = User.query.get(user_id)
+
     return render_template('perfil.html', apelido=usuario.apelido, idade=usuario.idade)
 
 @app.route('/feed', methods=['GET', 'POST'])

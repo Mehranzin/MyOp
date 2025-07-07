@@ -74,3 +74,15 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+a {
+  color: #1e90ff;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: #104e8b;
+  text-decoration: underline;
+}
