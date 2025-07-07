@@ -2,6 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login</title>
     <link
       rel="stylesheet"
@@ -9,21 +10,18 @@
     />
   </head>
   <body>
-    <nav>
-      <a href="{{ url_for('login') }}">Login</a> |
-      <a href="{{ url_for('register') }}">Registrar</a>
-    </nav>
-    <hr />
+    <div class="container">
+      <h2>Entrar</h2>
+      <form method="POST" action="{{ url_for('login') }}">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
 
-    <h2>Login</h2>
-    <form method="POST" action="{{ url_for('login') }}">
-      {{ form.hidden_tag() }}
-      <p>{{ form.email.label }}<br />{{ form.email(size=32) }}</p>
-      <p>{{ form.password.label }}<br />{{ form.password(size=32) }}</p>
-      <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-      <p>{{ form.submit() }}</p>
-    </form>
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required />
 
-    <p><a href="{{ url_for('register') }}">Não tem conta? Registre-se</a></p>
+        <button type="submit">Entrar</button>
+      </form>
+      <p>Não tem conta? <a href="{{ url_for('registro') }}">Registrar</a></p>
+    </div>
   </body>
 </html>

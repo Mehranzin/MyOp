@@ -2,6 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Feed</title>
     <link
       rel="stylesheet"
@@ -9,57 +10,32 @@
     />
   </head>
   <body>
-    <nav>
-      <a href="{{ url_for('feed') }}">Feed</a> |
-      <a href="{{ url_for('perfil', apelido=current_user.apelido) }}">Perfil</a>
-      |
-      <a href="{{ url_for('logout') }}">Sair</a>
-    </nav>
-    <hr />
-
-    <h2>Feed</h2>
-
-    <form method="POST" action="{{ url_for('feed') }}">
-      {{ form.hidden_tag() }}
-      <p>{{ form.body(rows=3, cols=60) }}</p>
-      <p>{{ form.submit() }}</p>
-    </form>
-
-    <hr />
-
-    {% for post in posts %}
-    <div class="post">
-      <p>
-        <strong
-          ><a href="{{ url_for('perfil', apelido=post.author.apelido) }}"
-            >{{ post.author.apelido }}</a
-          ></strong
-        >
-        - {{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}
-      </p>
-      <p>{{ post.body }}</p>
-      <form method="POST" action="{{ url_for('like', post_id=post.id) }}">
-        <button type="submit">
-          {% set liked = false %} {% for like in post.likes %} {% if
-          like.user_id == current_user.id %} {% set liked = true %} {% endif %}
-          {% endfor %} {{ "Descurtir" if liked else "Curtir" }}
-        </button>
+    <div class="container">
+      <nav>
+        <a href="{{ url_for('perfil') }}">Perfil</a> |
+        <a href="{{ url_for('feed') }}">Feed</a> |
+        <a href="{{ url_for('logout') }}">Sair</a>
+      </nav>
+      <hr />
+      <h2>Feed</h2>
+      <form method="POST" action="{{ url_for('feed') }}">
+        <label for="texto">Nova postagem</label>
+        <textarea
+          id="texto"
+          name="texto"
+          rows="4"
+          placeholder="Digite sua postagem..."
+          required
+        ></textarea>
+        <button type="submit">Postar</button>
       </form>
-      <a href="{{ url_for('edit_post', post_id=post.id) }}">Editar</a>
-
-      <div class="comments">
-        <h4>Comentários</h4>
-        {% for comment in post.comments_ordered %}
-        <p><strong>{{ comment.author.apelido }}</strong>: {{ comment.body }}</p>
-        {% endfor %}
-        <form method="POST" action="{{ url_for('comment', post_id=post.id) }}">
-          {{ comment_forms[post.id].hidden_tag() }} {{
-          comment_forms[post.id].body(rows=2, cols=50) }} {{
-          comment_forms[post.id].submit() }}
-        </form>
-      </div>
+      <hr />
+      {% if posts %} {% for post in posts %}
+      <p><strong>{{ post.autor.apelido }}:</strong> {{ post.texto|e }}</p>
+      <hr />
+      {% endfor %} {% else %}
+      <p>Nenhuma postagem ainda.</p>
+      {% endif %}
     </div>
-    <hr />
-    {% endfor %}
   </body>
 </html>

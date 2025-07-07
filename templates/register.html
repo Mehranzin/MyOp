@@ -2,32 +2,53 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>Registrar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <nav>
-      <a href="{{ url_for('login') }}">Login</a> |
-      <a href="{{ url_for('register') }}">Registrar</a>
-    </nav>
-    <hr />
+    <div class="container">
+      <h2>Registrar</h2>
+      <form method="POST" action="{{ url_for('registro') }}">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" required />
 
-    <h2>Registrar</h2>
-    <form method="POST" action="{{ url_for('register') }}">
-      {{ form.hidden_tag() }}
-      <p>{{ form.nome.label }}<br />{{ form.nome(size=32) }}</p>
-      <p>{{ form.sobrenome.label }}<br />{{ form.sobrenome(size=32) }}</p>
-      <p>{{ form.apelido.label }}<br />{{ form.apelido(size=32) }}</p>
-      <p>{{ form.email.label }}<br />{{ form.email(size=32) }}</p>
-      <p>{{ form.idade.label }}<br />{{ form.idade() }}</p>
-      <p>{{ form.password.label }}<br />{{ form.password(size=32) }}</p>
-      <p>{{ form.password2.label }}<br />{{ form.password2(size=32) }}</p>
-      <p>{{ form.submit() }}</p>
-    </form>
+        <label for="sobrenome">Sobrenome</label>
+        <input type="text" id="sobrenome" name="sobrenome" required />
 
-    <p><a href="{{ url_for('login') }}">Já tem conta? Entre aqui</a></p>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="idade">Idade</label>
+        <input
+          type="number"
+          id="idade"
+          name="idade"
+          required
+          min="1"
+          max="150"
+        />
+
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required />
+
+        <label for="confirma_senha">Confirmar Senha</label>
+        <input
+          type="password"
+          id="confirma_senha"
+          name="confirma_senha"
+          required
+        />
+
+        <label for="apelido">Apelido (opcional)</label>
+        <input type="text" id="apelido" name="apelido" maxlength="50" />
+
+        <button type="submit">Registrar</button>
+      </form>
+      <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
+    </div>
   </body>
 </html>
