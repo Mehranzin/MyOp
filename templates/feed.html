@@ -33,7 +33,7 @@
       {% if posts %} {% for post, tempo in posts %}
       <p>
         <strong>
-          <a href="{{ url_for('perfil') }}?usuario={{ post.autor.apelido }}"
+          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
             >{{ post.autor.apelido }}</a
           >:
         </strong>
