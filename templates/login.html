@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login</title>
+    <title>Login - MyOpinion</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -11,7 +11,7 @@
   </head>
   <body>
     <div class="container">
-      <h2>Entrar</h2>
+      <h2>Faça Login para entrar</h2>
       <form method="POST" action="{{ url_for('login') }}">
         <label for="email"></label>
         <input
@@ -31,7 +31,7 @@
           required
         />
 
-        <button type="submit">Entrar</button>
+        <button type="submit">Login</button>
       </form>
       <p>
         Ainda NÃO tem conta? <a href="{{ url_for('register') }}">Registrar</a>
