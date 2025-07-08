@@ -10,10 +10,9 @@ from datetime import timedelta
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# Configurações de cookie (Corrigido: 'SESSION_COOKIE_SECURE' apenas uma vez)
-app.config['SESSION_COOKIE_SAMESITE'] = 'None' # Apenas se 'Lax' não funcionar e você aceitar a implicação de segurança
-app.config['SESSION_COOKIE_SECURE'] = True # Essencial para SameSite='None' e para HTTPS
-app.permanent_session_lifetime = timedelta(days=30) # Esta linha já estava correta
+app.config['SESSION_COOKIE_SAMESITE'] = 'None'
+app.config['SESSION_COOKIE_SECURE'] = True
+app.permanent_session_lifetime = timedelta(days=30)
 
 db.init_app(app)
 
@@ -48,7 +47,11 @@ def tempo_relativo(post_time):
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    user_id = session.get('user_id')
+    if user_id:
+        return redirect(url_for('feed'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -100,7 +103,6 @@ def register():
 
     return render_template('register.html')
 
-# VERSÃO CORRIGIDA DA FUNÇÃO login (com logs)
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -111,13 +113,10 @@ def login():
         if usuario and usuario.checa_senha(senha):
             session.permanent = True
             session['user_id'] = usuario.id
-            print(f"*** DEBUG LOGIN SUCESSO: Usuário {usuario.id} logado. Session permanent: {session.permanent}")
             return redirect(url_for('feed'))
         else:
-            print(f"*** DEBUG LOGIN FALHA: Email {email} ou senha inválidos.")
             flash('Email ou senha inválidos')
             return redirect(url_for('login'))
-    print("*** DEBUG LOGIN GET: Página de login acessada.")
     return render_template('login.html')
 
 @app.route('/perfil')
@@ -136,15 +135,12 @@ def perfil():
 
     return render_template('perfil.html', apelido=usuario.apelido, idade=usuario.idade)
 
-# VERSÃO CORRIGIDA DA FUNÇÃO feed (com logs)
 @app.route('/feed', methods=['GET', 'POST'])
 def feed():
     user_id = session.get('user_id')
     if not user_id:
-        print("*** DEBUG FEED: Usuário não logado. Redirecionando para login.")
         return redirect(url_for('login'))
 
-    print(f"*** DEBUG FEED: Usuário logado na sessão: {user_id}. Permanent: {session.permanent}")
     usuario = User.query.get(user_id)
 
     if request.method == 'POST':
