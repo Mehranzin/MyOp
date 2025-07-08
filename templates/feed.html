@@ -46,5 +46,17 @@
       <p>Nenhuma postagem ainda.</p>
       {% endif %}
     </div>
+    <script>
+      window.addEventListener("load", function () {
+        // Adiciona um estado ao histórico quando a página carrega
+        history.pushState(null, document.title, location.href);
+
+        // Adiciona um listener para o evento 'popstate' (disparado ao navegar no histórico, ex: botão de voltar)
+        window.addEventListener("popstate", function (event) {
+          // Recarrega a página atual
+          location.reload();
+        });
+      });
+    </script>
   </body>
 </html>
