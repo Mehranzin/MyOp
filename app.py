@@ -55,6 +55,11 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+
+    if session.get('user_id'):
+        flash('Você já está logado e não pode se registrar novamente.', 'info')
+        return redirect(url_for('feed'))
+
     if request.method == 'POST':
         nome = request.form.get('nome')
         sobrenome = request.form.get('sobrenome')
@@ -65,31 +70,31 @@ def register():
         apelido = request.form.get('apelido')
 
         if not (nome and sobrenome and email and idade and senha and confirma_senha):
-            flash('Preencha todos os campos obrigatórios')
+            flash('Preencha todos os campos obrigatórios', 'warning')
             return redirect(url_for('register'))
 
         if senha != confirma_senha:
-            flash('Senha e confirmação não conferem')
+            flash('Senha e confirmação não conferem', 'danger')
             return redirect(url_for('register'))
 
         if User.query.filter_by(email=email).first():
-            flash('Email já cadastrado')
+            flash('Email já cadastrado', 'danger')
             return redirect(url_for('register'))
 
         if apelido:
             if User.query.filter_by(apelido=apelido).first():
-                flash('Apelido já em uso')
+                flash('Apelido já em uso', 'warning'
                 return redirect(url_for('register'))
         else:
             apelido = gera_apelido()
             if not apelido:
-                flash('Limite de apelidos esgotado')
+                flash('Limite de apelidos esgotado', 'danger')
                 return redirect(url_for('register'))
 
         try:
             idade_int = int(idade)
         except:
-            flash('Idade inválida')
+            flash('Idade inválida', 'danger')
             return redirect(url_for('register'))
 
         novo = User(nome=nome, sobrenome=sobrenome, email=email, idade=idade_int, apelido=apelido)
@@ -98,13 +103,18 @@ def register():
         db.session.add(novo)
         db.session.commit()
 
-        flash('Cadastro realizado com sucesso')
+        flash('Cadastro realizado com sucesso! Faça login para continuar.', 'success')
         return redirect(url_for('login'))
 
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+
+    if session.get('user_id'):
+        flash('Você já está logado!', 'info')
+        return redirect(url_for('feed'))
+
     if request.method == 'POST':
         email = request.form.get('email')
         senha = request.form.get('senha')
@@ -113,9 +123,10 @@ def login():
         if usuario and usuario.checa_senha(senha):
             session.permanent = True
             session['user_id'] = usuario.id
+            flash('Login bem-sucedido!', 'success')
             return redirect(url_for('feed'))
         else:
-            flash('Email ou senha inválidos')
+            flash('Email ou senha inválidos', 'danger')
             return redirect(url_for('login'))
     return render_template('login.html')
 
@@ -129,7 +140,8 @@ def perfil():
     if apelido_param:
         usuario = User.query.filter_by(apelido=apelido_param).first()
         if not usuario:
-            return "Usuário não encontrado", 404
+            flash('Usuário não encontrado.', 'danger')
+            return redirect(url_for('feed'))
     else:
         usuario = User.query.get(user_id)
 
@@ -149,7 +161,10 @@ def feed():
             post = Post(texto=texto, user_id=usuario.id)
             db.session.add(post)
             db.session.commit()
+            flash('Postagem criada com sucesso!', 'success')
             return redirect(url_for('feed'))
+        else:
+            flash('Escreva algo para postar.', 'warning')
 
     posts = Post.query.order_by(Post.id.desc()).all()
     posts_com_tempo = [(post, tempo_relativo(post.created_at)) for post in posts]
@@ -159,4 +174,8 @@ def feed():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    flash('Você foi desconectado.', 'info')
     return redirect(url_for('login'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
