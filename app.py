@@ -83,7 +83,7 @@ def register():
 
         if apelido:
             if User.query.filter_by(apelido=apelido).first():
-                flash('Apelido já em uso', 'warning'
+                flash('Apelido já em uso', 'warning')
                 return redirect(url_for('register'))
         else:
             apelido = gera_apelido()

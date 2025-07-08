@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}Meu Site{% endblock %}</title>
+    <title>{% block title %}Opinion{% endblock %}</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -17,13 +17,24 @@
         <a href="{{ url_for('logout') }}">Sair</a>
       </nav>
       <hr />
-      {% with messages = get_flashed_messages() %} {% if messages %}
-      <ul class="error">
-        {% for msg in messages %}
-        <li>{{ msg }}</li>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <ul class="flashes">
+        {% for category, message in messages %}
+        <li class="{{ category }}">{{ message }}</li>
         {% endfor %}
       </ul>
       {% endif %} {% endwith %} {% block content %}{% endblock %}
     </div>
+
+    <script>
+      window.addEventListener("load", function () {
+        history.pushState(null, document.title, location.href);
+        window.addEventListener("popstate", function (event) {
+          location.reload();
+        });
+      });
+    </script>
   </body>
 </html>
