@@ -34,89 +34,117 @@
 
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
-      <p>
-        <strong>
-          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
-            >{{ post.autor.apelido }}</a
-          >:
-        </strong>
-        {{ post.texto|e }}
-      </p>
-      <small>{{ tempo }}</small>
-      <div style="margin-top: 5px">
-        <!-- Like -->
-        <a href="{{ url_for('like_post', post_id=post.id) }}">
-          {% if liked %} ❤️ {% else %} 🤍 {% endif %}
-        </a>
-        {{ likes_count }} curtidas
 
-        <!-- Comentário -->
-        <button
-          onclick="document.getElementById('comentario-{{ post.id }}').style.display='block'"
-        >
-          💬
-        </button>
-
-        <!-- Menu 3 pontinhos -->
+      <div style="position: relative; padding: 5px 0">
+        <!-- 3 pontinhos no canto superior direito -->
         {% if post.user_id == session['user_id'] %}
-        <button
+        <img
+          src="{{ url_for('static', filename='images/three points.png') }}"
           onclick="document.getElementById('opcoes-{{ post.id }}').style.display='block'"
-        >
-          ⋯
-        </button>
+          style="
+            position: absolute;
+            top: 5px;
+            right: 0;
+            width: 20px;
+            cursor: pointer;
+          "
+        />
         {% endif %}
-      </div>
 
-      <!-- Form de comentário -->
-      <div id="comentario-{{ post.id }}" style="display: none; margin-top: 5px">
-        <form
-          method="POST"
-          action="{{ url_for('comment_post', post_id=post.id) }}"
-        >
-          <textarea
-            name="comentario"
-            rows="2"
-            placeholder="Comente aqui..."
-            required
-          ></textarea>
-          <button type="submit">Enviar</button>
-        </form>
-      </div>
-
-      <!-- Comentários -->
-      {% if comentarios %}
-      <div style="margin-top: 5px; margin-left: 10px">
-        {% for comentario in comentarios %}
-        <p>
-          <strong>{{ comentario.post.autor.apelido }}</strong>: {{
-          comentario.texto }}
+        <p style="margin-bottom: 3px">
+          <strong>
+            <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
+              >{{ post.autor.apelido }}</a
+            >:
+          </strong>
+          {{ post.texto|e }}
         </p>
-        {% endfor %}
-      </div>
-      {% endif %}
+        <small>{{ tempo }}</small>
 
-      <!-- Opções editar/deletar -->
-      <div id="opcoes-{{ post.id }}" style="display: none; margin-top: 5px">
-        <form
-          method="GET"
-          action="{{ url_for('delete_post', post_id=post.id) }}"
-          style="display: inline"
+        <div style="margin-top: 5px">
+          <!-- Like -->
+          <a href="{{ url_for('like_post', post_id=post.id) }}">
+            {% if liked %}
+            <img
+              src="{{ url_for('static', filename='images/heart y.png') }}"
+              style="width: 20px; vertical-align: middle"
+            />
+            {% else %}
+            <img
+              src="{{ url_for('static', filename='images/heart n.webp') }}"
+              style="width: 20px; vertical-align: middle"
+            />
+            {% endif %}
+          </a>
+
+          <!-- Comentário -->
+          <button
+            type="button"
+            onclick="document.getElementById('comentario-{{ post.id }}').style.display='block'"
+            style="border: none; background: none; cursor: pointer"
+          >
+            <img
+              src="{{ url_for('static', filename='images/comment.png') }}"
+              style="width: 20px; vertical-align: middle"
+            />
+            <span style="vertical-align: middle">Comentar</span>
+          </button>
+        </div>
+
+        <!-- Form de comentário -->
+        <div
+          id="comentario-{{ post.id }}"
+          style="display: none; margin-top: 5px"
         >
-          <button type="submit" style="color: red">Excluir</button>
-        </form>
-        <form
-          method="POST"
-          action="{{ url_for('edit_post', post_id=post.id) }}"
-          style="display: inline"
-        >
-          <input
-            type="text"
-            name="novo_texto"
-            value="{{ post.texto|e }}"
-            required
-          />
-          <button type="submit">Salvar</button>
-        </form>
+          <form
+            method="POST"
+            action="{{ url_for('comment_post', post_id=post.id) }}"
+          >
+            <textarea
+              name="comentario"
+              rows="2"
+              placeholder="Comente aqui..."
+              required
+            ></textarea>
+            <button type="submit">Enviar</button>
+          </form>
+        </div>
+
+        <!-- Comentários -->
+        {% if comentarios %}
+        <div style="margin-top: 5px; margin-left: 10px">
+          {% for comentario in comentarios %}
+          <p>
+            <strong>{{ comentario.post.autor.apelido }}</strong>: {{
+            comentario.texto }}
+          </p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Opções editar/deletar -->
+        <div id="opcoes-{{ post.id }}" style="display: none; margin-top: 5px">
+          <form
+            method="GET"
+            action="{{ url_for('delete_post', post_id=post.id) }}"
+            style="display: inline"
+          >
+            <button type="submit" style="color: red">Excluir</button>
+          </form>
+          <form
+            method="POST"
+            action="{{ url_for('edit_post', post_id=post.id) }}"
+            style="display: inline"
+          >
+            <input
+              type="text"
+              name="novo_texto"
+              value="{{ post.texto|e }}"
+              required
+            />
+            <button type="submit">Salvar</button>
+          </form>
+        </div>
       </div>
 
       <hr />
@@ -124,10 +152,11 @@
       <p>Nenhuma postagem ainda.</p>
       {% endif %}
     </div>
+
     <script>
       window.addEventListener("load", function () {
         history.pushState(null, document.title, location.href);
-        window.addEventListener("popstate", function (event) {
+        window.addEventListener("popstate", function () {
           location.reload();
         });
       });
