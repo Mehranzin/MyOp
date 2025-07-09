@@ -11,6 +11,20 @@
   </head>
   <body>
     <div class="container">
+      <h2>Feed</h2>
+      <form method="POST" action="{{ url_for('feed') }}">
+        <label for="texto">Nova postagem</label>
+        <textarea
+          id="texto"
+          name="texto"
+          rows="3"
+          placeholder="O que quer contar?"
+          required
+        ></textarea>
+        <button type="submit">Postar</button>
+      </form>
+      <hr />
+
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
       <div class="post-container">
@@ -43,7 +57,7 @@
         <div class="post-acoes">
           <a
             href="{{ url_for('like_post', post_id=post.id) }}"
-            onclick="saveScroll()"
+            onclick="scrollStay()"
           >
             {% if liked %}
             <img
@@ -85,7 +99,7 @@
               placeholder="Comente aqui..."
               required
             ></textarea>
-            <button type="submit" onclick="saveScroll()">Enviar</button>
+            <button type="submit" onclick="scrollStay()">Enviar</button>
           </form>
         </div>
 
