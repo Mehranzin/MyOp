@@ -34,18 +34,12 @@
 
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
-      <div style="position: relative; padding: 5px 0">
+      <div class="post-container">
         {% if post.user_id == session['user_id'] %}
         <img
           src="{{ url_for('static', filename='images/three points.png') }}"
           onclick="toggleOpcoes({{ post.id }})"
-          style="
-            position: absolute;
-            top: 5px;
-            right: 0;
-            width: 20px;
-            cursor: pointer;
-          "
+          class="tres-pontos"
         />
         <div id="opcoes-{{ post.id }}" class="post-opcoes">
           <form
@@ -57,17 +51,17 @@
         </div>
         {% endif %}
 
-        <p style="margin-bottom: 3px">
+        <p class="post-nick">
           <strong>
-            <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
-              >{{ post.autor.apelido }}</a
+            <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
+              {{ post.autor.apelido }} </a
             >:
           </strong>
-          {{ post.texto|e }}
         </p>
+        <p class="post-texto">{{ post.texto|e }}</p>
         <small>{{ tempo }}</small>
 
-        <div style="margin-top: 5px">
+        <div class="post-acoes">
           <a
             href="{{ url_for('like_post', post_id=post.id) }}"
             onclick="scrollStay()"
@@ -75,12 +69,12 @@
             {% if liked %}
             <img
               src="{{ url_for('static', filename='images/heart y.png') }}"
-              style="width: 20px; vertical-align: middle"
+              class="icone"
             />
             {% else %}
             <img
               src="{{ url_for('static', filename='images/heart n.webp') }}"
-              style="width: 20px; vertical-align: middle"
+              class="icone"
             />
             {% endif %}
           </a>
@@ -92,15 +86,12 @@
           >
             <img
               src="{{ url_for('static', filename='images/comment.png') }}"
-              style="width: 20px; vertical-align: middle"
+              class="icone"
             />
           </a>
         </div>
 
-        <div
-          id="comentario-{{ post.id }}"
-          style="display: none; margin-top: 5px"
-        >
+        <div id="comentario-{{ post.id }}" class="comentario-box">
           <form
             method="POST"
             action="{{ url_for('comment_post', post_id=post.id) }}"
