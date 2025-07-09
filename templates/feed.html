@@ -17,20 +17,23 @@
         <a href="{{ url_for('logout') }}">Sair</a>
       </nav>
       <hr />
+
       <h2>Feed</h2>
       <form method="POST" action="{{ url_for('feed') }}">
         <label for="texto">Nova postagem</label>
         <textarea
           id="texto"
           name="texto"
-          rows="4"
-          placeholder="Quer contar oque hoje?..."
+          rows="3"
+          placeholder="O que quer contar?"
           required
         ></textarea>
         <button type="submit">Postar</button>
       </form>
       <hr />
-      {% if posts %} {% for post, tempo in posts %}
+
+      {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
+      posts %}
       <p>
         <strong>
           <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
@@ -39,8 +42,83 @@
         </strong>
         {{ post.texto|e }}
       </p>
-
       <small>{{ tempo }}</small>
+      <div style="margin-top: 5px">
+        <!-- Like -->
+        <a href="{{ url_for('like_post', post_id=post.id) }}">
+          {% if liked %} ❤️ {% else %} 🤍 {% endif %}
+        </a>
+        {{ likes_count }} curtidas
+
+        <!-- Comentário -->
+        <button
+          onclick="document.getElementById('comentario-{{ post.id }}').style.display='block'"
+        >
+          💬
+        </button>
+
+        <!-- Menu 3 pontinhos -->
+        {% if post.user_id == session['user_id'] %}
+        <button
+          onclick="document.getElementById('opcoes-{{ post.id }}').style.display='block'"
+        >
+          ⋯
+        </button>
+        {% endif %}
+      </div>
+
+      <!-- Form de comentário -->
+      <div id="comentario-{{ post.id }}" style="display: none; margin-top: 5px">
+        <form
+          method="POST"
+          action="{{ url_for('comment_post', post_id=post.id) }}"
+        >
+          <textarea
+            name="comentario"
+            rows="2"
+            placeholder="Comente aqui..."
+            required
+          ></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+
+      <!-- Comentários -->
+      {% if comentarios %}
+      <div style="margin-top: 5px; margin-left: 10px">
+        {% for comentario in comentarios %}
+        <p>
+          <strong>{{ comentario.post.autor.apelido }}</strong>: {{
+          comentario.texto }}
+        </p>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <!-- Opções editar/deletar -->
+      <div id="opcoes-{{ post.id }}" style="display: none; margin-top: 5px">
+        <form
+          method="GET"
+          action="{{ url_for('delete_post', post_id=post.id) }}"
+          style="display: inline"
+        >
+          <button type="submit" style="color: red">Excluir</button>
+        </form>
+        <form
+          method="POST"
+          action="{{ url_for('edit_post', post_id=post.id) }}"
+          style="display: inline"
+        >
+          <input
+            type="text"
+            name="novo_texto"
+            value="{{ post.texto|e }}"
+            required
+          />
+          <button type="submit">Salvar</button>
+        </form>
+      </div>
+
       <hr />
       {% endfor %} {% else %}
       <p>Nenhuma postagem ainda.</p>
@@ -48,12 +126,8 @@
     </div>
     <script>
       window.addEventListener("load", function () {
-        // Adiciona um estado ao histórico quando a página carrega
         history.pushState(null, document.title, location.href);
-
-        // Adiciona um listener para o evento 'popstate' (disparado ao navegar no histórico, ex: botão de voltar)
         window.addEventListener("popstate", function (event) {
-          // Recarrega a página atual
           location.reload();
         });
       });

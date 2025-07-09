@@ -1,11 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
-from models import db, User, Post
-from datetime import datetime, timezone
-import random
-import string
+from models import db, User, Post, Comment, Like
+from datetime import datetime, timezone, timedelta
 from config import Config
-from flask import request
-from datetime import timedelta
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -29,35 +25,31 @@ def gera_apelido():
 def tempo_relativo(post_time):
     agora = datetime.now(timezone.utc)
     diff = agora - post_time
-
     segundos = diff.total_seconds()
     minutos = segundos // 60
     horas = minutos // 60
     dias = diff.days
 
     if segundos < 60:
-        return f"Postado há {int(segundos)}s"
+        return f"{int(segundos)}s atrás"
     if minutos < 60:
-        return f"Postado há {int(minutos)}min"
+        return f"{int(minutos)}min atrás"
     if horas < 24:
-        return f"Postado há {int(horas)}h"
+        return f"{int(horas)}h atrás"
     if dias < 7:
-        return f"Postado há {int(dias)} dia{'s' if dias > 1 else ''}"
-    return f"Postado em {post_time.strftime('%d/%m/%Y')}"
+        return f"{int(dias)}d atrás"
+    return f"{post_time.strftime('%d/%m/%Y')}"
 
 @app.route('/')
 def index():
-    user_id = session.get('user_id')
-    if user_id:
+    if session.get('user_id'):
         return redirect(url_for('feed'))
-    else:
-        return redirect(url_for('login'))
+    return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-
     if session.get('user_id'):
-        flash('Você já está logado e não pode se registrar novamente.', 'info')
+        flash('Já está logado.', 'info')
         return redirect(url_for('feed'))
 
     if request.method == 'POST':
@@ -70,49 +62,42 @@ def register():
         apelido = request.form.get('apelido')
 
         if not (nome and sobrenome and email and idade and senha and confirma_senha):
-            flash('Preencha todos os campos obrigatórios', 'warning')
+            flash('Preencha todos os campos.', 'warning')
             return redirect(url_for('register'))
 
         if senha != confirma_senha:
-            flash('Senha e confirmação não conferem', 'danger')
+            flash('Senhas não conferem.', 'danger')
             return redirect(url_for('register'))
 
         if User.query.filter_by(email=email).first():
-            flash('Email já cadastrado', 'danger')
+            flash('Email já usado.', 'danger')
             return redirect(url_for('register'))
 
         if apelido:
             if User.query.filter_by(apelido=apelido).first():
-                flash('Apelido já em uso', 'warning')
+                flash('Apelido já usado.', 'warning')
                 return redirect(url_for('register'))
         else:
             apelido = gera_apelido()
             if not apelido:
-                flash('Limite de apelidos esgotado', 'danger')
+                flash('Limite de apelidos esgotado.', 'danger')
                 return redirect(url_for('register'))
 
-        try:
-            idade_int = int(idade)
-        except:
-            flash('Idade inválida', 'danger')
-            return redirect(url_for('register'))
-
-        novo = User(nome=nome, sobrenome=sobrenome, email=email, idade=idade_int, apelido=apelido)
+        novo = User(nome=nome, sobrenome=sobrenome, email=email, idade=int(idade), apelido=apelido)
         novo.set_senha(senha)
 
         db.session.add(novo)
         db.session.commit()
 
-        flash('Cadastro realizado com sucesso! Faça login para continuar.', 'success')
+        flash('Cadastro feito. Faça login.', 'success')
         return redirect(url_for('login'))
 
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
     if session.get('user_id'):
-        flash('Você já está logado!', 'info')
+        flash('Já está logado.', 'info')
         return redirect(url_for('feed'))
 
     if request.method == 'POST':
@@ -123,17 +108,21 @@ def login():
         if usuario and usuario.checa_senha(senha):
             session.permanent = True
             session['user_id'] = usuario.id
-            flash('Login bem-sucedido!', 'success')
+            flash('Login bem-sucedido.', 'success')
             return redirect(url_for('feed'))
-        else:
-            flash('Email ou senha inválidos', 'danger')
-            return redirect(url_for('login'))
+        flash('Credenciais inválidas.', 'danger')
+        return redirect(url_for('login'))
     return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    flash('Saiu da conta.', 'info')
+    return redirect(url_for('login'))
 
 @app.route('/perfil')
 def perfil():
-    user_id = session.get('user_id')
-    if not user_id:
+    if not session.get('user_id'):
         return redirect(url_for('login'))
 
     apelido_param = request.args.get('usuario')
@@ -143,17 +132,16 @@ def perfil():
             flash('Usuário não encontrado.', 'danger')
             return redirect(url_for('feed'))
     else:
-        usuario = User.query.get(user_id)
+        usuario = User.query.get(session['user_id'])
 
     return render_template('perfil.html', apelido=usuario.apelido, idade=usuario.idade)
 
 @app.route('/feed', methods=['GET', 'POST'])
 def feed():
-    user_id = session.get('user_id')
-    if not user_id:
+    if not session.get('user_id'):
         return redirect(url_for('login'))
 
-    usuario = User.query.get(user_id)
+    usuario = User.query.get(session['user_id'])
 
     if request.method == 'POST':
         texto = request.form.get('texto')
@@ -161,21 +149,80 @@ def feed():
             post = Post(texto=texto, user_id=usuario.id)
             db.session.add(post)
             db.session.commit()
-            flash('Postagem criada com sucesso!', 'success')
+            flash('Postado!', 'success')
             return redirect(url_for('feed'))
-        else:
-            flash('Escreva algo para postar.', 'warning')
+        flash('Escreva algo.', 'warning')
 
     posts = Post.query.order_by(Post.id.desc()).all()
-    posts_com_tempo = [(post, tempo_relativo(post.created_at)) for post in posts]
+    posts_com_tempo = []
+    for post in posts:
+        tempo = tempo_relativo(post.created_at)
+        likes_count = Like.query.filter_by(post_id=post.id).count()
+        comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
+        liked = Like.query.filter_by(post_id=post.id, user_id=usuario.id).first() is not None
+        posts_com_tempo.append((post, tempo, likes_count, comentarios, liked))
 
     return render_template('feed.html', posts=posts_com_tempo, apelido=usuario.apelido)
 
-@app.route('/logout')
-def logout():
-    session.pop('user_id', None)
-    flash('Você foi desconectado.', 'info')
-    return redirect(url_for('login'))
+@app.route('/like/<int:post_id>')
+def like_post(post_id):
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    like = Like.query.filter_by(post_id=post_id, user_id=user_id).first()
+
+    if like:
+        db.session.delete(like)
+    else:
+        novo_like = Like(post_id=post_id, user_id=user_id)
+        db.session.add(novo_like)
+    db.session.commit()
+    return redirect(url_for('feed'))
+
+@app.route('/comment/<int:post_id>', methods=['POST'])
+def comment_post(post_id):
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    texto = request.form.get('comentario')
+    if texto:
+        comentario = Comment(texto=texto, post_id=post_id, user_id=session['user_id'])
+        db.session.add(comentario)
+        db.session.commit()
+    return redirect(url_for('feed'))
+
+@app.route('/delete_post/<int:post_id>')
+def delete_post(post_id):
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    post = Post.query.get_or_404(post_id)
+    if post.user_id != session['user_id']:
+        flash('Você não pode excluir este post.', 'danger')
+        return redirect(url_for('feed'))
+
+    db.session.delete(post)
+    db.session.commit()
+    flash('Post deletado.', 'info')
+    return redirect(url_for('feed'))
+
+@app.route('/edit_post/<int:post_id>', methods=['POST'])
+def edit_post(post_id):
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    post = Post.query.get_or_404(post_id)
+    if post.user_id != session['user_id']:
+        flash('Você não pode editar este post.', 'danger')
+        return redirect(url_for('feed'))
+
+    novo_texto = request.form.get('novo_texto')
+    if novo_texto:
+        post.texto = novo_texto
+        db.session.commit()
+        flash('Post editado.', 'success')
+    return redirect(url_for('feed'))
 
 if __name__ == '__main__':
     app.run(debug=True)
