@@ -11,13 +11,6 @@
   </head>
   <body>
     <div class="container">
-      <nav>
-        <a href="{{ url_for('perfil') }}">Perfil</a> |
-        <a href="{{ url_for('feed') }}">Feed</a> |
-        <a href="{{ url_for('logout') }}">Sair</a>
-      </nav>
-      <hr />
-
       <h2>Feed</h2>
       <form method="POST" action="{{ url_for('feed') }}">
         <label for="texto">Nova postagem</label>
@@ -91,7 +84,11 @@
           </a>
         </div>
 
-        <div id="comentario-{{ post.id }}" class="comentario-box">
+        <div
+          id="comentario-{{ post.id }}"
+          class="comentario-box"
+          style="display: none"
+        >
           <form
             method="POST"
             action="{{ url_for('comment_post', post_id=post.id) }}"
@@ -122,6 +119,14 @@
       <p>Nenhuma postagem ainda.</p>
       {% endif %}
     </div>
+
+    <footer class="nav-footer">
+      <nav>
+        <a href="{{ url_for('perfil') }}">Perfil</a>
+        <a href="{{ url_for('feed') }}">Feed</a>
+        <a href="{{ url_for('logout') }}">Sair</a>
+      </nav>
+    </footer>
 
     <script>
       function toggleOpcoes(postId) {

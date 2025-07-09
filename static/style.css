@@ -8,7 +8,6 @@ body {
 .container {
   max-width: 600px;
   margin: auto;
-  background: rgb(0, 0, 0);
   padding: 20px 30px;
   box-shadow: 0 0 10px #ffffff;
   border-radius: 13px;
@@ -16,7 +15,7 @@ body {
 }
 
 nav a {
-  margin-right: 10px;
+  margin: 0 10px;
   color: #007bff;
   text-decoration: none;
   font-weight: bold;
@@ -153,9 +152,9 @@ a:hover {
   font-size: 14px;
 }
 
-/* 🌟 NOVAS CLASSES DO DESIGN ATUALIZADO */
+/* NOVAS CLASSES */
 .post-container {
-  background-color: #0e0e0e;
+  background-color: rgb(0, 0, 0);
   padding: 12px 16px;
   border-radius: 12px;
   margin-bottom: 20px;
@@ -195,4 +194,38 @@ a:hover {
 
 .comentario-box {
   margin-top: 10px;
+}
+
+/* NAV FIXO NO RODAPÉ */
+.nav-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: #000;
+  padding: 12px 0;
+  text-align: center;
+  border-top: 1px solid #444;
+  z-index: 100;
+}
+
+.nav-footer nav a {
+  margin: 0 15px;
+  color: #fff;
+  font-size: 1.1em;
+}
+
+/* MOBILE FRIENDLY */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px 15px;
+  }
+
+  .nav-footer nav a {
+    font-size: 1em;
+    margin: 0 10px;
+  }
+
+  .post-container {
+    padding: 10px 12px;
+  }
 }
