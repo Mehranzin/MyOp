@@ -8,6 +8,24 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <style>
+      .post-opcoes {
+        display: none;
+        position: absolute;
+        top: 30px;
+        right: 0;
+        background: #fff;
+        border: 1px solid #ccc;
+        padding: 5px;
+        z-index: 100;
+      }
+      .post-opcoes button {
+        background: none;
+        border: none;
+        color: red;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -34,13 +52,12 @@
 
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
-
       <div style="position: relative; padding: 5px 0">
         <!-- 3 pontinhos no canto superior direito -->
         {% if post.user_id == session['user_id'] %}
         <img
           src="{{ url_for('static', filename='images/three points.png') }}"
-          onclick="document.getElementById('opcoes-{{ post.id }}').style.display='block'"
+          onclick="toggleOpcoes({{ post.id }})"
           style="
             position: absolute;
             top: 5px;
@@ -49,6 +66,14 @@
             cursor: pointer;
           "
         />
+        <div id="opcoes-{{ post.id }}" class="post-opcoes">
+          <form
+            method="GET"
+            action="{{ url_for('delete_post', post_id=post.id) }}"
+          >
+            <button type="submit">Deletar mensagem</button>
+          </form>
+        </div>
         {% endif %}
 
         <p style="margin-bottom: 3px">
@@ -78,17 +103,15 @@
           </a>
 
           <!-- Comentário -->
-          <button
-            type="button"
+          <a
+            href="javascript:void(0);"
             onclick="document.getElementById('comentario-{{ post.id }}').style.display='block'"
-            style="border: none; background: none; cursor: pointer"
           >
             <img
               src="{{ url_for('static', filename='images/comment.png') }}"
               style="width: 20px; vertical-align: middle"
             />
-            <span style="vertical-align: middle">Comentar</span>
-          </button>
+          </a>
         </div>
 
         <!-- Form de comentário -->
@@ -121,32 +144,7 @@
           {% endfor %}
         </div>
         {% endif %}
-
-        <!-- Opções editar/deletar -->
-        <div id="opcoes-{{ post.id }}" style="display: none; margin-top: 5px">
-          <form
-            method="GET"
-            action="{{ url_for('delete_post', post_id=post.id) }}"
-            style="display: inline"
-          >
-            <button type="submit" style="color: red">Excluir</button>
-          </form>
-          <form
-            method="POST"
-            action="{{ url_for('edit_post', post_id=post.id) }}"
-            style="display: inline"
-          >
-            <input
-              type="text"
-              name="novo_texto"
-              value="{{ post.texto|e }}"
-              required
-            />
-            <button type="submit">Salvar</button>
-          </form>
-        </div>
       </div>
-
       <hr />
       {% endfor %} {% else %}
       <p>Nenhuma postagem ainda.</p>
@@ -154,6 +152,20 @@
     </div>
 
     <script>
+      function toggleOpcoes(postId) {
+        var menu = document.getElementById("opcoes-" + postId);
+        if (menu.style.display === "block") {
+          menu.style.display = "none";
+        } else {
+          // Esconde outros abertos antes
+          var menus = document.querySelectorAll(".post-opcoes");
+          menus.forEach(function (el) {
+            el.style.display = "none";
+          });
+          menu.style.display = "block";
+        }
+      }
+
       window.addEventListener("load", function () {
         history.pushState(null, document.title, location.href);
         window.addEventListener("popstate", function () {
