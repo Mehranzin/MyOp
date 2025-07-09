@@ -147,15 +147,20 @@
         box.style.display = box.style.display === "block" ? "none" : "block";
       }
 
-      let scrollPos = 0;
-      function scrollStay() {
-        scrollPos = window.scrollY;
+      function saveScroll() {
+        sessionStorage.setItem("scrollPos", window.scrollY);
       }
-      window.addEventListener("pageshow", function () {
-        window.scrollTo(0, scrollPos);
+
+      document.querySelectorAll(".icone").forEach(function (icon) {
+        icon.addEventListener("click", saveScroll);
       });
-      window.addEventListener("popstate", function () {
-        location.reload();
+
+      window.addEventListener("pageshow", function () {
+        var scrollPos = sessionStorage.getItem("scrollPos");
+        if (scrollPos !== null) {
+          window.scrollTo(0, parseInt(scrollPos));
+          sessionStorage.removeItem("scrollPos");
+        }
       });
     </script>
   </body>
