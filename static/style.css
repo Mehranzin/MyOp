@@ -71,25 +71,13 @@ p {
 a {
   color: #ff1414;
   text-decoration: none;
-}
-a:hover {
-  text-decoration: underline;
-}
-
-a {
-  color: #ffffff;
   font-weight: bold;
-  text-decoration: none;
   transition: color 0.3s;
-  font-weight: bold;
 }
-
 a:hover {
   color: #c0c0c0;
   text-decoration: underline;
-  font-weight: bold;
 }
-
 .flashes {
   list-style: none;
   padding: 10px;
@@ -121,4 +109,26 @@ a:hover {
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+/* Adições do feed */
+.post-opcoes {
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  z-index: 100;
+}
+.post-opcoes button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+}
+.like-count {
+  margin-left: 3px;
+  font-size: 14px;
 }

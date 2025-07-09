@@ -8,24 +8,6 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
-    <style>
-      .post-opcoes {
-        display: none;
-        position: absolute;
-        top: 30px;
-        right: 0;
-        background: #fff;
-        border: 1px solid #ccc;
-        padding: 5px;
-        z-index: 100;
-      }
-      .post-opcoes button {
-        background: none;
-        border: none;
-        color: red;
-        cursor: pointer;
-      }
-    </style>
   </head>
   <body>
     <div class="container">
@@ -53,7 +35,6 @@
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
       <div style="position: relative; padding: 5px 0">
-        <!-- 3 pontinhos no canto superior direito -->
         {% if post.user_id == session['user_id'] %}
         <img
           src="{{ url_for('static', filename='images/three points.png') }}"
@@ -87,8 +68,10 @@
         <small>{{ tempo }}</small>
 
         <div style="margin-top: 5px">
-          <!-- Like -->
-          <a href="{{ url_for('like_post', post_id=post.id) }}">
+          <a
+            href="{{ url_for('like_post', post_id=post.id) }}"
+            onclick="scrollStay()"
+          >
             {% if liked %}
             <img
               src="{{ url_for('static', filename='images/heart y.png') }}"
@@ -101,11 +84,11 @@
             />
             {% endif %}
           </a>
+          <span class="like-count">{{ likes_count }}</span>
 
-          <!-- Comentário -->
           <a
             href="javascript:void(0);"
-            onclick="document.getElementById('comentario-{{ post.id }}').style.display='block'"
+            onclick="toggleComentario({{ post.id }})"
           >
             <img
               src="{{ url_for('static', filename='images/comment.png') }}"
@@ -114,7 +97,6 @@
           </a>
         </div>
 
-        <!-- Form de comentário -->
         <div
           id="comentario-{{ post.id }}"
           style="display: none; margin-top: 5px"
@@ -129,11 +111,10 @@
               placeholder="Comente aqui..."
               required
             ></textarea>
-            <button type="submit">Enviar</button>
+            <button type="submit" onclick="scrollStay()">Enviar</button>
           </form>
         </div>
 
-        <!-- Comentários -->
         {% if comentarios %}
         <div style="margin-top: 5px; margin-left: 10px">
           {% for comentario in comentarios %}
@@ -157,7 +138,6 @@
         if (menu.style.display === "block") {
           menu.style.display = "none";
         } else {
-          // Esconde outros abertos antes
           var menus = document.querySelectorAll(".post-opcoes");
           menus.forEach(function (el) {
             el.style.display = "none";
@@ -166,11 +146,20 @@
         }
       }
 
-      window.addEventListener("load", function () {
-        history.pushState(null, document.title, location.href);
-        window.addEventListener("popstate", function () {
-          location.reload();
-        });
+      function toggleComentario(postId) {
+        var box = document.getElementById("comentario-" + postId);
+        box.style.display = box.style.display === "block" ? "none" : "block";
+      }
+
+      let scrollPos = 0;
+      function scrollStay() {
+        scrollPos = window.scrollY;
+      }
+      window.addEventListener("pageshow", function () {
+        window.scrollTo(0, scrollPos);
+      });
+      window.addEventListener("popstate", function () {
+        location.reload();
       });
     </script>
   </body>
