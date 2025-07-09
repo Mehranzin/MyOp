@@ -24,7 +24,6 @@
         <button type="submit">Postar</button>
       </form>
       <hr />
-
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
       <div class="post-container">
@@ -43,21 +42,19 @@
           </form>
         </div>
         {% endif %}
-
         <p class="post-nick">
           <strong>
-            <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
-              {{ post.autor.apelido }} </a
+            <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
+              >{{ post.autor.apelido }}</a
             >:
           </strong>
         </p>
         <p class="post-texto">{{ post.texto|e }}</p>
         <small>{{ tempo }}</small>
-
         <div class="post-acoes">
           <a
             href="{{ url_for('like_post', post_id=post.id) }}"
-            onclick="scrollStay()"
+            class="like-link"
           >
             {% if liked %}
             <img
@@ -72,7 +69,6 @@
             {% endif %}
           </a>
           <span class="like-count">{{ likes_count }}</span>
-
           <a
             href="javascript:void(0);"
             onclick="toggleComentario({{ post.id }})"
@@ -83,7 +79,6 @@
             />
           </a>
         </div>
-
         <div
           id="comentario-{{ post.id }}"
           class="comentario-box"
@@ -99,10 +94,9 @@
               placeholder="Comente aqui..."
               required
             ></textarea>
-            <button type="submit" onclick="scrollStay()">Enviar</button>
+            <button type="submit" onclick="saveScroll()">Enviar</button>
           </form>
         </div>
-
         {% if comentarios %}
         <div style="margin-top: 5px; margin-left: 10px">
           {% for comentario in comentarios %}
@@ -119,7 +113,6 @@
       <p>Nenhuma postagem ainda.</p>
       {% endif %}
     </div>
-
     <footer class="nav-footer">
       <nav>
         <a href="{{ url_for('perfil') }}">Perfil</a>
@@ -127,7 +120,6 @@
         <a href="{{ url_for('logout') }}">Sair</a>
       </nav>
     </footer>
-
     <script>
       function toggleOpcoes(postId) {
         var menu = document.getElementById("opcoes-" + postId);
@@ -141,26 +133,22 @@
           menu.style.display = "block";
         }
       }
-
       function toggleComentario(postId) {
         var box = document.getElementById("comentario-" + postId);
         box.style.display = box.style.display === "block" ? "none" : "block";
       }
-
       function saveScroll() {
         sessionStorage.setItem("scrollPos", window.scrollY);
       }
-
+      document.querySelectorAll(".like-link").forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          saveScroll();
+          window.location = this.href;
+        });
+      });
       document.querySelectorAll(".icone").forEach(function (icon) {
         icon.addEventListener("click", saveScroll);
-      });
-
-      window.addEventListener("pageshow", function () {
-        var scrollPos = sessionStorage.getItem("scrollPos");
-        if (scrollPos !== null) {
-          window.scrollTo(0, parseInt(scrollPos));
-          sessionStorage.removeItem("scrollPos");
-        }
       });
     </script>
   </body>
