@@ -106,7 +106,7 @@
         {% if comentarios %}
         <div style="margin-top: 5px; margin-left: 10px">
           {% for comentario in comentarios %}
-          <p>
+          <p class="comentario-texto">
             <strong>{{ comentario.post.autor.apelido }}</strong>: {{
             comentario.texto }}
           </p>
