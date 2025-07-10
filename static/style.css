@@ -284,3 +284,15 @@ a:hover {
     right: 5px;
   }
 }
+
+img {
+  outline: none;
+  border: none;
+  user-select: none;
+}
+
+img:focus,
+img:active {
+  outline: none;
+  background: transparent;
+}
