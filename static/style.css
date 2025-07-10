@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background: #0a0a0a;
+  background: #0e0e0e;
   color: #999999;
 }
 
@@ -139,7 +139,7 @@ a:hover {
   padding: 10px 14px;
   border-radius: 20px 20px 0 20px;
   font-weight: bold;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   display: inline-block;
   border: 1px solid #444;
   font-size: 1.1em;
@@ -163,7 +163,7 @@ a:hover {
   color: white;
   border: 1.6px solid #444;
   margin-bottom: 10px;
-  margin-top: 0;
+  margin-top: -2px;
   position: relative;
 }
 
@@ -212,7 +212,7 @@ a:hover {
 .tres-pontos {
   position: absolute;
   top: 10px;
-  right: 10px;
+  right: 5px;
   width: 16px;
   cursor: pointer;
 }
@@ -223,6 +223,10 @@ a:hover {
 
 .comentario-texto {
   color: white;
+}
+
+.comentario-texto strong {
+  color: #ff2626;
 }
 
 .nav-footer {
@@ -264,14 +268,18 @@ a:hover {
   .post-content {
     padding: 12px;
     border-radius: 18px 0 18px 18px;
-    margin-top: 0;
+    margin-top: -2px;
   }
 
   .user-box {
     padding: 8px 12px;
     border-radius: 18px 18px 0 18px;
     font-size: 1em;
-    background-color: #0a0a0a;
-    margin-bottom: 4px;
+    background-color: #0e0e0e;
+    margin-bottom: 2px;
+  }
+
+  .tres-pontos {
+    right: 5px;
   }
 }
