@@ -141,8 +141,8 @@ a:hover {
   font-weight: bold;
   margin-bottom: 0px;
   display: inline-block;
-  border: 1.6px solid #444; /* mesma grossura da caixa maior */
-  font-size: 1.1em; /* corrigido para tamanho de fonte válido */
+  border: 1.6px solid #444;
+  font-size: 1.1em;
 }
 
 .user-box a {
@@ -207,7 +207,7 @@ a:hover {
 .icone {
   width: 22px;
   vertical-align: -1px;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .tres-pontos {
@@ -286,15 +286,13 @@ a:hover {
   }
 }
 
-img {
-  outline: none;
-  border: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
+img,
 img:focus,
 img:active {
   outline: none;
-  background: transparent;
+  background: transparent !important;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  border: none;
 }
