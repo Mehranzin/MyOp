@@ -159,7 +159,7 @@ a:hover {
 .post-content {
   background-color: #000;
   padding: 16px;
-  border-radius: 0 20px 20px 20px;
+  border-radius: 0 0 20px 20px;
   color: white;
   border: 1.6px solid #444;
   margin-bottom: 10px;
@@ -267,7 +267,7 @@ a:hover {
 
   .post-content {
     padding: 12px;
-    border-radius: 0 18px 18px 18px;
+    border-radius: 0 0 18px 18px;
     margin-top: -4px;
   }
 
