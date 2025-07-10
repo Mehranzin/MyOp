@@ -141,7 +141,7 @@ a:hover {
   font-weight: bold;
   margin-bottom: 0px;
   display: inline-block;
-  border: 1px solid #444;
+  border: 1.6px solid #444;
   font-size: 1.1em;
 }
 
@@ -206,7 +206,8 @@ a:hover {
 
 .icone {
   width: 22px;
-  vertical-align: -3px;
+  vertical-align: -1px;
+  margin-top: 4px;
 }
 
 .tres-pontos {
@@ -274,7 +275,7 @@ a:hover {
   .user-box {
     padding: 8px 12px;
     border-radius: 18px 18px 0 0;
-    font-size: 1em;
+    font-size: 1.5em;
     background-color: #000;
     margin-bottom: 0px;
   }
