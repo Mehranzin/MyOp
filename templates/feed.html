@@ -146,6 +146,7 @@
       function saveScroll() {
         sessionStorage.setItem("scrollPos", window.scrollY);
       }
+
       document.querySelectorAll(".like-link").forEach(function (link) {
         link.addEventListener("click", function (e) {
           e.preventDefault();
@@ -153,8 +154,18 @@
           window.location = this.href;
         });
       });
+
+      // Garante que, ao clicar no icone dentro do link, o scroll seja salvo (cuidado para não salvar só quando clicar na img, e perder o clique do link)
       document.querySelectorAll(".icone").forEach(function (icon) {
         icon.addEventListener("click", saveScroll);
+      });
+
+      window.addEventListener("load", function () {
+        const scrollPos = sessionStorage.getItem("scrollPos");
+        if (scrollPos !== null) {
+          window.scrollTo(0, parseInt(scrollPos));
+          sessionStorage.removeItem("scrollPos");
+        }
       });
     </script>
   </body>
