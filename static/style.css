@@ -206,7 +206,7 @@ a:hover {
 
 .icone {
   width: 22px;
-  vertical-align: text-bottom;
+  vertical-align: -3px;
 }
 
 .tres-pontos {
