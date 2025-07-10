@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background: #120909; /* fundo um pouco mais quente que preto */
+  background: #0a0a0a;
   color: #999999;
 }
 
@@ -78,7 +78,7 @@ p {
 }
 
 a {
-  color: #ff2626; /* usar vermelho */
+  color: #ff2626;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s;
@@ -127,8 +127,6 @@ a:hover {
   border: 1px solid #f5c6cb;
 }
 
-/* POSTES E FEED */
-
 .post-container {
   padding: 0;
   margin-bottom: 20px;
@@ -136,12 +134,12 @@ a:hover {
 }
 
 .user-box {
-  background-color: #000; /* fundo preto */
+  background-color: #000;
   color: #ff2626;
   padding: 10px 14px;
-  border-radius: 20px 20px 0 20px; /* ponta direita de baixo pontuda */
+  border-radius: 20px 20px 0 20px;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   display: inline-block;
   border: 1px solid #444;
   font-size: 1.1em;
@@ -161,10 +159,11 @@ a:hover {
 .post-content {
   background-color: #000;
   padding: 16px;
-  border-radius: 20px 0 20px 20px; /* ponta direita de cima pontuda */
+  border-radius: 20px 0 20px 20px;
   color: white;
   border: 1.6px solid #444;
   margin-bottom: 10px;
+  margin-top: 0;
   position: relative;
 }
 
@@ -226,8 +225,6 @@ a:hover {
   color: white;
 }
 
-/* NAV FIXO NO RODAPÉ */
-
 .nav-footer {
   position: fixed;
   bottom: 0;
@@ -254,8 +251,6 @@ a:hover {
   font-weight: bold;
 }
 
-/* MOBILE FRIENDLY */
-
 @media (max-width: 600px) {
   .container {
     padding: 10px 15px;
@@ -268,13 +263,15 @@ a:hover {
 
   .post-content {
     padding: 12px;
-    border-radius: 18px 0 18px 18px; /* ponta direita de cima pontuda no mobile */
+    border-radius: 18px 0 18px 18px;
+    margin-top: 0;
   }
 
   .user-box {
     padding: 8px 12px;
-    border-radius: 18px 18px 0 18px; /* ponta direita de baixo pontuda no mobile */
+    border-radius: 18px 18px 0 18px;
     font-size: 1em;
-    background-color: #000; /* fundo preto no mobile */
+    background-color: #0a0a0a;
+    margin-bottom: 4px;
   }
 }
