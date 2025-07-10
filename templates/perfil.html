@@ -3,19 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Perfil</title>
+    <title>Perfil • Opinion</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <div class="container">
+    
+    <footer class="nav-footer">
       <nav>
-        <a href="{{ url_for('perfil') }}">Perfil</a> |
-        <a href="{{ url_for('feed') }}">Feed</a> |
+        <a href="{{ url_for('perfil') }}">Perfil</a>
+        <a href="{{ url_for('feed') }}">Feed</a>
         <a href="{{ url_for('logout') }}">Sair</a>
       </nav>
+    </footer>
+
       <hr />
       <h2>Perfil</h2>
       <p><strong>Apelido:</strong> {{ apelido }}</p>

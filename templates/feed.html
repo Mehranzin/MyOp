@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Feed</title>
+    <title>Feed Opinion</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
@@ -11,7 +11,7 @@
   </head>
   <body>
     <div class="container">
-      <h2>Feed</h2>
+      <h2>Feed • Opinion</h2>
       <form method="POST" action="{{ url_for('feed') }}">
         <label for="texto">Nova postagem</label>
         <textarea
@@ -45,7 +45,7 @@
               method="GET"
               action="{{ url_for('delete_post', post_id=post.id) }}"
             >
-              <button type="submit">Deletar mensagem</button>
+              <button type="submit">Apagar Opinião</button>
             </form>
           </div>
           {% endif %} {{ post.texto|e }}
@@ -155,7 +155,6 @@
         });
       });
 
-      // Garante que, ao clicar no icone dentro do link, o scroll seja salvo (cuidado para não salvar só quando clicar na img, e perder o clique do link)
       document.querySelectorAll(".icone").forEach(function (icon) {
         icon.addEventListener("click", saveScroll);
       });
