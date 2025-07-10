@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background: rgb(8, 8, 8);
+  background: #120909; /* fundo um pouco mais quente que preto */
   color: #999999;
 }
 
@@ -136,7 +136,7 @@ a:hover {
 }
 
 .user-box {
-  background-color: #111;
+  background-color: #000; /* fundo preto */
   color: #ff2626;
   padding: 10px 14px;
   border-radius: 20px 20px 0 20px; /* ponta direita de baixo pontuda */
@@ -268,12 +268,13 @@ a:hover {
 
   .post-content {
     padding: 12px;
-    border-radius: 18px;
+    border-radius: 18px 0 18px 18px; /* ponta direita de cima pontuda no mobile */
   }
 
   .user-box {
     padding: 8px 12px;
-    border-radius: 18px 18px 0 18px;
+    border-radius: 18px 18px 0 18px; /* ponta direita de baixo pontuda no mobile */
     font-size: 1em;
+    background-color: #000; /* fundo preto no mobile */
   }
 }
