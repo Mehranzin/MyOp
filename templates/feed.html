@@ -27,33 +27,28 @@
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
       <div class="post-container">
-        {% if post.user_id == session['user_id'] %}
-        <img
-          src="{{ url_for('static', filename='images/three points.png') }}"
-          onclick="toggleOpcoes({{ post.id }})"
-          class="tres-pontos"
-        />
-        <div id="opcoes-{{ post.id }}" class="post-opcoes">
-          <form
-            method="GET"
-            action="{{ url_for('delete_post', post_id=post.id) }}"
-          >
-            <button type="submit">Deletar mensagem</button>
-          </form>
-        </div>
-        {% endif %}
-
         <div class="user-box">
-          <a
-            href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
-            style="color: white; text-decoration: none"
-          >
+          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
             {{ post.autor.apelido }}
           </a>
         </div>
 
         <div class="post-content">
-          {{ post.texto|e }}
+          {% if post.user_id == session['user_id'] %}
+          <img
+            src="{{ url_for('static', filename='images/three points.png') }}"
+            onclick="toggleOpcoes({{ post.id }})"
+            class="tres-pontos"
+          />
+          <div id="opcoes-{{ post.id }}" class="post-opcoes">
+            <form
+              method="GET"
+              action="{{ url_for('delete_post', post_id=post.id) }}"
+            >
+              <button type="submit">Deletar mensagem</button>
+            </form>
+          </div>
+          {% endif %} {{ post.texto|e }}
           <br />
           <small>{{ tempo }}</small>
 
