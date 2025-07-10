@@ -137,13 +137,14 @@ a:hover {
 
 .user-box {
   background-color: #111;
-  color: white;
+  color: #ff2626;
   padding: 10px 14px;
   border-radius: 20px;
   font-weight: bold;
   margin-bottom: 8px;
   display: inline-block;
   border: 1px solid #444;
+  font-size: 1.1em;
 }
 
 .post-content {
@@ -153,13 +154,21 @@ a:hover {
   color: white;
   border: 1px solid #444;
   margin-bottom: 10px;
+  position: relative;
+}
+
+.post-content small {
+  display: block;
+  font-size: 0.85em;
+  color: #888888;
+  margin-top: 6px;
 }
 
 .post-opcoes {
   display: none;
   position: absolute;
   top: 30px;
-  right: 0;
+  right: 10px;
   background: #fff;
   border: 1px solid #ccc;
   padding: 5px;
@@ -254,5 +263,6 @@ a:hover {
   .user-box {
     padding: 8px 12px;
     border-radius: 18px;
+    font-size: 1em;
   }
 }
