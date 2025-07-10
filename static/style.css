@@ -141,8 +141,8 @@ a:hover {
   font-weight: bold;
   margin-bottom: 0px;
   display: inline-block;
-  border: 1.2em solid #444;
-  font-size: 1.1px;
+  border: 1.6px solid #444; /* mesma grossura da caixa maior */
+  font-size: 1.1em; /* corrigido para tamanho de fonte válido */
 }
 
 .user-box a {
@@ -275,9 +275,10 @@ a:hover {
   .user-box {
     padding: 8px 12px;
     border-radius: 18px 18px 0 0;
-    font-size: 1.2em;
+    font-size: 1.3em;
     background-color: #000;
     margin-bottom: 0px;
+    border: 1.6px solid #444;
   }
 
   .tres-pontos {
@@ -289,6 +290,7 @@ img {
   outline: none;
   border: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 img:focus,
