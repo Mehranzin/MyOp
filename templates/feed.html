@@ -42,14 +42,16 @@
           </form>
         </div>
         {% endif %}
-        <p class="post-nick">
-          <strong>
-            <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
-              >{{ post.autor.apelido }}</a
-            >:
-          </strong>
-        </p>
-        <p class="post-texto">{{ post.texto|e }}</p>
+        <div class="user-box">
+          <a
+            href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
+            style="color: white; text-decoration: none"
+          >
+            {{ post.autor.apelido }}
+          </a>
+        </div>
+        <div class="post-content">{{ post.texto|e }}</div>
+
         <small>{{ tempo }}</small>
         <div class="post-acoes">
           <a

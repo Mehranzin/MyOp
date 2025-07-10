@@ -17,6 +17,7 @@ nav a {
   text-decoration: none;
   font-weight: bold;
 }
+
 nav a:hover {
   text-decoration: underline;
 }
@@ -126,7 +127,34 @@ a:hover {
   border: 1px solid #f5c6cb;
 }
 
-/* Adições do feed */
+/* POSTES E FEED */
+
+.post-container {
+  padding: 0;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.user-box {
+  background-color: #111;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: inline-block;
+  border: 1px solid #444;
+}
+
+.post-content {
+  background-color: #000;
+  padding: 16px;
+  border-radius: 20px;
+  color: white;
+  border: 1px solid #444;
+  margin-bottom: 10px;
+}
+
 .post-opcoes {
   display: none;
   position: absolute;
@@ -150,33 +178,10 @@ a:hover {
   font-size: 14px;
 }
 
-/* NOVAS CLASSES */
-.post-container {
-  background-color: rgb(0, 0, 0);
-  padding: 16px;
-  border-radius: 30px;
-  margin-bottom: 20px;
-  position: relative;
-  border: 1px solid #444;
-}
-
-.post-nick {
-  font-size: 1em;
-  margin-bottom: 5px;
-  color: white;
-  border-top-left-radius: 30px;
-}
-
-.post-texto {
-  font-size: 1em;
-  margin-bottom: 10px;
-  color: white;
-}
-
 .post-acoes {
   display: flex;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 10px;
   align-items: center;
 }
 
@@ -202,6 +207,7 @@ a:hover {
 }
 
 /* NAV FIXO NO RODAPÉ */
+
 .nav-footer {
   position: fixed;
   bottom: 0;
@@ -229,6 +235,7 @@ a:hover {
 }
 
 /* MOBILE FRIENDLY */
+
 @media (max-width: 600px) {
   .container {
     padding: 10px 15px;
@@ -239,12 +246,13 @@ a:hover {
     margin: 0 10px;
   }
 
-  .post-container {
-    padding: 10px 12px;
-    border-radius: 25px;
+  .post-content {
+    padding: 12px;
+    border-radius: 18px;
   }
 
-  .post-nick {
-    font-size: 0.95em;
+  .user-box {
+    padding: 8px 12px;
+    border-radius: 18px;
   }
 }
