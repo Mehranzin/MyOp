@@ -33,7 +33,9 @@
           </a>
         </div>
 
-        <div class="post-content">
+        <div
+          class="post-content {% if post.user_id != session['user_id'] %}post-outro{% endif %}"
+        >
           {% if post.user_id == session['user_id'] %}
           <img
             src="{{ url_for('static', filename='images/three points.png') }}"
