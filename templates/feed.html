@@ -128,6 +128,13 @@
       </nav>
     </footer>
 
+    <a href="#texto" class="scroll-to-top" id="scrollToTopBtn">
+      <img
+        src="{{ url_for('static', filename='images/feather pen.png') }}"
+        alt="Nova Postagem"
+      />
+    </a>
+
     <script>
       function toggleOpcoes(postId) {
         var menu = document.getElementById("opcoes-" + postId);
@@ -166,6 +173,20 @@
         if (scrollPos !== null) {
           window.scrollTo(0, parseInt(scrollPos));
           sessionStorage.removeItem("scrollPos");
+        }
+      });
+
+      // JavaScript para o botão flutuante
+      const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+      const textareaElement = document.getElementById("texto");
+
+      window.addEventListener("scroll", () => {
+        const textareaRect = textareaElement.getBoundingClientRect();
+        // Se a parte inferior da textarea estiver acima da viewport (ou seja, saiu da visão para cima)
+        if (textareaRect.bottom < 0) {
+          scrollToTopBtn.style.display = "flex"; // Mostra o botão
+        } else {
+          scrollToTopBtn.style.display = "none"; // Esconde o botão
         }
       });
     </script>
