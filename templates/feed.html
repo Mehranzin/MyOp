@@ -176,17 +176,15 @@
         }
       });
 
-      // JavaScript para o botão flutuante
       const scrollToTopBtn = document.getElementById("scrollToTopBtn");
       const textareaElement = document.getElementById("texto");
 
       window.addEventListener("scroll", () => {
         const textareaRect = textareaElement.getBoundingClientRect();
-        // Se a parte inferior da textarea estiver acima da viewport (ou seja, saiu da visão para cima)
         if (textareaRect.bottom < 0) {
-          scrollToTopBtn.style.display = "flex"; // Mostra o botão
+          scrollToTopBtn.style.display = "flex";
         } else {
-          scrollToTopBtn.style.display = "none"; // Esconde o botão
+          scrollToTopBtn.style.display = "none";
         }
       });
     </script>
