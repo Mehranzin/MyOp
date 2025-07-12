@@ -196,7 +196,7 @@ a:hover {
 }
 
 .post-outro {
-  border-radius: 0 30px 20px 20px;
+  border-radius: 0 20px 20px 20px;
 }
 
 .post-content small {
@@ -362,6 +362,7 @@ a:hover {
   }
 }
 
+/*SCIRPT PARA NÃO APARECER FUNDO AZUL NO CLICK DE UMA PNG*/
 img,
 img:focus,
 img:active,
