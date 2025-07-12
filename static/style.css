@@ -262,27 +262,26 @@ a:hover {
   font-weight: bold;
 }
 
-/* Estilo para o botão flutuante */
 .scroll-to-top {
   position: fixed;
-  bottom: 100px; /* Ajuste para não sobrepor o footer */
+  bottom: 100px;
   right: 20px;
-  background-color: white; /* Fundo branco para a imagem PNG */
-  border-radius: 50%; /* Torna o fundo circular */
-  width: 50px; /* Tamanho do botão */
-  height: 50px; /* Tamanho do botão */
-  display: none; /* Escondido por padrão, será mostrado via JS */
+  background-color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: none;
   justify-content: center;
   align-items: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  z-index: 99; /* Z-index menor que o footer para que o footer fique por cima ao rolar */
-  text-decoration: none; /* Remove sublinhado do link */
+  z-index: 99;
+  text-decoration: none;
 }
 
 .scroll-to-top img {
-  width: 30px; /* Ajuste o tamanho da imagem dentro do botão */
-  height: 30px;
-  object-fit: contain; /* Garante que a imagem se ajuste sem distorção */
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 @media (max-width: 600px) {
@@ -324,15 +323,15 @@ a:hover {
   }
 
   .scroll-to-top {
-    bottom: 80px; /* Ajuste para telas menores */
+    bottom: 80px;
     width: 45px;
     height: 45px;
     right: 15px;
   }
 
   .scroll-to-top img {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
   }
 }
 
