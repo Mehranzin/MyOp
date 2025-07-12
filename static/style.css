@@ -294,15 +294,20 @@ a:hover {
 
 .new-post-box {
   background-color: #000;
-  border: 1.6px solid #fff;
+  border: 3px solid #fff;
   border-radius: 8px;
   padding: 20px;
+  padding-bottom: 15px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .new-post-box form {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .new-post-box textarea {
@@ -310,16 +315,13 @@ a:hover {
   border: 2px solid #555;
   color: #eee;
   padding: 12px;
-  border-radius: 4px;
+  border-radius: 8px;
   resize: none;
   min-height: 80px;
   height: 100px;
-  margin-bottom: 20px;
-}
-
-.new-post-box label {
-  color: #ff2626;
-  font-size: 1.1em;
+  flex-grow: 1;
+  margin-bottom: 15px;
+  font-family: Arial, sans-serif;
 }
 
 .new-post-box button {
@@ -329,10 +331,11 @@ a:hover {
   font-size: 1.1em;
   color: white;
   font-weight: bold;
-  align-self: flex-end;
-  width: auto;
-  padding-left: 25px;
-  padding-right: 25px;
+  align-self: center;
+  width: calc(100% - 10px);
+  margin-top: auto;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 @media (max-width: 600px) {
@@ -385,8 +388,7 @@ a:hover {
     height: 40px;
   }
 }
-
-/* Evita fundo azul em cliques de imagens/links */
+/*Script para evitar fundo azul no click de imagem*/
 img,
 img:focus,
 img:active,
