@@ -82,6 +82,7 @@ a {
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a:hover {
@@ -140,7 +141,7 @@ a:hover {
   padding: 12px 20px;
   border-radius: 20px 20px 0 0;
   font-weight: bold;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   display: inline-block;
   border: 1.6px solid #444;
   font-size: 1.2em;
