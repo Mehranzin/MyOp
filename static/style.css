@@ -297,7 +297,7 @@ a:hover {
   border: 3px solid #fff;
   border-radius: 8px;
   padding: 20px;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -320,7 +320,7 @@ a:hover {
   min-height: 80px;
   height: 100px;
   flex-grow: 1;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-family: Arial, sans-serif;
 }
 
@@ -332,10 +332,15 @@ a:hover {
   color: white;
   font-weight: bold;
   align-self: center;
-  width: calc(100% - 10px);
+  width: calc(100% - 0px);
   margin-top: auto;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.container h2 {
+  text-align: center;
+  margin-bottom: 25px;
 }
 
 @media (max-width: 600px) {
@@ -388,7 +393,7 @@ a:hover {
     height: 40px;
   }
 }
-/*Script para evitar fundo azul no click de imagem*/
+
 img,
 img:focus,
 img:active,
