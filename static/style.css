@@ -302,11 +302,14 @@ a:hover {
 
 img,
 img:focus,
-img:active {
+img:active,
+a img,
+a img:focus,
+a img:active {
   outline: none;
   background: transparent !important;
+  border: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   user-select: none;
-  border: none;
 }
