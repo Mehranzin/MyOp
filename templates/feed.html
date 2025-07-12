@@ -23,7 +23,6 @@
       <h2>Feed • Opinion</h2>
       <div class="new-post-box">
         <form method="POST" action="{{ url_for('feed') }}">
-          <label for="texto">Nova postagem</label>
           <textarea
             id="texto"
             name="texto"
@@ -217,7 +216,6 @@
         lastScroll = currentScroll;
       });
 
-      // Função para definir o placeholder aleatório
       document.addEventListener("DOMContentLoaded", () => {
         const placeholders = [
           "O que quer contar?",
