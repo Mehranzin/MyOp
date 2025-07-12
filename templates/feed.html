@@ -21,17 +21,19 @@
 
     <div class="container">
       <h2>Feed • Opinion</h2>
-      <form method="POST" action="{{ url_for('feed') }}">
-        <label for="texto">Nova postagem</label>
-        <textarea
-          id="texto"
-          name="texto"
-          rows="3"
-          placeholder="O que quer contar?"
-          required
-        ></textarea>
-        <button type="submit">Postar</button>
-      </form>
+      <div class="new-post-box">
+        <form method="POST" action="{{ url_for('feed') }}">
+          <label for="texto">Nova postagem</label>
+          <textarea
+            id="texto"
+            name="texto"
+            rows="3"
+            placeholder="O que quer contar?"
+            required
+          ></textarea>
+          <button type="submit">Postar</button>
+        </form>
+      </div>
       <hr />
       {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
       posts %}
@@ -213,6 +215,18 @@
           navFooter.style.transform = "translateY(0%)";
         }
         lastScroll = currentScroll;
+      });
+
+      // Função para definir o placeholder aleatório
+      document.addEventListener("DOMContentLoaded", () => {
+        const placeholders = [
+          "O que quer contar?",
+          "O que está pensando hoje?",
+          "O que tem pra hoje?",
+        ];
+        const textarea = document.getElementById("texto");
+        const randomIndex = Math.floor(Math.random() * placeholders.length);
+        textarea.placeholder = placeholders[randomIndex];
       });
     </script>
   </body>

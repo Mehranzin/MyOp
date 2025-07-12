@@ -1,3 +1,4 @@
+/* Estilos globais */
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -11,7 +12,7 @@ body {
   padding: 20px 30px;
 }
 
-/* Nova nav-top */
+/* Navegação superior */
 .nav-top {
   position: fixed;
   top: 0;
@@ -48,8 +49,8 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/* Estilos de input e botão genéricos (mantidos para outros elementos) */
 input,
-textarea,
 button {
   width: 100%;
   padding: 10px 12px;
@@ -58,23 +59,6 @@ button {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1em;
-}
-
-textarea {
-  resize: vertical;
-  min-height: 80px;
-  color: white;
-}
-
-button {
-  background-color: #ff2626;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1.1em;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -116,6 +100,7 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Mensagens flash */
 .flashes {
   list-style: none;
   padding: 10px;
@@ -154,6 +139,7 @@ a:hover {
   border: 1px solid #f5c6cb;
 }
 
+/* Contêiner de postagem */
 .post-container {
   max-width: 750px;
   margin: 12px auto;
@@ -262,6 +248,7 @@ a:hover {
   color: #ff2626;
 }
 
+/* Navegação do rodapé */
 .nav-footer {
   position: fixed;
   bottom: 0;
@@ -289,6 +276,7 @@ a:hover {
   font-weight: bold;
 }
 
+/* Botão de scroll para o topo */
 .scroll-to-top {
   position: fixed;
   bottom: 100px;
@@ -311,6 +299,38 @@ a:hover {
   object-fit: contain;
 }
 
+/* Estilos da caixa de nova postagem */
+.new-post-box {
+  background-color: #000;
+  border: 1.6px solid #fff;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.new-post-box textarea {
+  background-color: #1a1a1a;
+  border: 1px solid #555;
+  color: #eee;
+  padding: 12px;
+  border-radius: 8px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.new-post-box label {
+  color: #ff2626;
+  font-size: 1.1em;
+}
+
+.new-post-box button {
+  background-color: #ff2626;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1.1em;
+}
+
+/* Media queries para responsividade */
 @media (max-width: 600px) {
   .container {
     padding: 10px 12px;
@@ -362,7 +382,7 @@ a:hover {
   }
 }
 
-/*SCIRPT PARA NÃO APARECER FUNDO AZUL NO CLICK DE UMA PNG*/
+/* Evita fundo azul em cliques de imagens/links */
 img,
 img:focus,
 img:active,
