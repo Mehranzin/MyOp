@@ -10,6 +10,15 @@
     />
   </head>
   <body>
+    <header class="nav-top">
+      <div class="logo-container">
+        <img
+          src="{{ url_for('static', filename='images/Logo.png') }}"
+          alt="Logo"
+        />
+      </div>
+    </header>
+
     <div class="container">
       <h2>Feed • Opinion</h2>
       <form method="POST" action="{{ url_for('feed') }}">
@@ -148,10 +157,12 @@
           menu.style.display = "block";
         }
       }
+
       function toggleComentario(postId) {
         var box = document.getElementById("comentario-" + postId);
         box.style.display = box.style.display === "block" ? "none" : "block";
       }
+
       function saveScroll() {
         sessionStorage.setItem("scrollPos", window.scrollY);
       }
@@ -186,6 +197,22 @@
         } else {
           scrollToTopBtn.style.display = "none";
         }
+      });
+
+      let lastScroll = 0;
+      const navTop = document.querySelector(".nav-top");
+      const navFooter = document.querySelector(".nav-footer");
+
+      window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+        if (currentScroll > lastScroll) {
+          navTop.style.transform = "translateY(-100%)";
+          navFooter.style.transform = "translateY(100%)";
+        } else {
+          navTop.style.transform = "translateY(0%)";
+          navFooter.style.transform = "translateY(0%)";
+        }
+        lastScroll = currentScroll;
       });
     </script>
   </body>

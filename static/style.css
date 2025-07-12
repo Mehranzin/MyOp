@@ -11,6 +11,32 @@ body {
   padding: 20px 30px;
 }
 
+/* Nova nav-top */
+.nav-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #000;
+  padding: 10px 0; /* Padding ajustado para ser mais fino */
+  text-align: center;
+  border-bottom: 1px solid #fff; /* Linha mais fina na parte inferior */
+  z-index: 100;
+  transition: transform 0.3s ease-in-out; /* Transição para sumir/aparecer */
+}
+
+.nav-top .logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-top .logo-container img {
+  height: 40px; /* Ajuste a altura da logo conforme necessário */
+  object-fit: contain;
+}
+
 nav a {
   margin: 0 15px;
   color: #007bff;
@@ -245,8 +271,9 @@ a:hover {
   background: #000;
   padding: 20px 0;
   text-align: center;
-  border-top: 2px solid #fff;
+  border-top: 1px solid #fff; /* Linha mais fina */
   z-index: 100;
+  transition: transform 0.3s ease-in-out; /* Transição para sumir/aparecer */
 }
 
 .nav-footer nav {
