@@ -263,7 +263,7 @@ a:hover {
 
 @media (max-width: 600px) {
   .container {
-    padding: 10px 15px;
+    padding: 10px 12px;
   }
 
   .nav-footer nav a {
@@ -272,11 +272,12 @@ a:hover {
   }
 
   .post-container {
-    max-width: 95%;
+    max-width: 98%;
+    margin: 10px auto;
   }
 
   .post-content {
-    padding: 14px 18px;
+    padding: 16px 20px;
     border-radius: 0 0 18px 18px;
     margin-top: -4px;
   }
@@ -286,11 +287,11 @@ a:hover {
   }
 
   .user-box {
-    padding: 10px 16px;
+    padding: 12px 18px;
     border-radius: 18px 18px 0 0;
     font-size: 1.2em;
     background-color: #000;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     border: 1.6px solid #444;
   }
 
