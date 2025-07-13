@@ -1,7 +1,7 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background: #0c0c0c;
+  background: #1b1b1b;
   color: #999999;
 }
 
@@ -393,7 +393,7 @@ a:hover {
 
 .btn-voltar {
   position: absolute;
-  top: 450px;
+  top: 45px;
   left: 10px;
   background-color: #ff2626;
   border: none;
