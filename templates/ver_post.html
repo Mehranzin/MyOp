@@ -10,7 +10,7 @@
     />
   </head>
   <body>
-    <div class="nav-top">Respostas • Opinion</div>
+    <div class="nav-top">Opinião de {{ post.autor.apelido }}:</div>
     <div class="container" style="padding-top: 30px">
       <a href="{{ url_for('feed') }}">
         <img
@@ -19,8 +19,6 @@
           class="btn-voltar-img"
         />
       </a>
-
-      <h2>Opinião de {{ post.autor.apelido }}:</h2>
 
       <div class="post-container">
         <div class="user-box">
