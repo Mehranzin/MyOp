@@ -47,8 +47,7 @@ nav a:hover {
   text-decoration: underline;
 }
 
-input,
-button {
+input {
   width: 100%;
   padding: 10px 12px;
   margin: 8px 0 16px 0;
@@ -56,10 +55,6 @@ button {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1em;
-}
-
-button:hover {
-  background-color: #ff1414;
 }
 
 label {
@@ -364,20 +359,20 @@ a:hover {
 }
 
 .comment-box button {
-  background-color: #ff2626; /* Cor original do botão */
+  background-color: #ff2626;
   border-radius: 4px;
-  padding: 12px;
-  font-size: 1em;
+  padding: 8px 15px; /* Reduzindo o padding para encolher o botão */
+  font-size: 0.9em; /* Reduzindo a fonte */
   color: white;
   font-weight: bold;
-  width: auto;
+  width: auto; /* Deixando a largura se ajustar ao conteúdo */
   align-self: flex-end; /* Alinhar à direita */
   margin-top: 5px;
   cursor: pointer;
 }
 
 .comment-box button:hover {
-  background-color: #cc2020; /* Hover original do botão */
+  background-color: #cc2020;
 }
 
 .container h2 {
@@ -390,13 +385,15 @@ a:hover {
   border: none;
   color: white;
   font-weight: bold;
-  padding: 8px 15px;
+  padding: 5px 10px; /* Reduzindo o padding para encolher o botão */
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 15px;
-  font-size: 1em;
+  font-size: 0.9em; /* Reduzindo a fonte */
   display: inline-block;
   text-transform: lowercase;
+  width: auto; /* Ajustar a largura para a palavra "Voltar" */
+  float: left; /* Alinhar à esquerda */
 }
 
 .btn-voltar:hover {
