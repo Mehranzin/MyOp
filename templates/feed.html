@@ -34,13 +34,14 @@
         </form>
       </div>
       <hr />
-      {% if posts %} {% for post, tempo, likes_count, comentarios, liked in
-      posts %}
+
+      {% if posts %} {% for post, tempo, likes_count, comentarios_count,
+      comentarios, liked in posts %}
       <div class="post-container">
         <div class="user-box">
-          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
-            {{ post.autor.apelido }}
-          </a>
+          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
+            >{{ post.autor.apelido }}</a
+          >
         </div>
 
         <div
@@ -82,6 +83,7 @@
               {% endif %}
             </a>
             <span class="like-count">{{ likes_count }}</span>
+
             <a
               href="javascript:void(0);"
               onclick="toggleComentario({{ post.id }})"
@@ -90,6 +92,18 @@
                 src="{{ url_for('static', filename='images/comment.png') }}"
                 class="icone"
               />
+            </a>
+
+            <a
+              href="{{ url_for('ver_post', post_id=post.id) }}"
+              style="
+                margin-left: 5px;
+                text-decoration: underline;
+                font-size: 13px;
+              "
+            >
+              Ver {{ comentarios_count }} resposta{{ 's' if comentarios_count !=
+              1 else '' }}
             </a>
           </div>
 
@@ -116,7 +130,7 @@
           <div style="margin-top: 5px; margin-left: 10px">
             {% for comentario in comentarios %}
             <p class="comentario-texto">
-              <strong>{{ comentario.post.autor.apelido }}</strong>: {{
+              <strong>{{ comentario.autor.apelido }}</strong>: {{
               comentario.texto }}
             </p>
             {% endfor %}

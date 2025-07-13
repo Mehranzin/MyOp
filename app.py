@@ -159,8 +159,9 @@ def feed():
         tempo = tempo_relativo(post.created_at)
         likes_count = Like.query.filter_by(post_id=post.id).count()
         comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
+        comentarios_count = len(comentarios)
         liked = Like.query.filter_by(post_id=post.id, user_id=usuario.id).first() is not None
-        posts_com_tempo.append((post, tempo, likes_count, comentarios, liked))
+        posts_com_tempo.append((post, tempo, likes_count, comentarios_count, comentarios, liked))
 
     return render_template('feed.html', posts=posts_com_tempo, apelido=usuario.apelido)
 
@@ -224,5 +225,28 @@ def edit_post(post_id):
         flash('Post editado.', 'success')
     return redirect(url_for('feed'))
 
+@app.route('/post/<int:post_id>')
+def ver_post(post_id):
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    usuario = User.query.get(session['user_id'])
+    post = Post.query.get_or_404(post_id)
+    tempo = tempo_relativo(post.created_at)
+    likes_count = Like.query.filter_by(post_id=post.id).count()
+    comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
+    liked = Like.query.filter_by(post_id=post.id, user_id=usuario.id).first() is not None
+
+    return render_template(
+        'ver_post.html',
+        post=post,
+        tempo=tempo,
+        likes_count=likes_count,
+        comentarios=comentarios,
+        liked=liked,
+        apelido=usuario.apelido
+    )
+
 if __name__ == '__main__':
     app.run(debug=True)
+
