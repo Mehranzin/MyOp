@@ -53,6 +53,7 @@ a {
 
 a:hover {
   color: #ff4848;
+  text-decoration: none;
 }
 
 .flashes {
