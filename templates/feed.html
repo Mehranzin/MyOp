@@ -84,10 +84,7 @@
             </a>
             <span class="like-count">{{ likes_count }}</span>
 
-            <a
-              href="javascript:void(0);"
-              onclick="toggleComentario({{ post.id }})"
-            >
+            <a href="{{ url_for('ver_post', post_id=post.id) }}">
               <img
                 src="{{ url_for('static', filename='images/comment.png') }}"
                 class="icone"
@@ -106,36 +103,6 @@
               1 else '' }}
             </a>
           </div>
-
-          <div
-            id="comentario-{{ post.id }}"
-            class="comentario-box"
-            style="display: none"
-          >
-            <form
-              method="POST"
-              action="{{ url_for('comment_post', post_id=post.id) }}"
-            >
-              <textarea
-                name="comentario"
-                rows="2"
-                placeholder="Comente aqui..."
-                required
-              ></textarea>
-              <button type="submit" onclick="saveScroll()">Enviar</button>
-            </form>
-          </div>
-
-          {% if comentarios %}
-          <div style="margin-top: 5px; margin-left: 10px">
-            {% for comentario in comentarios %}
-            <p class="comentario-texto">
-              <strong>{{ comentario.autor.apelido }}</strong>: {{
-              comentario.texto }}
-            </p>
-            {% endfor %}
-          </div>
-          {% endif %}
         </div>
       </div>
       <hr />
@@ -171,11 +138,6 @@
           });
           menu.style.display = "block";
         }
-      }
-
-      function toggleComentario(postId) {
-        var box = document.getElementById("comentario-" + postId);
-        box.style.display = box.style.display === "block" ? "none" : "block";
       }
 
       function saveScroll() {

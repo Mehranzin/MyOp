@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Comentarios • Opinion</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Opinião de {{ post.autor.apelido }}</h2>
+
+      <div class="post-container">
+        <div class="user-box">
+          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}"
+            >{{ post.autor.apelido }}</a
+          >
+        </div>
+
+        <div class="post-content">
+          {{ post.texto }}
+          <br />
+          <small>{{ tempo }}</small>
+
+          <div class="post-acoes">
+            <a
+              href="{{ url_for('like_post', post_id=post.id) }}"
+              class="like-link"
+            >
+              {% if liked %}
+              <img
+                src="{{ url_for('static', filename='images/heart y.png') }}"
+                class="icone"
+              />
+              {% else %}
+              <img
+                src="{{ url_for('static', filename='images/heart n.webp') }}"
+                class="icone"
+              />
+              {% endif %}
+            </a>
+            <span class="like-count">{{ likes_count }}</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>Responder:</h3>
+      <form
+        method="POST"
+        action="{{ url_for('comment_post', post_id=post.id) }}"
+      >
+        <textarea
+          name="comentario"
+          rows="2"
+          placeholder="Comente aqui..."
+          required
+        ></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+
+      <hr />
+
+      <h3>Comentários:</h3>
+      {% for comentario in comentarios %}
+      <p>
+        <strong>{{ comentario.autor.apelido }}</strong>: {{ comentario.texto }}
+      </p>
+      {% else %}
+      <p>Nenhum comentário ainda.</p>
+      {% endfor %}
+
+      <p><a href="{{ url_for('feed') }}">← Voltar pro feed</a></p>
+    </div>
+  </body>
+</html>
