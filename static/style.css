@@ -377,15 +377,14 @@ a:hover {
   width: 36px;
   height: 36px;
   cursor: pointer;
-  transform: scaleY(-1);
 }
 
 .btn-voltar-img:hover {
-  transform: scale(1.6);
+  transform: scale(1.4);
 }
 
 button:active {
-  transform: scale(1.05);
+  transform: scale(1.4);
 }
 
 @media (max-width: 600px) {
