@@ -370,23 +370,18 @@ a:hover {
   color: #fff;
 }
 
-.btn-voltar {
+.btn-voltar-img {
   position: absolute;
   top: 90px;
   left: 10px;
-  background-color: #ff2626;
-  border: none;
-  color: white;
-  font-weight: bold;
-  padding: 7px 12px;
-  border-radius: 4px;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
-  font-size: 1em;
-  text-transform: lowercase;
 }
 
-.btn-voltar:hover {
-  background-color: #cc2020;
+.btn-voltar-img:hover {
+  transform: scale(2);
+  transition: 0.2s ease;
 }
 
 button:active {

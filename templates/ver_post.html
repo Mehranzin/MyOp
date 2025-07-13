@@ -12,12 +12,13 @@
   <body>
     <div class="nav-top">Respostas • Opinion</div>
     <div class="container" style="padding-top: 30px">
-      <button
-        onclick="window.location='{{ url_for('feed') }}'"
-        class="btn-voltar"
-      >
-        Voltar
-      </button>
+      <a href="{{ url_for('feed') }}">
+        <img
+          src="{{ url_for('static', filename='images/arrow.png') }}"
+          alt="Voltar"
+          class="btn-voltar-img"
+        />
+      </a>
 
       <h2>Opinião de {{ post.autor.apelido }}:</h2>
 
