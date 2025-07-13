@@ -44,7 +44,7 @@ p {
 }
 
 a {
-  color: #ff2626;
+  color: #ff0000;
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s;
@@ -52,7 +52,7 @@ a {
 }
 
 a:hover {
-  color: #c0c0c0;
+  color: #ff4848;
   text-decoration: underline;
 }
 
