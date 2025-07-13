@@ -10,8 +10,8 @@
     />
   </head>
   <body>
+    <div class="nav-top">Feed • Opinion</div>
     <div class="container">
-      <h2>Feed • Opinion</h2>
       <div class="new-post-box">
         <form method="POST" action="{{ url_for('feed') }}">
           <textarea
@@ -170,20 +170,19 @@
       });
 
       let lastScroll = 0;
-      const navTop = document.querySelector(".nav-top");
       const navFooter = document.querySelector(".nav-footer");
 
-      window.addEventListener("scroll", () => {
-        const currentScroll = window.pageYOffset;
-        if (currentScroll > lastScroll) {
-          navTop.style.transform = "translateY(-100%)";
-          navFooter.style.transform = "translateY(100%)";
-        } else {
-          navTop.style.transform = "translateY(0%)";
-          navFooter.style.transform = "translateY(0%)";
-        }
-        lastScroll = currentScroll;
-      });
+      if (navFooter) {
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
+          if (currentScroll > lastScroll) {
+            navFooter.style.transform = "translateY(100%)";
+          } else {
+            navFooter.style.transform = "translateY(0%)";
+          }
+          lastScroll = currentScroll;
+        });
+      }
 
       document.addEventListener("DOMContentLoaded", () => {
         const placeholders = [
