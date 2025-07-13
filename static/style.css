@@ -204,9 +204,9 @@ a:hover {
 
 .nav-top {
   background: #000000;
-  top: 12px;
-  left: 12px;
-  right: 12px;
+  top: 6px;
+  left: 6px;
+  right: 6px;
   color: #fff;
   font-size: 1.4em;
   font-weight: bold;
@@ -372,7 +372,7 @@ a:hover {
 
 .btn-voltar {
   position: absolute;
-  top: 45px;
+  top: 60px;
   left: 10px;
   background-color: #ff2626;
   border: none;
