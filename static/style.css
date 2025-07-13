@@ -394,6 +394,71 @@ a:hover {
   }
 }
 
+.resposta-numero {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ff2626;
+}
+
+.btn-voltar {
+  background-color: #ff2626;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 1em;
+  display: inline-block;
+  text-transform: lowercase;
+}
+
+.btn-voltar:hover {
+  background-color: #cc2020;
+}
+
+.nav-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #000;
+  padding: 8px 0;
+  text-align: center;
+  border-bottom: 1px solid #363636;
+  z-index: 100;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: #000;
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid #fff;
+  z-index: 100;
+  transition: transform 0.3s ease-in-out;
+}
+
+.nav-footer nav {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  width: 100%;
+}
+
+.nav-footer nav a {
+  color: #fff;
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
 img,
 img:focus,
 img:active,

@@ -97,10 +97,12 @@
                 margin-left: 5px;
                 text-decoration: underline;
                 font-size: 13px;
+                /* novo: número maior */
               "
             >
-              Ver {{ comentarios_count }} resposta{{ 's' if comentarios_count !=
-              1 else '' }}
+              Ver
+              <span class="resposta-numero">{{ comentarios_count }}</span>
+              resposta{{ 's' if comentarios_count != 1 else '' }}
             </a>
           </div>
         </div>
