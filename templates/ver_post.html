@@ -95,14 +95,15 @@
     </footer>
     <script>
       /*SCRIPT DE SUMIR A NAV*/
-      if (navTop && navFooter) {
+      let lastScroll = 0;
+      const navFooter = document.querySelector(".nav-footer");
+
+      if (navFooter) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
           if (currentScroll > lastScroll) {
-            navTop.style.transform = "translateY(-100%)";
             navFooter.style.transform = "translateY(100%)";
           } else {
-            navTop.style.transform = "translateY(0%)";
             navFooter.style.transform = "translateY(0%)";
           }
           lastScroll = currentScroll;
