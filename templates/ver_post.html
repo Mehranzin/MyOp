@@ -20,14 +20,15 @@
     </header>
 
     <div class="container" style="padding-top: 60px">
-      <button
-        onclick="window.location='{{ url_for('feed') }}'"
-        class="btn-voltar"
-      >
-        ← voltar
-      </button>
-
-      <h2>Opinião de {{ post.autor.apelido }}</h2>
+      <div class="header-post-view">
+        <button
+          onclick="window.location='{{ url_for('feed') }}'"
+          class="btn-voltar-seta"
+        >
+          &#8592;
+        </button>
+        <h2>Opinião de {{ post.autor.apelido }}</h2>
+      </div>
 
       <div class="post-container">
         <div class="user-box">
@@ -64,7 +65,7 @@
       </div>
 
       <h3>Responder:</h3>
-      <div class="new-post-box">
+      <div class="comment-box">
         <form
           method="POST"
           action="{{ url_for('comment_post', post_id=post.id) }}"
@@ -75,7 +76,7 @@
             placeholder="Comente aqui..."
             required
           ></textarea>
-          <button type="submit">Enviar</button>
+          <button type="submit">Comentar</button>
         </form>
       </div>
 
@@ -103,86 +104,5 @@
         <a href="{{ url_for('logout') }}">Sair</a>
       </nav>
     </footer>
-
-    <style>
-      .btn-voltar {
-        background-color: #ff2626;
-        border: none;
-        color: white;
-        font-weight: bold;
-        padding: 8px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-bottom: 15px;
-        font-size: 1em;
-        display: inline-block;
-      }
-      .btn-voltar:hover {
-        background-color: #cc2020;
-      }
-
-      /* responsivo */
-      @media (max-width: 600px) {
-        .container {
-          max-width: 98%;
-          padding: 10px 12px;
-        }
-        .post-container {
-          max-width: 100%;
-          margin: 10px auto;
-        }
-        .post-content,
-        .comentario-texto {
-          padding: 16px 20px;
-          border-radius: 0 0 20px 20px;
-          background-color: #000;
-          border: 1.6px solid #444;
-          color: white;
-          margin-top: -4px;
-        }
-        .user-box {
-          padding: 12px 20px;
-          border-radius: 20px 20px 0 0;
-          font-size: 1.1em;
-          background-color: #000;
-          margin-bottom: 0;
-          border: 1.6px solid #444;
-          display: inline-block;
-        }
-        .new-post-box {
-          background-color: #000;
-          border: 3px solid #fff;
-          border-radius: 8px;
-          padding: 15px 20px;
-          margin-bottom: 20px;
-        }
-        .new-post-box textarea {
-          background-color: #1a1a1a;
-          border: 2px solid #555;
-          color: #eee;
-          padding: 12px;
-          border-radius: 8px;
-          resize: none;
-          width: 100%;
-          font-family: Arial, sans-serif;
-          margin-bottom: 10px;
-          min-height: 60px;
-        }
-        .new-post-box button {
-          background-color: #ff2626;
-          border-radius: 4px;
-          padding: 12px;
-          font-size: 1.1em;
-          color: white;
-          font-weight: bold;
-          width: 100%;
-          cursor: pointer;
-          border: none;
-        }
-        .new-post-box button:hover {
-          background-color: #cc2020;
-        }
-      }
-    </style>
   </body>
 </html>
