@@ -203,7 +203,10 @@ a:hover {
 }
 
 .nav-top {
-  background: #ff2626;
+  background: #000000;
+  top: 12px;
+  left: 12px;
+  right: 12px;
   color: #fff;
   font-size: 1.4em;
   font-weight: bold;
