@@ -10,15 +10,6 @@
     />
   </head>
   <body>
-    <header class="nav-top">
-      <div class="logo-container">
-        <img
-          src="{{ url_for('static', filename='images/Logo.png') }}"
-          alt="Logo"
-        />
-      </div>
-    </header>
-
     <div class="container" style="padding-top: 60px">
       <button
         onclick="window.location='{{ url_for('feed') }}'"
@@ -27,7 +18,7 @@
         Voltar
       </button>
 
-      <h2>Opinião de {{ post.autor.apelido }}</h2>
+      <h2>Opinião de {{ post.autor.apelido }}:</h2>
 
       <div class="post-container">
         <div class="user-box">
@@ -62,7 +53,7 @@
           </div>
         </div>
       </div>
-
+      <hr />
       <div class="comment-box">
         <form
           method="POST"
