@@ -20,15 +20,14 @@
     </header>
 
     <div class="container" style="padding-top: 60px">
-      <div class="header-post-view">
-        <button
-          onclick="window.location='{{ url_for('feed') }}'"
-          class="btn-voltar-seta"
-        >
-          &#8592;
-        </button>
-        <h2>Opinião de {{ post.autor.apelido }}</h2>
-      </div>
+      <button
+        onclick="window.location='{{ url_for('feed') }}'"
+        class="btn-voltar"
+      >
+        Voltar
+      </button>
+
+      <h2>Opinião de {{ post.autor.apelido }}</h2>
 
       <div class="post-container">
         <div class="user-box">
