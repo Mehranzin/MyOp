@@ -63,7 +63,6 @@
         </div>
       </div>
 
-      <h3>Responder:</h3>
       <div class="comment-box">
         <form
           method="POST"
@@ -72,7 +71,7 @@
           <textarea
             name="comentario"
             rows="2"
-            placeholder="Comente aqui..."
+            placeholder="Escreva sua reposta..."
             required
           ></textarea>
           <button type="submit">Comentar</button>
@@ -103,5 +102,13 @@
         <a href="{{ url_for('logout') }}">Sair</a>
       </nav>
     </footer>
+    <script>
+      document.querySelectorAll("textarea").forEach((t) => {
+        t.addEventListener("input", () => {
+          t.style.height = "auto";
+          t.style.height = t.scrollHeight + "px";
+        });
+      });
+    </script>
   </body>
 </html>

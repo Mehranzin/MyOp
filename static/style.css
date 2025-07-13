@@ -317,6 +317,7 @@ a:hover {
   flex-grow: 1;
   margin-bottom: 10px;
   font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
 .new-post-box button {
@@ -356,11 +357,11 @@ a:hover {
   border-radius: 6px;
   resize: none;
   min-height: 40px;
-  height: 60px;
   flex-grow: 1;
   margin-bottom: 8px;
   font-family: Arial, sans-serif;
   font-size: 0.9em;
+  overflow: hidden;
 }
 
 .comment-box button {
@@ -381,11 +382,19 @@ a:hover {
 }
 
 .container h2 {
+  color: #fff;
   text-align: center;
   margin-bottom: 25px;
 }
 
+.container h3 {
+  color: #fff;
+}
+
 .btn-voltar {
+  position: absolute;
+  top: 60px;
+  left: 10px;
   background-color: #ff2626;
   border: none;
   color: white;
@@ -393,12 +402,8 @@ a:hover {
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 15px;
   font-size: 0.9em;
-  display: inline-block;
   text-transform: lowercase;
-  width: auto;
-  float: left;
 }
 
 .btn-voltar:hover {

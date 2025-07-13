@@ -204,6 +204,13 @@
         const randomIndex = Math.floor(Math.random() * placeholders.length);
         textarea.placeholder = placeholders[randomIndex];
       });
+
+      document.querySelectorAll("textarea").forEach((t) => {
+        t.addEventListener("input", () => {
+          t.style.height = "auto";
+          t.style.height = t.scrollHeight + "px";
+        });
+      });
     </script>
   </body>
 </html>
