@@ -244,6 +244,11 @@ a:hover {
   font-weight: bold;
 }
 
+.nav-footer img {
+  width: 36px;
+  height: 36px;
+}
+
 .scroll-to-top {
   position: fixed;
   bottom: 100px;
