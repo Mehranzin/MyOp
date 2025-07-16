@@ -246,7 +246,13 @@ def ver_post(post_id):
         liked=liked,
         apelido=usuario.apelido
     )
+@app.route('/trending')
+def trending():
+    return render_template('trending.html')
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
-
