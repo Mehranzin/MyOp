@@ -224,7 +224,7 @@ a:hover {
   right: 0;
   width: 100%;
   background: #000;
-  padding: 15px 0;
+  padding: 14px 0;
   text-align: center;
   border-top: 1px solid #fff;
   z-index: 100;
@@ -245,8 +245,8 @@ a:hover {
 }
 
 .nav-footer img {
-  width: 23px;
-  height: 23px;
+  width: 24px;
+  height: 24px;
 }
 
 .scroll-to-top {
