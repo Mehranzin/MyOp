@@ -137,13 +137,7 @@
       <div class="modal-content">
         <span class="close-modal" id="closeModalBtn">&times;</span>
         <form method="POST" action="{{ url_for('feed') }}">
-          <textarea
-            id="texto"
-            name="texto"
-            rows="3"
-            placeholder="O que quer contar?"
-            required
-          ></textarea>
+          <textarea id="texto" name="texto" rows="3" required></textarea>
           <button type="submit">Postar</button>
         </form>
       </div>

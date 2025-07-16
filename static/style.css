@@ -440,7 +440,7 @@ button:active {
   background-color: white;
   border-radius: 50%;
   width: 60px;
-  height: 50;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -451,7 +451,7 @@ button:active {
 
 .open-post-btn img {
   width: 45px;
-  height: 45px;
+  height: 35px;
   object-fit: contain;
 }
 
