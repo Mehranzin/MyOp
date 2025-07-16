@@ -13,14 +13,39 @@
         <div class="nav-top">Perfil • Opinion</div>
     <footer class="nav-footer">
       <nav>
-        <a href="{{ url_for('perfil') }}">Perfil</a>
-        <a href="{{ url_for('feed') }}">Feed</a>
-        <a href="{{ url_for('logout') }}">Sair</a>
+        <a href="{{ url_for('feed') }}">
+          <img
+            src="{{ url_for('static', filename='images/home.png') }}"
+            alt="Feed"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('search') }}">
+          <img
+            src="{{ url_for('static', filename='images/search.png') }}"
+            alt="Search"
+            class="icone"
+          />
+        </a>
+
+        <a href="{{ url_for('trending') }}">
+          <img
+            src="{{ url_for('static', filename='images/trending.PNG') }}"
+            alt="Trending"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('perfil') }}">
+          <img
+            src="{{ url_for('static', filename='images/perfil.png') }}"
+            alt="Perfil"
+            class="icone"
+          />
+        </a>
       </nav>
     </footer>
 
       <hr />
-      <h2>Perfil</h2>
       <p><strong>Apelido:</strong> {{ apelido }}</p>
       <p><strong>Idade:</strong> {{ idade }}</p>
       <a href="{{ url_for('logout') }}">Sair</a>
