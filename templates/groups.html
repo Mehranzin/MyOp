@@ -16,6 +16,10 @@
         color: #fff;
       }
     </style>
+        <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
     <h2>FUNÇÃO DE GRUPOS EM BREVE !!</h2>
@@ -41,7 +45,7 @@
             src="{{ url_for('static', filename='images/trending.PNG') }}"
             alt="Trending"
             class="icone"
-          />
+          />  
         </a>
         <a href="{{ url_for('groups') }}">
           <img
@@ -58,6 +62,7 @@
           />
         </a>
       </nav>
+    </footer>
     </footer>
   </body>
 </html>
