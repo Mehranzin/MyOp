@@ -440,7 +440,7 @@ button:active {
   background-color: white;
   border-radius: 50%;
   width: 60px;
-  height: 60px;
+  height: 50;
   display: flex;
   justify-content: center;
   align-items: center;
