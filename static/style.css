@@ -234,7 +234,7 @@ a:hover {
 .nav-footer nav {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  gap: 30px;
   width: 100%;
 }
 
@@ -245,8 +245,8 @@ a:hover {
 }
 
 .nav-footer img {
-  width: 27px;
-  height: 27px;
+  width: 23px;
+  height: 23px;
 }
 
 .scroll-to-top {
