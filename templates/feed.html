@@ -185,40 +185,31 @@
       if (navFooter) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
-          if (currentScroll > lastScroll) {
-            navFooter.style.transform = "translateY(100%)";
-          } else {
-            navFooter.style.transform = "translateY(0%)";
-          }
+          navFooter.style.transform =
+            currentScroll > lastScroll ? "translateY(100%)" : "translateY(0%)";
           lastScroll = currentScroll;
         });
       }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const placeholders = [
-          "O que quer contar?",
-          "O que está pensando hoje?",
-          "O que tem pra hoje?",
-        ];
-        const textarea = document.getElementById("texto");
-        if (textarea) {
-          const randomIndex = Math.floor(Math.random() * placeholders.length);
-          textarea.placeholder = placeholders[randomIndex];
-        }
-
-        document.querySelectorAll("textarea").forEach((t) => {
-          t.addEventListener("input", () => {
-            t.style.height = "auto";
-            t.style.height = t.scrollHeight + 35 + "px";
-          });
-        });
-      });
 
       const openBtn = document.getElementById("openPostBtn");
       const modal = document.getElementById("modalPost");
       const closeBtn = document.getElementById("closeModalBtn");
 
       openBtn.addEventListener("click", () => {
+        const frases = [
+          "O que quer contar?",
+          "O que está pensando hoje?",
+          "O que tem pra hoje?",
+          "Compartilhe algo legal...",
+          "Fala aí, o que tá na mente?",
+        ];
+        const textarea = document.getElementById("texto");
+        if (textarea) {
+          const randomIndex = Math.floor(Math.random() * frases.length);
+          textarea.placeholder = frases[randomIndex];
+          textarea.value = ""; // limpa o campo se já tiver algo
+          textarea.style.height = "auto"; // reseta o height
+        }
         modal.style.display = "block";
       });
 
@@ -230,6 +221,15 @@
         if (event.target == modal) {
           modal.style.display = "none";
         }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("textarea").forEach((t) => {
+          t.addEventListener("input", () => {
+            t.style.height = "auto";
+            t.style.height = t.scrollHeight + 35 + "px";
+          });
+        });
       });
     </script>
   </body>
