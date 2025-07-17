@@ -55,7 +55,16 @@
       <hr />
       <p><strong>Apelido:</strong> {{ apelido }}</p>
       <p><strong>Idade:</strong> {{ idade }}</p>
-      <a href="{{ url_for('logout') }}">Sair</a>
+      <a href="{{ url_for('logout') }}" onclick="return confirmarLogout()">Sair</a>
+      
+      <scirpt>
+        <script>
+        function confirmarLogout() {
+          return confirm("Tem certeza que deseja sair da conta?");
+        }
+      </script>
+
+      </scirpt>
     </div>
   </body>
 </html>
