@@ -507,6 +507,9 @@ button:active {
     min-height: 30px;
     height: auto;
   }
+  .post-outro {
+    border-radius: 0 20px 20px 20px;
+  }
 }
 
 .resposta-numero {
