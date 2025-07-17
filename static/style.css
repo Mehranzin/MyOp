@@ -363,11 +363,11 @@ a:hover {
 }
 
 .btn-voltar-img:hover {
-  transform: scale(1.4);
+  transform: scale(1.2);
 }
 
 button:active {
-  transform: scale(1.4);
+  transform: scale(1.2);
 }
 
 .open-post-btn {
