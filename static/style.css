@@ -415,7 +415,9 @@ button:active {
 }
 
 .modal-content textarea {
-  width: 100%;
+  width: 90%;
+  display: block;
+  margin: 0 auto;
   background-color: #1a1a1a;
   border: 2px solid #555;
   color: #eee;
