@@ -229,8 +229,10 @@
           t.style.height = "auto";
 
           t.addEventListener("input", () => {
-            if (t.scrollHeight > t.clientHeight) {
-              t.style.height = t.scrollHeight + "px";
+            if (newHeight - currentHeight > lineHeight) {
+              t.style.height = currentHeight + lineHeight + "px";
+            } else {
+              t.style.height = newHeight + "px";
             }
           });
         });
