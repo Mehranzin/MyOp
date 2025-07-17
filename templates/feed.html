@@ -36,6 +36,7 @@
             <form
               method="GET"
               action="{{ url_for('delete_post', post_id=post.id) }}"
+              onsubmit="return confirmarExclusao()"
             >
               <button type="submit">Deletar Opinião</button>
             </form>
@@ -230,6 +231,10 @@
           });
         });
       });
+
+      function confirmarExclusao() {
+        return confirm("Tem certeza que deseja deletar sua opinião?");
+      }
     </script>
   </body>
 </html>
