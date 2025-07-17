@@ -197,18 +197,17 @@
 
       openBtn.addEventListener("click", () => {
         const frases = [
-          "O que quer contar?",
-          "O que está pensando hoje?",
-          "O que tem pra hoje?",
-          "Compartilhe algo legal...",
-          "Fala aí, o que tá na mente?",
+          "O que quer contar?...",
+          "O que está pensando hoje?...",
+          "O que tem pra hoje?...",
+          "Tem algo pra falar?...",
         ];
         const textarea = document.getElementById("texto");
         if (textarea) {
           const randomIndex = Math.floor(Math.random() * frases.length);
           textarea.placeholder = frases[randomIndex];
-          textarea.value = ""; // limpa o campo se já tiver algo
-          textarea.style.height = "auto"; // reseta o height
+          textarea.value = "";
+          textarea.style.height = "auto";
         }
         modal.style.display = "block";
       });
