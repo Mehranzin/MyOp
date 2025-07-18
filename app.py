@@ -277,8 +277,6 @@ def api_search():
     return jsonify({
         'usuarios': [
             {
-                'nome': u.nome,
-                'sobrenome': u.sobrenome,
                 'apelido': u.apelido
             } for u in usuarios
         ],
