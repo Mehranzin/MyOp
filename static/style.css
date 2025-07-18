@@ -165,7 +165,7 @@ a:hover {
 }
 
 .like-count {
-  margin-left: -3px;
+  margin-left: -4px;
   font-size: 14px;
 }
 
@@ -174,7 +174,7 @@ a:hover {
   gap: 10px;
   margin-top: 10px;
   align-items: center;
-  margin-left: -3px;
+  margin-left: -5px;
 }
 
 .icone {
