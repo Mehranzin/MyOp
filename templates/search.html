@@ -91,14 +91,26 @@
         usuariosLista.innerHTML = "";
         data.usuarios.forEach((u) => {
           const li = document.createElement("li");
-          li.innerHTML = `<a href="/perfil?usuario=${u.apelido}"><strong>${u.nome} ${u.sobrenome}</strong> (@${u.apelido})</a>`;
+          li.innerHTML = `<a href="/perfil?usuario=${u.apelido}"><strong>@${u.apelido}</strong></a>`;
           usuariosLista.appendChild(li);
         });
 
         postsLista.innerHTML = "";
         data.posts.forEach((p) => {
           const li = document.createElement("li");
-          li.innerHTML = `<strong>@${p.autor_apelido}:</strong> ${p.texto} <br><a href="/post/${p.id}">Ver post</a>`;
+          li.classList.add("post-container");
+          li.innerHTML = `
+            <div class="user-box">
+              <a href="/perfil?usuario=${p.autor_apelido}">@${p.autor_apelido}</a>
+            </div>
+            <div class="post-content">
+              ${p.texto}
+              <br />
+              <div class="post-acoes">
+                <a href="/post/${p.id}" style="color:#ff2626; font-weight:bold; text-decoration:none;">Ver post</a>
+              </div>
+            </div>
+          `;
           postsLista.appendChild(li);
         });
       });
