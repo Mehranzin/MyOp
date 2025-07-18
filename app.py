@@ -250,9 +250,41 @@ def ver_post(post_id):
 def trending():
     return render_template('trending.html')
 
-@app.route('/search')
-def search():
-    return render_template('search.html')
+@app.route('/api/search')
+def api_search():
+    query = request.args.get('q', '').strip()
+    if not query:
+        return jsonify({'usuarios': [], 'posts': []})
+
+    usuarios = User.query.filter(
+        or_(
+            User.nome.ilike(f"%{query}%"),
+            User.sobrenome.ilike(f"%{query}%"),
+            User.apelido.ilike(f"%{query}%")
+        )
+    ).all()
+
+    posts = Post.query.filter(
+        Post.texto.ilike(f"%{query}%")
+    ).all()
+
+    return jsonify({
+        'usuarios': [
+            {
+                'nome': u.nome,
+                'sobrenome': u.sobrenome,
+                'apelido': u.apelido
+            } for u in usuarios
+        ],
+        'posts': [
+            {
+                'id': p.id,
+                'texto': p.texto,
+                'autor_apelido': p.autor.apelido
+            } for p in posts
+        ]
+    })
+
 
 @app.route('/groups')
 def groups():

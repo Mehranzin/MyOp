@@ -1,17 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Seach • Opinon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Buscar • Opinion</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <style>
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
-    <p>Oque deseja pesquisar ?</p>
+    <div class="container">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Buscar usuários ou posts"
+      />
 
+      <h2>Usuários encontrados:</h2>
+      <ul id="usuariosResultado"></ul>
+
+      <h2>Posts encontrados:</h2>
+      <ul id="postsResultado"></ul>
+    </div>
     <footer class="nav-footer">
       <nav>
         <a href="{{ url_for('feed') }}">
@@ -28,7 +53,6 @@
             class="icone"
           />
         </a>
-
         <a href="{{ url_for('trending') }}">
           <img
             src="{{ url_for('static', filename='images/trending.PNG') }}"
@@ -52,5 +76,36 @@
         </a>
       </nav>
     </footer>
+    <script>
+      const input = document.getElementById("searchInput");
+      const usuariosLista = document.getElementById("usuariosResultado");
+      const postsLista = document.getElementById("postsResultado");
+
+      input.addEventListener("input", async () => {
+        const query = input.value.trim();
+        if (query === "") {
+          usuariosLista.innerHTML = "";
+          postsLista.innerHTML = "";
+          return;
+        }
+
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+        const data = await res.json();
+
+        usuariosLista.innerHTML = "";
+        data.usuarios.forEach((u) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="/perfil?usuario=${u.apelido}"><strong>${u.nome} ${u.sobrenome}</strong> (@${u.apelido})</a>`;
+          usuariosLista.appendChild(li);
+        });
+
+        postsLista.innerHTML = "";
+        data.posts.forEach((p) => {
+          const li = document.createElement("li");
+          li.innerHTML = `<strong>@${p.autor_apelido}:</strong> ${p.texto} <br><a href="/post/${p.id}">Ver post</a>`;
+          postsLista.appendChild(li);
+        });
+      });
+    </script>
   </body>
 </html>
