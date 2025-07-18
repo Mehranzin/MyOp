@@ -393,6 +393,10 @@ button:active {
   object-fit: contain;
 }
 
+.open-post-btn:focus {
+  outline: none;
+}
+
 .modal-post {
   display: none;
   position: fixed;
