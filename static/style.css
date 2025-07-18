@@ -495,7 +495,7 @@ button:active {
 
 .search-container {
   position: relative;
-  max-width: 100px;
+  max-width: 600px;
   margin: 0 auto 20px auto;
 }
 
@@ -525,7 +525,7 @@ button:active {
 .search-icon {
   position: absolute;
   left: 12px;
-  top: 50%;
+  top: 47%;
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
