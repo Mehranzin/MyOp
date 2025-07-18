@@ -95,26 +95,21 @@
 
         postsLista.innerHTML = "";
         data.posts.forEach((p) => {
-          if (
-            p.autor_apelido.toLowerCase() === query.toLowerCase() ||
-            query === ""
-          ) {
-            const li = document.createElement("li");
-            li.classList.add("post-container");
-            li.innerHTML = `
-              <div class="user-box">
-                <a href="/perfil?usuario=${p.autor_apelido}">@${p.autor_apelido}</a>
-              </div>
-              <div class="post-content">
-                ${p.texto}
-                <br />
-                <div class="post-acoes">
-                  <a href="/post/${p.id}">Ver post</a>
-                </div>
-              </div>
-            `;
-            postsLista.appendChild(li);
-          }
+          const li = document.createElement("li");
+          li.classList.add("post-container");
+          li.innerHTML = `
+        <div class="user-box">
+          <a href="/perfil?usuario=${p.autor_apelido}">@${p.autor_apelido}</a>
+        </div>
+        <div class="post-content">
+          ${p.texto}
+          <br />
+          <div class="post-acoes">
+            <a href="/post/${p.id}">Ver post</a>
+          </div>
+        </div>
+      `;
+          postsLista.appendChild(li);
         });
       });
     </script>
