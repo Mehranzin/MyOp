@@ -518,7 +518,7 @@ button:active {
 }
 
 #searchInput:focus {
-  border-color: #ff2626 1px;
+  border-color: #ff2626 5px;
 }
 
 .search-icon {
