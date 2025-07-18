@@ -372,7 +372,7 @@ button:active {
 
 .open-post-btn {
   position: fixed;
-  bottom: 130px;
+  bottom: 80px;
   right: 20px;
   background-color: white;
   border-radius: 50%;
