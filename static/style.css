@@ -460,6 +460,7 @@ button:active {
   gap: 5px;
   padding: 0;
   list-style: none;
+  margin-left: 20px;
 }
 
 .usuario-item {
@@ -483,7 +484,13 @@ button:active {
 }
 
 .usuario-item a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+}
+
+#postsResultado {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 @media (max-width: 600px) {
