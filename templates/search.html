@@ -21,6 +21,27 @@
       li {
         margin-bottom: 10px;
       }
+      /* Caixinha arredondada pro usuário */
+      .usuario-item {
+        background: #222;
+        border-radius: 12px;
+        padding: 10px 15px;
+        display: inline-block;
+        /* pra não pegar a largura toda */
+        box-shadow: 0 0 5px rgba(255, 38, 38, 0.5);
+        transition: background-color 0.2s;
+      }
+      .usuario-item:hover {
+        background: #ff2626;
+      }
+      .usuario-item a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .usuario-item a:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
@@ -91,7 +112,8 @@
         usuariosLista.innerHTML = "";
         data.usuarios.forEach((u) => {
           const li = document.createElement("li");
-          li.innerHTML = `<a href="/perfil?usuario=${u.apelido}"><strong>@${u.apelido}</strong></a>`;
+          li.classList.add("usuario-item");
+          li.innerHTML = `<a href="/perfil?usuario=${u.apelido}">@${u.apelido}</a>`;
           usuariosLista.appendChild(li);
         });
 
@@ -107,7 +129,7 @@
               ${p.texto}
               <br />
               <div class="post-acoes">
-                <a href="/post/${p.id}" style="color:#ff2626; font-weight:bold; text-decoration:none;">Ver post</a>
+                <a href="/post/${p.id}">Ver post</a>
               </div>
             </div>
           `;
