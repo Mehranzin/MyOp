@@ -14,28 +14,31 @@
         padding: 10px;
         margin-bottom: 20px;
       }
-      ul {
-        list-style: none;
-        padding: 0;
-      }
       li {
         margin-bottom: 10px;
       }
-      /* Caixinha arredondada pro usuário */
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        padding: 0;
+        list-style: none;
+      }
+
       .usuario-item {
         background: #000000;
         border-radius: 12px;
         padding: 10px 15px;
-        display: inline-block;
-        gap: 5px;
-        box-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        border: 2px solid gray;
+        color: white;
+        cursor: pointer;
         transition: background-color 0.2s;
       }
       .usuario-item:hover {
-        background: #ff2626;
+        background-color: #222222;
       }
       .usuario-item a {
-        color: #fff;
+        color: #ff0000;
         text-decoration: none;
         font-weight: bold;
       }
