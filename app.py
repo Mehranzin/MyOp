@@ -285,7 +285,6 @@ def api_search():
         ]
     })
 
-
 @app.route('/groups')
 def groups():
     return render_template('groups.html')
