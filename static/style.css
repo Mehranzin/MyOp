@@ -495,7 +495,7 @@ button:active {
 
 .search-container {
   position: relative;
-  max-width: 600px;
+  max-width: 100px;
   margin: 0 auto 20px auto;
 }
 
