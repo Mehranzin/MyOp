@@ -9,11 +9,28 @@
       href="{{ url_for('static', filename='style.css') }}"
     />
     <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        background: #111;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+
       input[type="text"] {
         width: 100%;
         padding: 10px;
         margin-bottom: 20px;
+        border-radius: 8px;
+        border: none;
       }
+
+      h2 {
+        margin-top: 30px;
+        margin-bottom: 10px;
+        font-size: 20px;
+      }
+
       ul {
         display: flex;
         flex-wrap: wrap;
@@ -21,28 +38,106 @@
         padding: 0;
         list-style: none;
       }
+
       li {
-        margin-bottom: 10px;
+        list-style: none;
       }
+
       .usuario-item {
         background: #000000;
         border-radius: 12px;
         padding: 10px 15px;
-        display: inline-block;
-        gap: 5px;
-        border: #555555 1px;
+        border: 1px solid #555555;
+        color: white;
+        cursor: pointer;
         transition: background-color 0.2s;
       }
+
       .usuario-item:hover {
-        background: #ffffff;
+        background-color: #222222;
       }
+
       .usuario-item a {
         color: #ff0000;
         text-decoration: none;
         font-weight: bold;
       }
+
       .usuario-item a:hover {
+        text-decoration: underline;
+      }
+
+      /* POSTS */
+
+      #postsResultado {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .post-container {
+        width: 100%;
+        background: #000000;
+        border: 1px solid #444;
+        border-radius: 12px;
+        padding: 15px;
+        box-sizing: border-box;
+      }
+
+      .user-box {
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .user-box a {
+        color: #ff0000;
         text-decoration: none;
+      }
+
+      .user-box a:hover {
+        text-decoration: underline;
+      }
+
+      .post-content {
+        margin-top: 5px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+
+      .post-acoes {
+        margin-top: 10px;
+      }
+
+      .post-acoes a {
+        color: #00bfff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .post-acoes a:hover {
+        text-decoration: underline;
+      }
+
+      .nav-footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: #000;
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid #333;
+      }
+
+      .nav-footer nav {
+        display: flex;
+        gap: 30px;
+      }
+
+      .icone {
+        width: 24px;
+        height: 24px;
+        filter: brightness(1.2);
       }
     </style>
   </head>
