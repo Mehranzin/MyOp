@@ -10,6 +10,10 @@
     />
   </head>
   <body>
+        <div class="nav-top"><Search></Search> • Opinion</div>
+    <div class="container">
+
+      <hr />
     <div class="container">
       <div class="search-container">
         <img
@@ -112,6 +116,22 @@
           postsLista.appendChild(li);
         });
       });
+      
+      /*SCRIPT DE SUMIR A NAV*/
+      let lastScroll = 0;
+      const navFooter = document.querySelector(".nav-footer");
+
+      if (navFooter) {
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
+          if (currentScroll > lastScroll) {
+            navFooter.style.transform = "translateY(100%)";
+          } else {
+            navFooter.style.transform = "translateY(0%)";
+          }
+          lastScroll = currentScroll;
+        });
+      }
     </script>
   </body>
 </html>
