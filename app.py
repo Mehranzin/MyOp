@@ -250,6 +250,10 @@ def ver_post(post_id):
 def trending():
     return render_template('trending.html')
 
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
 @app.route('/api/search')
 def api_search():
     query = request.args.get('q', '').strip()
