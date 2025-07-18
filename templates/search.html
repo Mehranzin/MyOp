@@ -119,15 +119,24 @@
       /*SCRIPT DE SUMIR A NAV*/
       let lastScroll = 0;
       const navFooter = document.querySelector(".nav-footer");
+      let timeoutId;
 
       if (navFooter) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
+
+          clearTimeout(timeoutId);
+
           if (currentScroll > lastScroll) {
-            navFooter.style.transform = "translateY(100%)";
+            timeoutId = setTimeout(() => {
+              navFooter.style.transform = "translateY(100%)";
+            }, 170);
           } else {
-            navFooter.style.transform = "translateY(0%)";
+            timeoutId = setTimeout(() => {
+              navFooter.style.transform = "translateY(0%)";
+            }, 80);
           }
+
           lastScroll = currentScroll;
         });
       }
