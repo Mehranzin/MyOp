@@ -183,15 +183,21 @@
 
       let lastScroll = 0;
       const navFooter = document.querySelector(".nav-footer");
-      if (navFooter) {
+      const openPostBtn = document.getElementById("openPostBtn");
+
+      if (navFooter && openPostBtn) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
+
           navFooter.style.transform =
             currentScroll > lastScroll ? "translateY(100%)" : "translateY(0%)";
+
+          openPostBtn.style.transform =
+            currentScroll > lastScroll ? "translateY(10px)" : "translateY(0px)";
+
           lastScroll = currentScroll;
         });
       }
-
       const openBtn = document.getElementById("openPostBtn");
       const modal = document.getElementById("modalPost");
       const closeBtn = document.getElementById("closeModalBtn");
