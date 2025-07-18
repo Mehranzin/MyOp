@@ -188,12 +188,17 @@
       if (navFooter && openPostBtn) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
+          const descendo = currentScroll > lastScroll;
 
-          navFooter.style.transform =
-            currentScroll > lastScroll ? "translateY(100%)" : "translateY(0%)";
+          navFooter.style.transform = descendo
+            ? "translateY(100%)"
+            : "translateY(0%)";
 
-          openPostBtn.style.transform =
-            currentScroll > lastScroll ? "translateY(50px)" : "translateY(0px)";
+          setTimeout(() => {
+            openPostBtn.style.transform = descendo
+              ? "translateY(50px)"
+              : "translateY(0px)";
+          }, 120);
 
           lastScroll = currentScroll;
         });
