@@ -190,15 +190,23 @@
           const currentScroll = window.pageYOffset;
           const descendo = currentScroll > lastScroll;
 
-          navFooter.style.transform = descendo
-            ? "translateY(100%)"
-            : "translateY(0%)";
+          if (descendo) {
+            setTimeout(() => {
+              navFooter.style.transform = "translateY(100%)";
+            }, 120);
 
-          setTimeout(() => {
-            openPostBtn.style.transform = descendo
-              ? "translateY(50px)"
-              : "translateY(0px)";
-          }, 120);
+            setTimeout(() => {
+              openPostBtn.style.transform = "translateY(50px)";
+            }, 180);
+          } else {
+            setTimeout(() => {
+              navFooter.style.transform = "translateY(0%)";
+            }, 180);
+
+            setTimeout(() => {
+              openPostBtn.style.transform = "translateY(0px)";
+            }, 60);
+          }
 
           lastScroll = currentScroll;
         });
