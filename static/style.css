@@ -493,6 +493,46 @@ button:active {
   margin: 0;
 }
 
+.search-container {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto 20px auto;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 10px 12px 10px 40px;
+  border-radius: 25px;
+  border: 1.5px solid #ccc;
+  font-size: 1em;
+  color: #333;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+}
+
+#searchInput::placeholder {
+  color: #999;
+  font-style: italic;
+  font-weight: 500;
+  content: "O que deseja pesquisar?";
+}
+
+#searchInput:focus {
+  border-color: #ff2626;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 10px 12px;
