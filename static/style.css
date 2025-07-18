@@ -393,10 +393,16 @@ button:active {
   object-fit: contain;
 }
 
-.open-post-btn:focus {
-  outline: none;
+.open-post-btn {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
-
+.open-post-btn:focus {
+  outline: none !important;
+}
+.open-post-btn:focus-visible {
+  outline: none !important;
+}
 .modal-post {
   display: none;
   position: fixed;
