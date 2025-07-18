@@ -11,7 +11,18 @@
   </head>
   <body>
     <div class="container">
-      <input type="text" id="searchInput" placeholder="Pesquisar" />
+      <div class="search-container">
+        <img
+          src="{{ url_for('static', filename='images/search.png') }}"
+          alt="search icon"
+          class="search-icon"
+        />
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="O que deseja pesquisar?"
+        />
+      </div>
 
       <h2>Usuários encontrados:</h2>
       <ul id="usuariosResultado"></ul>
@@ -84,21 +95,26 @@
 
         postsLista.innerHTML = "";
         data.posts.forEach((p) => {
-          const li = document.createElement("li");
-          li.classList.add("post-container");
-          li.innerHTML = `
-            <div class="user-box">
-              <a href="/perfil?usuario=${p.autor_apelido}">@${p.autor_apelido}</a>
-            </div>
-            <div class="post-content">
-              ${p.texto}
-              <br />
-              <div class="post-acoes">
-                <a href="/post/${p.id}">Ver post</a>
+          if (
+            p.autor_apelido.toLowerCase() === query.toLowerCase() ||
+            query === ""
+          ) {
+            const li = document.createElement("li");
+            li.classList.add("post-container");
+            li.innerHTML = `
+              <div class="user-box">
+                <a href="/perfil?usuario=${p.autor_apelido}">@${p.autor_apelido}</a>
               </div>
-            </div>
-          `;
-          postsLista.appendChild(li);
+              <div class="post-content">
+                ${p.texto}
+                <br />
+                <div class="post-acoes">
+                  <a href="/post/${p.id}">Ver post</a>
+                </div>
+              </div>
+            `;
+            postsLista.appendChild(li);
+          }
         });
       });
     </script>
