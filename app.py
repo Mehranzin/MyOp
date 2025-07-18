@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models import db, User, Post, Comment, Like
 from datetime import datetime, timezone, timedelta
 from config import Config
+from flask import jsonify
+from sqlalchemy import or_
 
 app = Flask(__name__)
 app.config.from_object(Config)
