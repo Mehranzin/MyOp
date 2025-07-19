@@ -428,8 +428,8 @@ button:active {
 
 .modal-content {
   background-color: #070707;
-  margin: 12% auto;
-  padding: 20px 22px;
+  margin: 16% auto;
+  padding: 18px 22px;
   border: 2px solid #ff2626;
   width: 100%;
   max-width: 300px;
@@ -438,6 +438,7 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 200px;
 }
 
 .modal-content textarea {
