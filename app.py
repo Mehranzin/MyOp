@@ -90,7 +90,7 @@ def login():
         email = request.form.get('email')
         senha = request.form.get('senha')
 
-        usuario = User.query.filter_by(email=email).first()
+        usuario = User.query.filter(db.func.lower(User.email) == email.lower()).first()
         if usuario and usuario.checa_senha(senha):
             session.permanent = True
             session['user_id'] = usuario.id
