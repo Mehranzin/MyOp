@@ -71,13 +71,7 @@
               />
             </a>
 
-            <a
-              href="{{ url_for('ver_post', post_id=post.id) }}"
-              style="margin-left: 5px; text-decoration: none; font-size: 13px"
-            >
-              Ver <span class="resposta-numero">{{ comentarios_count }}</span>
-              resposta{{ 's' if comentarios_count != 1 else '' }}
-            </a>
+            <span class="resposta-numero">{{ comentarios_count }}</span>
           </div>
         </div>
       </div>
