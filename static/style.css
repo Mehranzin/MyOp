@@ -543,6 +543,13 @@ button:active {
   opacity: 0.7;
 }
 
+.erro {
+  color: #ff5f5f;
+  font-size: 0.9em;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 10px 12px;
