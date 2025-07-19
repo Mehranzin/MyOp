@@ -168,6 +168,15 @@ a:hover {
   margin-left: -6px;
   font-size: 14px;
   vertical-align: middle;
+  font-weight: 600;
+}
+
+.resposta-numero {
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: -6px;
+  vertical-align: middle;
+  font-weight: 600;
 }
 
 .post-acoes {
@@ -610,13 +619,6 @@ button:active {
   .post-outro {
     border-radius: 0 20px 20px 20px;
   }
-}
-
-.resposta-numero {
-  font-size: 14px;
-  font-weight: normal;
-  margin-left: -6px;
-  vertical-align: middle;
 }
 
 img,
