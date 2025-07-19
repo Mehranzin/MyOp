@@ -270,10 +270,9 @@ def api_search():
 def groups():
     return render_template('groups.html')
 
-# Rota segura para mostrar uso do banco (só admin logado com seu email)
 @app.route('/admin/uso')
 def admin_uso_banco():
-    if 'user_id' not in session or session.get('user_email') != 'Mehranmesrob@gmail.com':
+    if 'user_id' not in session or session.get('user_email') != 'mehranmesrob@gmail.com':
         return redirect(url_for('login'))
 
     query = text("""
