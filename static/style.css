@@ -428,7 +428,8 @@ button:active {
 
 .modal-content {
   background-color: #070707;
-  margin: 16% auto;
+  margin: 0 auto;
+  margin-top: 24%;
   padding: 18px 22px;
   border: 2px solid #ff2626;
   width: 100%;
@@ -438,7 +439,8 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 200px;
+  justify-content: center;
+  height: auto;
 }
 
 .modal-content textarea {
@@ -446,13 +448,13 @@ button:active {
   background-color: #1a1a1a;
   border: 2px solid #555;
   color: #eee;
-  padding: 14px;
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 8px;
   resize: none;
-  min-height: 120px;
+  height: 100px;
   font-family: Arial, sans-serif;
   font-size: 1em;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   box-sizing: border-box;
 }
 
