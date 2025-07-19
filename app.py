@@ -55,16 +55,29 @@ def register():
         return redirect(url_for('feed'))
 
     if request.method == 'POST':
-        nome = request.form.get('nome')
-        sobrenome = request.form.get('sobrenome')
-        email = request.form.get('email')
-        idade = request.form.get('idade')
-        senha = request.form.get('senha')
-        confirma_senha = request.form.get('confirma_senha')
-        apelido = request.form.get('apelido')
+        nome = request.form.get('nome', '').strip()
+        sobrenome = request.form.get('sobrenome', '').strip()
+        email = request.form.get('email', '').strip()
+        idade = request.form.get('idade', '').strip()
+        senha = request.form.get('senha', '').strip()
+        confirma_senha = request.form.get('confirma_senha', '').strip()
+        apelido = request.form.get('apelido', '').strip()
 
+        # Verificações básicas
         if not (nome and sobrenome and email and idade and senha and confirma_senha):
             flash('Preencha todos os campos.', 'warning')
+            return redirect(url_for('register'))
+
+        if '@' not in email or '.' not in email:
+            flash('Email inválido.', 'danger')
+            return redirect(url_for('register'))
+
+        if not idade.isdigit() or int(idade) < 10:
+            flash('Idade inválida.', 'danger')
+            return redirect(url_for('register'))
+
+        if len(senha) < 6:
+            flash('A senha deve ter pelo menos 6 caracteres.', 'danger')
             return redirect(url_for('register'))
 
         if senha != confirma_senha:
@@ -76,6 +89,9 @@ def register():
             return redirect(url_for('register'))
 
         if apelido:
+            if len(apelido) < 3:
+                flash('Apelido deve ter pelo menos 3 caracteres.', 'danger')
+                return redirect(url_for('register'))
             if User.query.filter_by(apelido=apelido).first():
                 flash('Apelido já usado.', 'warning')
                 return redirect(url_for('register'))
@@ -85,7 +101,13 @@ def register():
                 flash('Limite de apelidos esgotado.', 'danger')
                 return redirect(url_for('register'))
 
-        novo = User(nome=nome, sobrenome=sobrenome, email=email, idade=int(idade), apelido=apelido)
+        novo = User(
+            nome=nome,
+            sobrenome=sobrenome,
+            email=email,
+            idade=int(idade),
+            apelido=apelido
+        )
         novo.set_senha(senha)
 
         db.session.add(novo)
