@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Uso do Banco de Dados</title>
+    <style>
+      body {
+        background: #111;
+        color: #ccc;
+        font-family: Arial, sans-serif;
+        padding: 30px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        padding: 12px;
+        border-bottom: 1px solid #333;
+        text-align: left;
+      }
+      th {
+        background-color: #222;
+      }
+      tr:hover {
+        background-color: #1a1a1a;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Uso do Banco de Dados</h1>
+    <p><strong>Tamanho total:</strong> {{ total }}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Tabela</th>
+          <th>Tamanho</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tabela, tamanho, bytes in tabelas %}
+        <tr>
+          <td>{{ tabela }}</td>
+          <td>{{ tamanho }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

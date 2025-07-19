@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models import db, User, Post, Comment, Like
 from datetime import datetime, timezone, timedelta
 from config import Config
-from sqlalchemy import or_
+from sqlalchemy import or_, text
 from forms import RegistrationForm
 
 app = Flask(__name__)
@@ -94,6 +94,7 @@ def login():
         if usuario and usuario.checa_senha(senha):
             session.permanent = True
             session['user_id'] = usuario.id
+            session['user_email'] = usuario.email  # salva o email na sessão
             flash('Login bem-sucedido.', 'success')
             return redirect(url_for('feed'))
         flash('Credenciais inválidas.', 'danger')
@@ -103,6 +104,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
+    session.pop('user_email', None)
     flash('Saiu da conta.', 'info')
     return redirect(url_for('login'))
 
@@ -267,6 +269,29 @@ def api_search():
 @app.route('/groups')
 def groups():
     return render_template('groups.html')
+
+# Rota segura para mostrar uso do banco (só admin logado com seu email)
+@app.route('/admin/uso')
+def admin_uso_banco():
+    if 'user_id' not in session or session.get('user_email') != 'Mehranmesrob@gmail.com':
+        return redirect(url_for('login'))
+
+    query = text("""
+        SELECT 
+            relname AS tabela,
+            pg_size_pretty(pg_total_relation_size(relid)) AS tamanho,
+            pg_total_relation_size(relid) AS bytes
+        FROM pg_catalog.pg_statio_user_tables
+        ORDER BY pg_total_relation_size(relid) DESC;
+    """)
+    resultado = db.session.execute(query).fetchall()
+
+    query_total = text("""
+        SELECT pg_size_pretty(pg_database_size(current_database())) AS total
+    """)
+    total = db.session.execute(query_total).scalar()
+
+    return render_template('uso_banco.html', tabelas=resultado, total=total)
 
 if __name__ == '__main__':
     app.run(debug=True)
