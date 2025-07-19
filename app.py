@@ -1,9 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from models import db, User, Post, Comment, Like
 from datetime import datetime, timezone, timedelta
 from config import Config
-from flask import jsonify
 from sqlalchemy import or_
+from forms import RegistrationForm
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -47,23 +47,6 @@ def index():
     if session.get('user_id'):
         return redirect(url_for('feed'))
     return redirect(url_for('login'))
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if session.get('user_id'):
-        flash('Já está logado.', 'info')
-        return redirect(url_for('feed'))
-
-    if request.method == 'POST':
-        nome = request.form.get('nome', '').strip()
-        sobrenome = request.form.get('sobrenome', '').strip()
-        email = request.form.get('email', '').strip()
-        idade = request.form.get('idade', '').strip()
-        senha = request.form.get('senha', '').strip()
-        confirma_senha = request.form.get('confirma_senha', '').strip()
-        apelido = request.form.get('apelido', '').strip()
-
-from forms import RegistrationForm
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -249,6 +232,7 @@ def ver_post(post_id):
         liked=liked,
         apelido=usuario.apelido
     )
+
 @app.route('/trending')
 def trending():
     return render_template('trending.html')
@@ -276,18 +260,8 @@ def api_search():
     ).all()
 
     return jsonify({
-        'usuarios': [
-            {
-                'apelido': u.apelido
-            } for u in usuarios
-        ],
-        'posts': [
-            {
-                'id': p.id,
-                'texto': p.texto,
-                'autor_apelido': p.autor.apelido
-            } for p in posts
-        ]
+        'usuarios': [{'apelido': u.apelido} for u in usuarios],
+        'posts': [{'id': p.id, 'texto': p.texto, 'autor_apelido': p.autor.apelido} for p in posts]
     })
 
 @app.route('/groups')
