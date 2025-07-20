@@ -229,6 +229,7 @@ a:hover {
   position: relative;
   z-index: 10;
 }
+
 .nav-footer {
   position: fixed;
   bottom: 0;
@@ -254,6 +255,7 @@ a:hover {
   color: #fff;
   font-size: 1.4em;
   font-weight: bold;
+  display: inline-block; /* Makes links side-by-side */
 }
 
 .nav-footer img {
@@ -380,8 +382,8 @@ button:active {
   border-radius: 16px;
   border: none;
   width: 100%;
-  height: 75px;
-  min-height: 75px;
+  height: 80px; /* Slightly lower height */
+  min-height: 80px; /* Adjusted min height */
   max-height: 150px;
   color: #ffffff;
   font-family: sans-serif;
@@ -636,11 +638,11 @@ a img:active {
   border: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+}
 
-  button,
-  button:focus,
-  button:active {
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-  }
+button,
+button:focus,
+button:active {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
