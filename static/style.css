@@ -260,100 +260,6 @@ a:hover {
   height: 24px;
 }
 
-.new-post-box {
-  background-color: #000;
-  border: 3px solid #fff;
-  border-radius: 8px;
-  padding: 20px;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.new-post-box form {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.new-post-box textarea {
-  background-color: #1a1a1a;
-  border: 2px solid #555;
-  color: #eee;
-  padding: 12px;
-  border-radius: 8px;
-  resize: none;
-  min-height: 80px;
-  height: 100px;
-  flex-grow: 1;
-  margin-bottom: 10px;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-}
-
-.new-post-box button {
-  background-color: #ff2626;
-  border-radius: 4px;
-  padding: 12px;
-  font-size: 1.1em;
-  color: white;
-  font-weight: bold;
-  align-self: center;
-  width: calc(100% - 0px);
-  margin-top: auto;
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-.comment-box {
-  background-color: #000;
-  border: 2px solid #ff2626;
-  border-radius: 6px;
-  padding: 15px 20px;
-  margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.comment-box form {
-  display: flex;
-  flex-direction: column;
-}
-
-.comment-box textarea {
-  background-color: #1a1a1a;
-  border: 1px solid #777;
-  color: #eee;
-  padding: 10px;
-  border-radius: 6px;
-  resize: none;
-  min-height: 40px;
-  flex-grow: 1;
-  margin-bottom: 8px;
-  font-family: Arial, sans-serif;
-  font-size: 0.9em;
-  overflow: hidden;
-}
-
-.comment-box button {
-  background-color: #ff2626;
-  border-radius: 4px;
-  padding: 8px 15px;
-  font-size: 0.9em;
-  color: white;
-  font-weight: bold;
-  width: auto;
-  align-self: flex-end;
-  margin-top: 5px;
-  cursor: pointer;
-}
-
-.comment-box button:hover {
-  background-color: #cc2020;
-}
-
 .container h2 {
   color: #fff;
   text-align: center;
@@ -414,8 +320,10 @@ button:active {
 .open-post-btn:focus-visible {
   outline: none !important;
 }
-.modal-post {
-  display: none;
+
+/* Nova caixa de postagem como um "modal" */
+.container_chat_bot {
+  display: none; /* Inicialmente escondida */
   position: fixed;
   z-index: 999;
   left: 0;
@@ -424,68 +332,169 @@ button:active {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.7);
+  flex-direction: column; /* Para centralizar o conteúdo verticalmente */
+  justify-content: center; /* Centraliza verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
 }
 
-.modal-content {
-  background-color: #070707;
-  margin: 0 auto;
-  margin-top: 24%;
-  padding: 18px 22px;
-  border: 2px solid #ff2626;
+/* Conteúdo da nova caixa */
+.container_chat_bot .container-chat-options {
+  position: relative;
+  display: flex;
+  background: linear-gradient(
+    to bottom right,
+    #000000,
+    #000000,
+    #000000,
+    #000000,
+    #000000
+  );
+  border-radius: 16px;
+  padding: 1px;
+  overflow: hidden;
+  max-width: 300px; /* Mantido o max-width para o design */
   width: 100%;
-  max-width: 300px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #000000aa;
+  border: 4px solid #ff0000; /* Borda da caixa principal */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+}
+
+.container_chat_bot .container-chat-options .chat {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 15px;
+  width: 100%;
+  overflow: hidden;
 }
 
-.modal-content textarea {
+.container_chat_bot .container-chat-options .chat .chat-bot {
+  position: relative;
+  display: flex;
+}
+
+.container_chat_bot .chat .chat-bot textarea {
+  background-color: transparent;
+  border-radius: 16px;
+  border: none;
   width: 100%;
-  background-color: #1a1a1a;
-  border: 2px solid #555;
-  color: #eee;
-  padding: 12px;
-  border-radius: 8px;
+  height: 50px; /* Altura inicial */
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 10px;
   resize: none;
-  height: 100px;
-  font-family: Arial, sans-serif;
-  font-size: 1em;
-  margin-bottom: 12px;
-  box-sizing: border-box;
+  outline: none;
 }
 
-.modal-content button {
-  background-color: #ff2626;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 1.1em;
-  color: white;
-  font-weight: bold;
-  width: 100%;
+.container_chat_bot .chat .chat-bot textarea::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.container_chat_bot .chat .chat-bot textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container_chat_bot .chat .chat-bot textarea::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.container_chat_bot .chat .chat-bot textarea::-webkit-scrollbar-thumb:hover {
+  background: #ff0000;
+  cursor: pointer;
+}
+
+.container_chat_bot .chat .chat-bot textarea::placeholder {
+  color: #ffffff;
+  transition: all 0.3s ease;
+}
+.container_chat_bot .chat .chat-bot textarea:focus::placeholder {
+  color: #757575;
+}
+
+.container_chat_bot .chat .options {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.container_chat_bot .chat .options .btns-add {
+  display: flex;
+  gap: 8px;
+}
+
+.container_chat_bot .chat .options .btns-add button {
+  display: flex;
+  color: #ff0000;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.container_chat_bot .chat .options .btns-add button:hover {
+  transform: translateY(-5px);
+  color: #660000;
+}
+
+.container_chat_bot .chat .options .btn-submit {
+  display: flex;
+  padding: 2px;
+  background-image: linear-gradient(to top, #292929, #494949, #292929);
+  border-radius: 10px;
+  box-shadow: inset 0 6px 2px -4px rgba(255, 0, 0, 0.5);
   cursor: pointer;
   border: none;
-  transition: background 0.2s ease-in-out;
+  outline: none;
+  transition: all 0.15s ease;
 }
 
-.modal-content button:hover {
-  background-color: #cc1f1f;
+.container_chat_bot .chat .options .btn-submit i {
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(3px);
+  color: #ffffff;
+}
+.container_chat_bot .chat .options .btn-submit svg {
+  transition: all 0.3s ease;
+}
+.container_chat_bot .chat .options .btn-submit:hover svg {
+  color: #ff0000;
 }
 
-.close-modal {
+.container_chat_bot .chat .options .btn-submit:focus svg {
+  color: #ffffff;
+  filter: drop-shadow(0 0 5px #ff0000);
+  transform: scale(1.1) rotate(45deg) translateX(-2px) translateY(1px);
+}
+
+.container_chat_bot .chat .options .btn-submit:active {
+  transform: scale(0.92);
+}
+
+/* Botão de fechar para a nova caixa de postagem */
+.close-new-post-box {
   color: #aaa;
   font-size: 26px;
   font-weight: bold;
-  align-self: flex-end;
-  margin-bottom: 10px;
+  position: absolute; /* Posição absoluta dentro do contêiner_chat_bot */
+  top: 8px;
+  right: 15px;
   cursor: pointer;
+  z-index: 1000; /* Acima de outros elementos */
+  background: transparent; /* Certifique-se de que não tem fundo extra */
 }
 
-.close-modal:hover {
+.close-new-post-box:hover,
+.close-new-post-box:focus {
   color: #ff2626;
+  text-decoration: none;
 }
 
 #usuariosResultado {
@@ -609,27 +618,6 @@ button:active {
     right: 5px;
   }
 
-  .scroll-to-top {
-    bottom: 80px;
-    width: 60px;
-    height: 60px;
-    right: 15px;
-  }
-
-  .scroll-to-top img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .new-post-box textarea {
-    min-height: 60px;
-    height: auto;
-  }
-
-  .comment-box textarea {
-    min-height: 30px;
-    height: auto;
-  }
   .post-outro {
     border-radius: 0 20px 20px 20px;
   }

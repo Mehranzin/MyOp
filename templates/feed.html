@@ -14,6 +14,62 @@
     <div class="container">
       <hr />
 
+      <div class="container_chat_bot" id="newPostBox">
+        <div class="container-chat-options">
+          <div class="chat">
+            <form method="POST" action="{{ url_for('feed') }}" id="postForm">
+              <div class="chat-bot">
+                <textarea id="chat_bot" name="texto" required></textarea>
+              </div>
+              <div class="options">
+                <div class="btns-add">
+                  <button type="button">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 8v8a5 5 0 1 0 10 0V6.5a3.5 3.5 0 1 0-7 0V15a2 2 0 0 0 4 0V8"
+                      ></path>
+                    </svg>
+                  </button>
+                  <button type="button" id="emojiButton">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12s12-5.373 12-12s-5.373-12-12-12zm-3.5 8c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5zm7 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5zm-3.5 10c-3.14 0-5.738-2.203-6.49-5h12.98c-.752 2.797-3.35 5-6.49 5z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <button type="submit" class="btn-submit">
+                  <i>
+                    <svg viewBox="0 0 512 512">
+                      <path
+                        fill="currentColor"
+                        d="M473 39.05a24 24 0 0 0-25.5-5.46L47.47 185h-.08a24 24 0 0 0 1 45.16l.41.13l137.3 58.63a16 16 0 0 0 15.54-3.59L422 80a7.07 7.07 0 0 1 10 10L226.66 310.26a16 16 0 0 0-3.59 15.54l58.65 137.38c.06.2.12.38.19.57c3.2 9.27 11.3 15.81 21.09 16.25h1a24.63 24.63 0 0 0 23-15.46L478.39 64.62A24 24 0 0 0 473 39.05"
+                      ></path>
+                    </svg>
+                  </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <span class="close-new-post-box" id="closeNewPostBox">&times;</span>
+      </div>
       {% if posts %} {% for post, tempo, likes_count, comentarios_count,
       comentarios, liked in posts %}
       <div class="post-container">
@@ -128,17 +184,22 @@
       />
     </div>
 
-    <div class="modal-post" id="modalPost">
-      <div class="modal-content">
-        <span class="close-modal" id="closeModalBtn">&times;</span>
-        <form method="POST" action="{{ url_for('feed') }}">
-          <textarea id="texto" name="texto" rows="3" required></textarea>
-          <button type="submit">Postar</button>
-        </form>
-      </div>
-    </div>
-
     <script>
+      document
+        .getElementById("emojiButton")
+        .addEventListener("click", function () {
+          const textarea = document.getElementById("chat_bot");
+          if ("showPicker" in textarea) {
+            textarea.focus();
+            textarea.showPicker();
+          } else {
+            alert(
+              "Seu navegador pode não suportar o seletor de emojis nativo. Tente usar o atalho do sistema operacional (Windows + . ou Ctrl + Cmd + Espaço no Mac) para emojis."
+            );
+            textarea.focus();
+          }
+        });
+
       function toggleOpcoes(postId) {
         const menu = document.getElementById("opcoes-" + postId);
         if (menu.style.display === "block") {
@@ -178,6 +239,9 @@
       let lastScroll = 0;
       const navFooter = document.querySelector(".nav-footer");
       const openPostBtn = document.getElementById("openPostBtn");
+      const newPostBox = document.getElementById("newPostBox");
+      const closeNewPostBox = document.getElementById("closeNewPostBox");
+      const chatBotTextarea = document.getElementById("chat_bot");
 
       if (navFooter && openPostBtn) {
         window.addEventListener("scroll", () => {
@@ -205,34 +269,32 @@
           lastScroll = currentScroll;
         });
       }
-      const openBtn = document.getElementById("openPostBtn");
-      const modal = document.getElementById("modalPost");
-      const closeBtn = document.getElementById("closeModalBtn");
 
-      openBtn.addEventListener("click", () => {
+      // Lógica para abrir a nova caixa com o botão "feather pen"
+      openPostBtn.addEventListener("click", () => {
         const frases = [
           "O que quer contar?...",
           "O que está pensando hoje?...",
           "O que tem pra hoje?...",
           "Tem algo pra falar?...",
         ];
-        const textarea = document.getElementById("texto");
-        if (textarea) {
-          const randomIndex = Math.floor(Math.random() * frases.length);
-          textarea.placeholder = frases[randomIndex];
-          textarea.value = "";
-          textarea.style.height = "auto";
-        }
-        modal.style.display = "block";
+        const randomIndex = Math.floor(Math.random() * frases.length);
+        chatBotTextarea.placeholder = frases[randomIndex];
+        chatBotTextarea.value = "";
+        chatBotTextarea.style.height = "auto";
+        newPostBox.style.display = "flex"; // Mostra a nova caixa
+        chatBotTextarea.focus(); // Foca na textarea
       });
 
-      closeBtn.addEventListener("click", () => {
-        modal.style.display = "none";
+      // Lógica para fechar a nova caixa
+      closeNewPostBox.addEventListener("click", () => {
+        newPostBox.style.display = "none";
       });
 
+      // Fechar a caixa se clicar fora dela (no "modal" de fundo)
       window.addEventListener("click", (event) => {
-        if (event.target == modal) {
-          modal.style.display = "none";
+        if (event.target == newPostBox && event.target.id === "newPostBox") {
+          newPostBox.style.display = "none";
         }
       });
 
