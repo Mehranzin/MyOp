@@ -17,13 +17,27 @@
 
         <!-- Etapa 1 -->
         <div class="step active">
-          <label for="{{ form.nome.id }}">Nome</label>
-          {{ form.nome(size=32) }} {% for error in form.nome.errors %}
+          <input
+            placeholder="Nome"
+            class="input"
+            name="nome"
+            type="text"
+            required
+            autocomplete="off"
+          />
+          {% for error in form.nome.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
 
-          <label for="{{ form.sobrenome.id }}">Sobrenome</label>
-          {{ form.sobrenome(size=32) }} {% for error in form.sobrenome.errors %}
+          <input
+            placeholder="Sobrenome"
+            class="input"
+            name="sobrenome"
+            type="text"
+            required
+            autocomplete="off"
+          />
+          {% for error in form.sobrenome.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
 
@@ -36,13 +50,26 @@
 
         <!-- Etapa 2 -->
         <div class="step">
-          <label for="{{ form.apelido.id }}">Apelido (opcional)</label>
-          {{ form.apelido(size=32) }} {% for error in form.apelido.errors %}
+          <input
+            placeholder="Apelido (opcional)"
+            class="input"
+            name="apelido"
+            type="text"
+            autocomplete="off"
+          />
+          {% for error in form.apelido.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
 
-          <label for="{{ form.idade.id }}">Idade</label>
-          {{ form.idade() }} {% for error in form.idade.errors %}
+          <input
+            placeholder="Idade"
+            class="input"
+            name="idade"
+            type="number"
+            required
+            autocomplete="off"
+          />
+          {% for error in form.idade.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
 
@@ -58,18 +85,39 @@
 
         <!-- Etapa 3 -->
         <div class="step">
-          <label for="{{ form.email.id }}">Email</label>
-          {{ form.email(size=32) }} {% for error in form.email.errors %}
+          <input
+            placeholder="Email"
+            class="input"
+            name="email"
+            type="email"
+            required
+            autocomplete="off"
+          />
+          {% for error in form.email.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
 
-          <label for="{{ form.password.id }}">Senha</label>
-          {{ form.password() }} {% for error in form.password.errors %}
+          <input
+            placeholder="Senha"
+            class="input"
+            name="password"
+            type="password"
+            required
+            autocomplete="off"
+          />
+          {% for error in form.password.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
 
-          <label for="{{ form.password2.id }}">Confirmar Senha</label>
-          {{ form.password2() }} {% for error in form.password2.errors %}
+          <input
+            placeholder="Confirmar Senha"
+            class="input"
+            name="password2"
+            type="password"
+            required
+            autocomplete="off"
+          />
+          {% for error in form.password2.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
 
@@ -77,10 +125,11 @@
             <button type="button" class="button-name" onclick="prevStep()">
               Voltar
             </button>
-            {{ form.submit(class_="button-name") }}
+            <button type="submit" class="button-name">Registrar</button>
           </div>
         </div>
       </form>
+
       <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
     </div>
 
