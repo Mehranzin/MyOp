@@ -3,301 +3,121 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Feed • Opinion</title>
+    <title>Criar Conta • Opinion</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <div class="nav-top">Feed • Opinion</div>
     <div class="container">
-      <hr />
+      <h2>Registrar</h2>
+      <form method="POST" action="{{ url_for('register') }}">
+        {{ form.hidden_tag() }}
 
-      <div class="container_chat_bot" id="newPostBox">
-        <div class="container-chat-options">
-          <div class="chat">
-            <form method="POST" action="{{ url_for('feed') }}" id="postForm">
-              <div class="chat-bot">
-                <textarea id="chat_bot" name="texto" required></textarea>
-              </div>
-              <div class="options">
-                <div class="btns-add">
-                  <button type="button">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M7 8v8a5 5 0 1 0 10 0V6.5a3.5 3.5 0 1 0-7 0V15a2 2 0 0 0 4 0V8"
-                      ></path>
-                    </svg>
-                  </button>
-                  <button type="button" id="emojiButton">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="currentColor"
-                        d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12s12-5.373 12-12s-5.373-12-12-12zm-3.5 8c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5zm7 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5zm-3.5 10c-3.14 0-5.738-2.203-6.49-5h12.98c-.752 2.797-3.35 5-6.49 5z"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <button type="submit" class="btn-submit">
-                  <i>
-                    <svg viewBox="0 0 512 512">
-                      <path
-                        fill="currentColor"
-                        d="M473 39.05a24 24 0 0 0-25.5-5.46L47.47 185h-.08a24 24 0 0 0 1 45.16l.41.13l137.3 58.63a16 16 0 0 0 15.54-3.59L422 80a7.07 7.07 0 0 1 10 10L226.66 310.26a16 16 0 0 0-3.59 15.54l58.65 137.38c.06.2.12.38.19.57c3.2 9.27 11.3 15.81 21.09 16.25h1a24.63 24.63 0 0 0 23-15.46L478.39 64.62A24 24 0 0 0 473 39.05"
-                      ></path>
-                    </svg>
-                  </i>
-                </button>
-              </div>
-            </form>
+        <!-- Etapa 1 -->
+        <div class="step active">
+          <label for="{{ form.nome.id }}">Nome</label>
+          {{ form.nome(size=32) }} {% for error in form.nome.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
+
+          <label for="{{ form.sobrenome.id }}">Sobrenome</label>
+          {{ form.sobrenome(size=32) }} {% for error in form.sobrenome.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
+
+          <div class="buttons">
+            <button type="button" class="button-name" onclick="nextStep()">
+              Próximo
+            </button>
           </div>
         </div>
-        <span class="close-new-post-box" id="closeNewPostBox">&times;</span>
-      </div>
 
-      {% if posts %} {% for post, tempo, likes_count, comentarios_count,
-      comentarios, liked in posts %}
-      <div class="post-container">
-        <div class="user-box">
-          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
-            {{ post.autor.apelido }}
-          </a>
-        </div>
+        <!-- Etapa 2 -->
+        <div class="step">
+          <label for="{{ form.apelido.id }}">Apelido (opcional)</label>
+          {{ form.apelido(size=32) }} {% for error in form.apelido.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-        <div
-          class="post-content {% if post.user_id != session['user_id'] %}post-outro{% endif %}"
-        >
-          {% if post.user_id == session['user_id'] %}
-          <img
-            src="{{ url_for('static', filename='images/three points.png') }}"
-            onclick="toggleOpcoes({{ post.id }})"
-            class="tres-pontos"
-          />
-          <div id="opcoes-{{ post.id }}" class="post-opcoes">
-            <form
-              method="GET"
-              action="{{ url_for('delete_post', post_id=post.id) }}"
-              onsubmit="return confirmarExclusao()"
-            >
-              <button type="submit">Deletar Opinião</button>
-            </form>
-          </div>
-          {% endif %} {{ post.texto|e }}
-          <br />
-          <small>{{ tempo }}</small>
+          <label for="{{ form.idade.id }}">Idade</label>
+          {{ form.idade() }} {% for error in form.idade.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-          <div class="post-acoes">
-            <a
-              href="{{ url_for('like_post', post_id=post.id) }}"
-              class="like-link"
-            >
-              {% if liked %}
-              <img
-                src="{{ url_for('static', filename='images/heart y.png') }}"
-                class="icone"
-              />
-              {% else %}
-              <img
-                src="{{ url_for('static', filename='images/heart n.webp') }}"
-                class="icone"
-              />
-              {% endif %}
-            </a>
-            <span class="like-count">{{ likes_count }}</span>
-
-            <a href="{{ url_for('ver_post', post_id=post.id) }}">
-              <img
-                src="{{ url_for('static', filename='images/comment.png') }}"
-                class="icone"
-              />
-            </a>
-
-            <span class="resposta-numero">{{ comentarios_count }}</span>
+          <div class="buttons">
+            <button type="button" class="button-name" onclick="prevStep()">
+              Voltar
+            </button>
+            <button type="button" class="button-name" onclick="nextStep()">
+              Próximo
+            </button>
           </div>
         </div>
-      </div>
-      <hr />
-      {% endfor %} {% else %}
-      <p>Nenhuma postagem ainda.</p>
-      {% endif %}
-    </div>
 
-    <footer class="nav-footer">
-      <nav>
-        <a href="{{ url_for('feed') }}">
-          <img
-            src="{{ url_for('static', filename='images/home.png') }}"
-            alt="Feed"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('search') }}">
-          <img
-            src="{{ url_for('static', filename='images/search.png') }}"
-            alt="Search"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('trending') }}">
-          <img
-            src="{{ url_for('static', filename='images/12.png') }}"
-            alt="Trending"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('groups') }}">
-          <img
-            src="{{ url_for('static', filename='images/groups.PNG') }}"
-            alt="Groups"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('perfil') }}">
-          <img
-            src="{{ url_for('static', filename='images/perfil.png') }}"
-            alt="Perfil"
-            class="icone"
-          />
-        </a>
-      </nav>
-    </footer>
+        <!-- Etapa 3 -->
+        <div class="step">
+          <label for="{{ form.email.id }}">Email</label>
+          {{ form.email(size=32) }} {% for error in form.email.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-    <div class="open-post-btn" id="openPostBtn">
-      <img
-        src="{{ url_for('static', filename='images/feather pen.png') }}"
-        alt="Nova Opinião"
-      />
+          <label for="{{ form.password.id }}">Senha</label>
+          {{ form.password() }} {% for error in form.password.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
+
+          <label for="{{ form.password2.id }}">Confirmar Senha</label>
+          {{ form.password2() }} {% for error in form.password2.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
+
+          <div class="buttons">
+            <button type="button" class="button-name" onclick="prevStep()">
+              Voltar
+            </button>
+            {{ form.submit(class_="button-name") }}
+          </div>
+        </div>
+      </form>
+      <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
     </div>
 
     <script>
-      document
-        .getElementById("emojiButton")
-        .addEventListener("click", function () {
-          document.getElementById("chat_bot").focus();
-        });
+      let currentStep = 0;
+      const steps = document.querySelectorAll(".step");
 
-      function toggleOpcoes(postId) {
-        const menu = document.getElementById("opcoes-" + postId);
-        if (menu.style.display === "block") {
-          menu.style.display = "none";
-        } else {
-          document
-            .querySelectorAll(".post-opcoes")
-            .forEach((el) => (el.style.display = "none"));
-          menu.style.display = "block";
-        }
+      function showStep(index) {
+        steps.forEach((step, i) => {
+          step.classList.toggle("active", i === index);
+        });
       }
 
-      function saveScroll() {
-        sessionStorage.setItem("scrollPos", window.scrollY);
-      }
-
-      document.querySelectorAll(".like-link").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          saveScroll();
-          window.location = this.href;
-        });
-      });
-
-      document.querySelectorAll(".icone").forEach((icon) => {
-        icon.addEventListener("click", saveScroll);
-      });
-
-      window.addEventListener("load", () => {
-        const scrollPos = sessionStorage.getItem("scrollPos");
-        if (scrollPos !== null) {
-          window.scrollTo(0, parseInt(scrollPos));
-          sessionStorage.removeItem("scrollPos");
-        }
-      });
-
-      let lastScroll = 0;
-      const navFooter = document.querySelector(".nav-footer");
-      const openPostBtn = document.getElementById("openPostBtn");
-      const newPostBox = document.getElementById("newPostBox");
-      const closeNewPostBox = document.getElementById("closeNewPostBox");
-      const chatBotTextarea = document.getElementById("chat_bot");
-
-      if (navFooter && openPostBtn) {
-        window.addEventListener("scroll", () => {
-          const currentScroll = window.pageYOffset;
-          const descendo = currentScroll > lastScroll;
-
-          if (descendo) {
-            setTimeout(() => {
-              navFooter.style.transform = "translateY(100%)";
-            }, 170);
-
-            setTimeout(() => {
-              openPostBtn.style.transform = "translateY(60px)";
-            }, 230);
-          } else {
-            setTimeout(() => {
-              navFooter.style.transform = "translateY(0%)";
-            }, 80);
-
-            setTimeout(() => {
-              openPostBtn.style.transform = "translateY(0px)";
-            }, 70);
+      function nextStep() {
+        const inputs = steps[currentStep].querySelectorAll("input");
+        for (let input of inputs) {
+          if (
+            input.offsetParent !== null &&
+            input.name !== "apelido" &&
+            input.type !== "hidden" &&
+            input.value.trim() === ""
+          ) {
+            alert("Preencha todos os campos obrigatórios.");
+            return;
           }
-
-          lastScroll = currentScroll;
-        });
+        }
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          showStep(currentStep);
+        }
       }
 
-      openPostBtn.addEventListener("click", () => {
-        const frases = [
-          "O que quer contar?...",
-          "O que está pensando hoje?...",
-          "O que tem pra hoje?...",
-          "Tem algo pra falar?...",
-        ];
-        const randomIndex = Math.floor(Math.random() * frases.length);
-        chatBotTextarea.placeholder = frases[randomIndex];
-        chatBotTextarea.value = "";
-        chatBotTextarea.style.height = "auto";
-        newPostBox.style.display = "flex";
-        document.body.style.overflow = "hidden";
-        setTimeout(() => {
-          chatBotTextarea.scrollIntoView({
-            block: "center",
-            behavior: "smooth",
-          });
-          chatBotTextarea.focus();
-        }, 200);
-      });
-
-      closeNewPostBox.addEventListener("click", () => {
-        newPostBox.style.display = "none";
-        document.body.style.overflow = "";
-      });
-
-      window.addEventListener("click", (event) => {
-        if (event.target == newPostBox && event.target.id === "newPostBox") {
-          newPostBox.style.display = "none";
-          document.body.style.overflow = "";
+      function prevStep() {
+        if (currentStep > 0) {
+          currentStep--;
+          showStep(currentStep);
         }
-      });
-
-      function confirmarExclusao() {
-        return confirm("Tem certeza que deseja deletar sua opinião?");
       }
     </script>
   </body>
