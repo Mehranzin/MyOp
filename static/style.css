@@ -657,8 +657,8 @@ button:active {
   background: none;
   border: none;
   outline: none;
-  max-width: 190px;
-  padding: 10px 20px;
+  max-width: 250px;
+  padding: 12px 22px;
   font-size: 16px;
   border-radius: 9999px;
   box-shadow: inset 2px 5px 10px rgb(0, 0, 0);
