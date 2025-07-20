@@ -322,7 +322,6 @@ button:active {
   outline: none !important;
 }
 
-
 .container_chat_bot {
   display: none;
   position: fixed;
@@ -445,7 +444,7 @@ button:active {
 .container_chat_bot .chat .options .btn-submit {
   display: flex;
   padding: 2px;
-  background-image: linear-gradient(to top, #292929, #494949, #292929);
+  background-image: linear-gradient(to top, #292929, #292929, #292929);
   border-radius: 10px;
   box-shadow: inset 0 6px 2px -4px rgba(255, 0, 0, 0.5);
   cursor: pointer;
@@ -638,9 +637,10 @@ a img:active {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 
-button,
-button:focus,
-button:active {
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
+  button,
+  button:focus,
+  button:active {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
