@@ -634,6 +634,13 @@ button:active {
   }
 }
 
+  .container_chat_bot {
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 40vh; /* Aproxima a caixa do topo do teclado */
+  }
+}
+
 img,
 img:focus,
 img:active,

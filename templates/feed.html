@@ -189,16 +189,7 @@
       document
         .getElementById("emojiButton")
         .addEventListener("click", function () {
-          const textarea = document.getElementById("chat_bot");
-          if ("showPicker" in textarea) {
-            textarea.focus();
-            textarea.showPicker();
-          } else {
-            alert(
-              "Seu navegador pode não suportar o seletor de emojis nativo. Tente usar o atalho do sistema operacional (Windows + . ou Ctrl + Cmd + Espaço no Mac) para emojis."
-            );
-            textarea.focus();
-          }
+          document.getElementById("chat_bot").focus();
         });
 
       function toggleOpcoes(postId) {
@@ -284,7 +275,13 @@
         chatBotTextarea.style.height = "auto";
         newPostBox.style.display = "flex";
         document.body.style.overflow = "hidden";
-        chatBotTextarea.focus();
+        setTimeout(() => {
+          chatBotTextarea.scrollIntoView({
+            block: "center",
+            behavior: "smooth",
+          });
+          chatBotTextarea.focus();
+        }, 200);
       });
 
       closeNewPostBox.addEventListener("click", () => {
@@ -297,36 +294,6 @@
           newPostBox.style.display = "none";
           document.body.style.overflow = "";
         }
-      });
-
-      document.addEventListener("DOMContentLoaded", () => {
-        chatBotTextarea.style.overflowY = "hidden";
-        chatBotTextarea.style.height = "auto";
-
-        chatBotTextarea.addEventListener("input", () => {
-          chatBotTextarea.style.height = "auto";
-          if (chatBotTextarea.scrollHeight > chatBotTextarea.clientHeight) {
-            chatBotTextarea.style.height =
-              Math.min(chatBotTextarea.scrollHeight, 150) + "px";
-            if (window.innerWidth <= 600) {
-              const boxHeight = newPostBox.querySelector(
-                ".container-chat-options"
-              ).offsetHeight;
-              const viewportHeight = window.innerHeight;
-              const keyboardHeight = viewportHeight * 0.4;
-              const newTop = viewportHeight - keyboardHeight - boxHeight - 20;
-              newPostBox.style.justifyContent = "flex-start";
-              newPostBox.style.paddingTop = Math.max(0, newTop) + "px";
-            }
-          }
-        });
-
-        chatBotTextarea.addEventListener("blur", () => {
-          if (window.innerWidth <= 600) {
-            newPostBox.style.justifyContent = "flex-end";
-            newPostBox.style.paddingTop = "0";
-          }
-        });
       });
 
       function confirmarExclusao() {
