@@ -8,6 +8,19 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <style>
+      .step {
+        display: none;
+      }
+      .step.active {
+        display: block;
+      }
+      .buttons {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -15,44 +28,90 @@
       <form method="POST" action="{{ url_for('register') }}">
         {{ form.hidden_tag() }}
 
-        <label for="{{ form.nome.id }}">Nome</label>
-        {{ form.nome(size=32) }} {% for error in form.nome.errors %}
-        <div class="erro">{{ error }}</div>
-        {% endfor %}
+        <!-- Etapa 1 -->
+        <div class="step active">
+          <label for="{{ form.nome.id }}">Nome</label>
+          {{ form.nome(size=32) }} {% for error in form.nome.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-        <label for="{{ form.sobrenome.id }}">Sobrenome</label>
-        {{ form.sobrenome(size=32) }} {% for error in form.sobrenome.errors %}
-        <div class="erro">{{ error }}</div>
-        {% endfor %}
+          <label for="{{ form.sobrenome.id }}">Sobrenome</label>
+          {{ form.sobrenome(size=32) }} {% for error in form.sobrenome.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-        <label for="{{ form.email.id }}">Email</label>
-        {{ form.email(size=32) }} {% for error in form.email.errors %}
-        <div class="erro">{{ error }}</div>
-        {% endfor %}
+          <div class="buttons">
+            <button type="button" onclick="nextStep()">Próximo</button>
+          </div>
+        </div>
 
-        <label for="{{ form.idade.id }}">Idade</label>
-        {{ form.idade() }} {% for error in form.idade.errors %}
-        <div class="erro">{{ error }}</div>
-        {% endfor %}
+        <!-- Etapa 2 -->
+        <div class="step">
+          <label for="{{ form.apelido.id }}">Apelido (opcional)</label>
+          {{ form.apelido(size=32) }} {% for error in form.apelido.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-        <label for="{{ form.password.id }}">Senha</label>
-        {{ form.password() }} {% for error in form.password.errors %}
-        <div class="erro">{{ error }}</div>
-        {% endfor %}
+          <label for="{{ form.idade.id }}">Idade</label>
+          {{ form.idade() }} {% for error in form.idade.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-        <label for="{{ form.password2.id }}">Confirmar Senha</label>
-        {{ form.password2() }} {% for error in form.password2.errors %}
-        <div class="erro">{{ error }}</div>
-        {% endfor %}
+          <div class="buttons">
+            <button type="button" onclick="prevStep()">Voltar</button>
+            <button type="button" onclick="nextStep()">Próximo</button>
+          </div>
+        </div>
 
-        <label for="{{ form.apelido.id }}">Apelido (opcional)</label>
-        {{ form.apelido(size=32) }} {% for error in form.apelido.errors %}
-        <div class="erro">{{ error }}</div>
-        {% endfor %}
+        <!-- Etapa 3 -->
+        <div class="step">
+          <label for="{{ form.email.id }}">Email</label>
+          {{ form.email(size=32) }} {% for error in form.email.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
 
-        <div style="margin-top: 15px">{{ form.submit() }}</div>
+          <label for="{{ form.password.id }}">Senha</label>
+          {{ form.password() }} {% for error in form.password.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
+
+          <label for="{{ form.password2.id }}">Confirmar Senha</label>
+          {{ form.password2() }} {% for error in form.password2.errors %}
+          <div class="erro">{{ error }}</div>
+          {% endfor %}
+
+          <div class="buttons">
+            <button type="button" onclick="prevStep()">Voltar</button>
+            {{ form.submit() }}
+          </div>
+        </div>
       </form>
       <p>Já tem conta? <a href="{{ url_for('login') }}">Entrar</a></p>
     </div>
+
+    <script>
+      let currentStep = 0;
+      const steps = document.querySelectorAll(".step");
+
+      function showStep(index) {
+        steps.forEach((step, i) => {
+          step.classList.toggle("active", i === index);
+        });
+      }
+
+      function nextStep() {
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          showStep(currentStep);
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 0) {
+          currentStep--;
+          showStep(currentStep);
+        }
+      }
+    </script>
   </body>
 </html>
