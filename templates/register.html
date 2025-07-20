@@ -100,6 +100,17 @@
       }
 
       function nextStep() {
+        const inputs = steps[currentStep].querySelectorAll("input");
+        for (let input of inputs) {
+          if (
+            input.name !== "apelido" && // apelido é opcional
+            input.offsetParent !== null && // visível
+            input.value.trim() === ""
+          ) {
+            alert("Preencha todos os campos obrigatórios.");
+            return;
+          }
+        }
         if (currentStep < steps.length - 1) {
           currentStep++;
           showStep(currentStep);
