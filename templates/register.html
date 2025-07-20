@@ -8,19 +8,6 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
-    <style>
-      .step {
-        display: none;
-      }
-      .step.active {
-        display: block;
-      }
-      .buttons {
-        margin-top: 15px;
-        display: flex;
-        gap: 10px;
-      }
-    </style>
   </head>
   <body>
     <div class="container">
@@ -41,7 +28,9 @@
           {% endfor %}
 
           <div class="buttons">
-            <button type="button" onclick="nextStep()">Próximo</button>
+            <button type="button" class="button-name" onclick="nextStep()">
+              Próximo
+            </button>
           </div>
         </div>
 
@@ -58,8 +47,12 @@
           {% endfor %}
 
           <div class="buttons">
-            <button type="button" onclick="prevStep()">Voltar</button>
-            <button type="button" onclick="nextStep()">Próximo</button>
+            <button type="button" class="button-name" onclick="prevStep()">
+              Voltar
+            </button>
+            <button type="button" class="button-name" onclick="nextStep()">
+              Próximo
+            </button>
           </div>
         </div>
 
@@ -81,8 +74,10 @@
           {% endfor %}
 
           <div class="buttons">
-            <button type="button" onclick="prevStep()">Voltar</button>
-            {{ form.submit() }}
+            <button type="button" class="button-name" onclick="prevStep()">
+              Voltar
+            </button>
+            {{ form.submit(class_="button-name") }}
           </div>
         </div>
       </form>
@@ -103,8 +98,8 @@
         const inputs = steps[currentStep].querySelectorAll("input");
         for (let input of inputs) {
           if (
-            input.name !== "apelido" && // apelido é opcional
-            input.offsetParent !== null && // visível
+            input.name !== "apelido" &&
+            input.offsetParent !== null &&
             input.value.trim() === ""
           ) {
             alert("Preencha todos os campos obrigatórios.");
