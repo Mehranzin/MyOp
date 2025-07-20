@@ -70,6 +70,7 @@
         </div>
         <span class="close-new-post-box" id="closeNewPostBox">&times;</span>
       </div>
+
       {% if posts %} {% for post, tempo, likes_count, comentarios_count,
       comentarios, liked in posts %}
       <div class="post-container">
@@ -270,7 +271,6 @@
         });
       }
 
-      // Lógica para abrir a nova caixa com o botão "feather pen"
       openPostBtn.addEventListener("click", () => {
         const frases = [
           "O que quer contar?...",
@@ -282,32 +282,50 @@
         chatBotTextarea.placeholder = frases[randomIndex];
         chatBotTextarea.value = "";
         chatBotTextarea.style.height = "auto";
-        newPostBox.style.display = "flex"; // Mostra a nova caixa
-        chatBotTextarea.focus(); // Foca na textarea
+        newPostBox.style.display = "flex";
+        document.body.style.overflow = "hidden";
+        chatBotTextarea.focus();
       });
 
-      // Lógica para fechar a nova caixa
       closeNewPostBox.addEventListener("click", () => {
         newPostBox.style.display = "none";
+        document.body.style.overflow = "";
       });
 
-      // Fechar a caixa se clicar fora dela (no "modal" de fundo)
       window.addEventListener("click", (event) => {
         if (event.target == newPostBox && event.target.id === "newPostBox") {
           newPostBox.style.display = "none";
+          document.body.style.overflow = "";
         }
       });
 
       document.addEventListener("DOMContentLoaded", () => {
-        document.querySelectorAll("textarea").forEach((t) => {
-          t.style.overflowY = "hidden";
-          t.style.height = "auto";
+        chatBotTextarea.style.overflowY = "hidden";
+        chatBotTextarea.style.height = "auto";
 
-          t.addEventListener("input", () => {
-            if (t.scrollHeight > t.clientHeight) {
-              t.style.height = t.scrollHeight + "px";
+        chatBotTextarea.addEventListener("input", () => {
+          chatBotTextarea.style.height = "auto";
+          if (chatBotTextarea.scrollHeight > chatBotTextarea.clientHeight) {
+            chatBotTextarea.style.height =
+              Math.min(chatBotTextarea.scrollHeight, 150) + "px";
+            if (window.innerWidth <= 600) {
+              const boxHeight = newPostBox.querySelector(
+                ".container-chat-options"
+              ).offsetHeight;
+              const viewportHeight = window.innerHeight;
+              const keyboardHeight = viewportHeight * 0.4;
+              const newTop = viewportHeight - keyboardHeight - boxHeight - 20;
+              newPostBox.style.justifyContent = "flex-start";
+              newPostBox.style.paddingTop = Math.max(0, newTop) + "px";
             }
-          });
+          }
+        });
+
+        chatBotTextarea.addEventListener("blur", () => {
+          if (window.innerWidth <= 600) {
+            newPostBox.style.justifyContent = "flex-end";
+            newPostBox.style.paddingTop = "0";
+          }
         });
       });
 
