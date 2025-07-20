@@ -162,6 +162,7 @@ a:hover {
   border: none;
   color: red;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .like-count {
@@ -321,6 +322,7 @@ button:active {
   outline: none !important;
 }
 
+
 .container_chat_bot {
   display: none;
   position: fixed;
@@ -332,9 +334,9 @@ button:active {
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.7);
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  padding-bottom: 50px;
+  padding-bottom: 0;
   box-sizing: border-box;
 }
 
@@ -379,9 +381,9 @@ button:active {
   border-radius: 16px;
   border: none;
   width: 100%;
-  height: 85px;
-  min-height: 85px;
-  max-height: 180px;
+  height: 75px;
+  min-height: 75px;
+  max-height: 150px;
   color: #ffffff;
   font-family: sans-serif;
   font-size: 14px;
@@ -425,11 +427,6 @@ button:active {
   padding: 10px;
 }
 
-.container_chat_bot .chat .options .btns-add {
-  display: flex;
-  gap: 8px;
-}
-
 .container_chat_bot .chat .options .btns-add button {
   display: flex;
   color: #ff0000;
@@ -437,6 +434,7 @@ button:active {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .container_chat_bot .chat .options .btns-add button:hover {
@@ -454,6 +452,7 @@ button:active {
   border: none;
   outline: none;
   transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .container_chat_bot .chat .options .btn-submit i {
@@ -492,6 +491,7 @@ button:active {
   cursor: pointer;
   z-index: 1000;
   background: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .close-new-post-box:hover,
@@ -636,6 +636,11 @@ a img:active {
   background: transparent !important;
   border: none;
   -webkit-tap-highlight-color: transparent;
-  -webkit-user-select: none;
   user-select: none;
+
+button,
+button:focus,
+button:active {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
