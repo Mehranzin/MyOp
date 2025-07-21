@@ -615,6 +615,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #111111;
+  overflow: hidden;
 }
 
 .form {
