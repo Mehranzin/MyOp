@@ -6,8 +6,41 @@
     <title>Login • Opinion</title>
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
+      href="{{ url_for('static', filename='style.css') }}?v=2.0"
     />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #111;
+        font-family: Arial, sans-serif;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .form {
+        width: 90%;
+        max-width: 400px;
+      }
+
+      .extra {
+        text-align: center;
+        margin-top: 1em;
+        color: #888;
+      }
+
+      .extra a {
+        color: red;
+        text-decoration: none;
+      }
+
+      .extra a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
   <body>
     <form class="form" method="POST" action="{{ url_for('login') }}">
@@ -17,9 +50,6 @@
         <svg
           class="input-icon"
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
           viewBox="0 0 16 16"
         >
           <path
@@ -40,9 +70,6 @@
         <svg
           class="input-icon"
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
           viewBox="0 0 16 16"
         >
           <path
