@@ -431,8 +431,8 @@ button:active {
 }
 
 .container_chat_bot .chat .options .btns-add {
-  display: flex; /* Garante que os botões fiquem lado a lado */
-  gap: 8px; /* Espaçamento entre os botões */
+  display: flex;
+  gap: 8px;
 }
 
 .container_chat_bot .chat .options .btns-add button {
@@ -697,7 +697,7 @@ button:active {
   justify-content: flex-start;
   gap: 0.5em;
   border-radius: 25px;
-  padding: 0.2em 0.8em;
+  padding: 0.2em;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
