@@ -695,7 +695,7 @@ button:active {
   display: flex;
   align-items: baseline;
   justify-content: flex-start;
-  gap: 0.5em;
+  gap: 0.1em;
   border-radius: 25px;
   padding: 0.2em;
   background-color: #171717;
