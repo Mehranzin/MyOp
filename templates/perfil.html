@@ -30,7 +30,7 @@
 
         <a href="{{ url_for('trending') }}">
           <img
-            src="{{ url_for('static', filename='images/trending.PNG') }}"
+            src="{{ url_for('static', filename='images/12.png') }}"
             alt="Trending"
             class="icone"
           />  
@@ -61,6 +61,10 @@
         function confirmarLogout() {
           return confirm("Tem certeza que deseja sair da conta?");
         }
+        
+  setInterval(() => {
+    fetch("/ping", { method: "POST" });
+  }, 5000);
       </script>
     </div>
   </body>

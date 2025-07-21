@@ -689,18 +689,26 @@ button:active {
   font-size: 1.2em;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111111;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-  padding-bottom: 0.4em;
+  padding: 1.5em;
   background-color: #171717;
   border-radius: 25px;
   transition: 0.4s ease-in-out;
   max-width: 340px;
-  margin: auto;
+  width: 100%;
 }
 
 .form:hover {
@@ -710,7 +718,7 @@ button:active {
 
 #heading {
   text-align: center;
-  margin: 2em;
+  margin: 1em;
   color: rgb(255, 255, 255);
   font-size: 1.2em;
 }
@@ -718,21 +726,18 @@ button:active {
 .field {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5em;
   border-radius: 25px;
-  padding: 0.4em;
-  border: none;
-  outline: none;
-  color: white;
+  padding: 0.3em 0.8em;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
 
 .input-icon {
-  height: 1.2em;
-  width: 1.2em;
+  height: 1em;
+  width: 1em;
   fill: white;
+  flex-shrink: 0;
 }
 
 .input-field {
@@ -742,38 +747,19 @@ button:active {
   width: 100%;
   color: #d3d3d3;
   font-size: 0.9em;
-  padding: 0.3em 0;
+  padding: 0.4em 0;
+  line-height: 1.2em;
 }
 
 .form .btn {
   display: flex;
   justify-content: center;
-  flex-direction: row;
-  margin-top: 2em;
+  margin-top: 1.5em;
 }
 
-.button1 {
-  padding: 0.6em;
-  padding-left: 1.2em;
-  padding-right: 1.2em;
-  border-radius: 6px;
-  margin-right: 0.5em;
-  border: none;
-  outline: none;
-  transition: 0.4s ease-in-out;
-  background-color: red;
-  color: white;
-}
-
-.button1:hover {
-  background-color: black;
-  color: white;
-}
-
+.button1,
 .button2 {
-  padding: 0.6em;
-  padding-left: 1.4em;
-  padding-right: 1.4em;
+  padding: 0.6em 1.2em;
   border-radius: 6px;
   border: none;
   outline: none;
@@ -782,9 +768,14 @@ button:active {
   color: white;
 }
 
+.button1:hover,
 .button2:hover {
   background-color: black;
   color: white;
+}
+
+.button1 {
+  margin-right: 0.5em;
 }
 
 @media (max-width: 600px) {
