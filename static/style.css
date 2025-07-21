@@ -693,14 +693,11 @@ button:active {
 
 .field {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: baseline;
+  justify-content: flex-start;
   gap: 0.5em;
   border-radius: 25px;
-  padding: 0.2em;
-  border: none;
-  outline: none;
-  color: white;
+  padding: 0.4em 0.8em;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
@@ -718,7 +715,8 @@ button:active {
   width: 100%;
   color: #d3d3d3;
   font-size: 0.9em;
-  padding: 0.3em 0;
+  padding: 0.5em 0;
+  line-height: 1.3em;
 }
 
 .form .btn {
