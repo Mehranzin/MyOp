@@ -718,8 +718,7 @@ button:active {
   width: 100%;
   color: #d3d3d3;
   font-size: 0.9em;
-  padding: 0.2em 0;
-  line-height: 1em;
+  padding: 0.3em 0;
 }
 
 .form .btn {
