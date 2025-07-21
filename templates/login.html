@@ -27,11 +27,11 @@
           ></path>
         </svg>
         <input
-          autocomplete="off"
-          placeholder="Email"
-          class="input-field"
           type="email"
+          id="email"
           name="email"
+          class="input-field"
+          placeholder="Email"
           required
         />
       </div>
@@ -50,26 +50,30 @@
           ></path>
         </svg>
         <input
-          placeholder="Senha"
-          class="input-field"
           type="password"
+          id="senha"
           name="senha"
+          class="input-field"
+          placeholder="Senha"
           required
         />
       </div>
 
       <div class="btn">
+        <button class="button1" type="submit">Entrar</button>
         <a href="{{ url_for('register') }}">
           <button type="button" class="button2">Criar Conta</button>
         </a>
-        <button type="submit" class="button1">Entrar</button>
       </div>
+      <p class="extra">
+        Ainda NÃO tem conta? <a href="{{ url_for('register') }}">Registrar</a>
+      </p>
     </form>
 
     <script>
       window.addEventListener("load", function () {
         history.pushState(null, document.title, location.href);
-        window.addEventListener("popstate", function () {
+        window.addEventListener("popstate", function (event) {
           location.reload();
         });
       });
