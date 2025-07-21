@@ -669,12 +669,14 @@ button:active {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
   padding-bottom: 0.4em;
   background-color: #171717;
   border-radius: 25px;
   transition: 0.4s ease-in-out;
+  max-width: 340px;
+  margin: auto;
 }
 
 .form:hover {
@@ -695,7 +697,7 @@ button:active {
   justify-content: center;
   gap: 0.5em;
   border-radius: 25px;
-  padding: 0.6em;
+  padding: 0.4em;
   border: none;
   outline: none;
   color: white;
@@ -704,8 +706,8 @@ button:active {
 }
 
 .input-icon {
-  height: 1.3em;
-  width: 1.3em;
+  height: 1.2em;
+  width: 1.2em;
   fill: white;
 }
 
@@ -715,20 +717,22 @@ button:active {
   outline: none;
   width: 100%;
   color: #d3d3d3;
+  font-size: 0.9em;
+  padding: 0.3em 0;
 }
 
 .form .btn {
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-top: 2.5em;
+  margin-top: 2em;
 }
 
 .button1 {
-  padding: 0.5em;
-  padding-left: 1.1em;
-  padding-right: 1.1em;
-  border-radius: 5px;
+  padding: 0.6em;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  border-radius: 6px;
   margin-right: 0.5em;
   border: none;
   outline: none;
@@ -743,10 +747,10 @@ button:active {
 }
 
 .button2 {
-  padding: 0.5em;
-  padding-left: 1.3em;
-  padding-right: 1.3em;
-  border-radius: 5px;
+  padding: 0.6em;
+  padding-left: 1.4em;
+  padding-right: 1.4em;
+  border-radius: 6px;
   border: none;
   outline: none;
   transition: 0.4s ease-in-out;
