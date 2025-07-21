@@ -607,64 +607,6 @@ button:active {
   gap: 10px;
 }
 
-.button-name {
-  align-items: center;
-  appearance: none;
-  background-color: #ff0000;
-  border-radius: 4px;
-  border-width: 0;
-  box-shadow: rgba(163, 0, 0, 0.2) 0 2px 4px,
-    rgba(216, 0, 0, 0.15) 0 7px 13px -3px, #000000 0 -3px 0 inset;
-  box-sizing: border-box;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-flex;
-  height: 28px;
-  justify-content: center;
-  line-height: 1;
-  list-style: none;
-  overflow: hidden;
-  padding-left: 10px;
-  padding-right: 10px;
-  position: relative;
-  text-align: center;
-  text-decoration: none;
-  transition: box-shadow 0.15s, transform 0.15s;
-  user-select: none;
-  white-space: nowrap;
-  will-change: box-shadow, transform;
-  font-size: 12px;
-}
-
-.button-name:focus {
-  box-shadow: #000000 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
-    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #000000 0 -3px 0 inset;
-}
-
-.button-name:hover {
-  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px,
-    rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #000000 0 -3px 0 inset;
-  transform: translateY(-2px);
-}
-
-.button-name:active {
-  box-shadow: #000000 0 3px 7px inset;
-  transform: translateY(2px);
-}
-
-.input {
-  margin: 30px;
-  background: none;
-  border: none;
-  outline: none;
-  max-width: 280px;
-  padding: 12px 22px;
-  font-size: 16px;
-  border-radius: 9999px;
-  box-shadow: inset 2px 5px 10px rgb(0, 0, 0);
-  color: #ffffff;
-}
-
 body {
   margin: 0;
   padding: 0;
@@ -680,10 +622,10 @@ body {
   flex-direction: column;
   gap: 10px;
   padding: 1.5em;
-  background-color: #171717;
+  background-color: #000000;
   border-radius: 25px;
   transition: 0.4s ease-in-out;
-  max-width: 340px;
+  max-width: 200px;
   width: 100%;
 }
 
@@ -735,25 +677,55 @@ body {
   margin-top: 1.5em;
 }
 
-.button1,
-.button2 {
-  padding: 0.6em 1.2em;
-  border-radius: 6px;
-  border: none;
-  outline: none;
-  transition: 0.4s ease-in-out;
-  background-color: red;
-  color: white;
+.button-name {
+  align-items: center;
+  appearance: none;
+  background-color: #ff0000;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(163, 0, 0, 0.2) 0 2px 4px,
+    rgba(216, 0, 0, 0.15) 0 7px 13px -3px, #000000 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  height: 28px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 12px;
 }
 
-.button1:hover,
-.button2:hover {
-  background-color: black;
-  color: white;
+.button-login {
+  min-width: 220px;
+  width: 100%;
+  max-width: 300px;
 }
 
-.button1 {
-  margin-right: 0.5em;
+.button-name:focus {
+  box-shadow: #000000 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+    rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #000000 0 -3px 0 inset;
+}
+
+.button-name:hover {
+  box-shadow: rgba(45, 35, 66, 0.3) 0 4px 8px,
+    rgba(45, 35, 66, 0.2) 0 7px 13px -3px, #000000 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-name:active {
+  box-shadow: #000000 0 3px 7px inset;
+  transform: translateY(2px);
 }
 
 @media (max-width: 600px) {
