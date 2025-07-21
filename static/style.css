@@ -723,8 +723,9 @@ body {
   width: 100%;
   color: #d3d3d3;
   font-size: 0.9em;
-  padding: 0.05em 0;
+  padding: 0em 0;
   line-height: 1em;
+  padding-top: 0.4em;
 }
 
 .form .btn {
