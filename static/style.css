@@ -704,7 +704,7 @@ body {
   align-items: center;
   gap: 0.5em;
   border-radius: 25px;
-  padding: 0.3em 0.8em;
+  padding: 0.1em 0.6em;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
