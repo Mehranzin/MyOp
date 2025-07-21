@@ -693,17 +693,20 @@ button:active {
 
 .field {
   display: flex;
-  align-items: baseline;
-  justify-content: flex-start;
-  gap: 0.1em;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
   border-radius: 25px;
-  padding: 0.2em;
+  padding: 0.6em;
+  border: none;
+  outline: none;
+  color: white;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
 
 .input-icon {
-  height: 1.2em;
+  height: 1em;
   width: 1.2em;
   fill: white;
 }
@@ -715,8 +718,7 @@ button:active {
   width: 100%;
   color: #d3d3d3;
   font-size: 0.9em;
-  padding: 0.5em 0;
-  line-height: 1.3em;
+  padding: 0.3em 0;
 }
 
 .form .btn {
