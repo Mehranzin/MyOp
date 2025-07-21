@@ -665,31 +665,7 @@ button:active {
   color: #ffffff;
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-left: 2em;
-  padding-right: 2em;
-  padding-bottom: 0.4em;
-  background-color: #171717;
-  border-radius: 25px;
-  transition: 0.4s ease-in-out;
-}
-
-.form:hover {
-  transform: scale(1.05);
-  border: 1px solid red;
-}
-
-#heading {
-  text-align: center;
-  margin: 2em;
-  color: rgb(255, 255, 255);
-  font-size: 1.2em;
-}
-
-body {
+.body {
   margin: 0;
   padding: 0;
   height: 100vh;
@@ -725,10 +701,10 @@ body {
 
 .field {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5em;
   border-radius: 25px;
-  padding: 0.3em 0.8em;
+  padding: 0.2em 0.8em;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
@@ -738,6 +714,7 @@ body {
   width: 1em;
   fill: white;
   flex-shrink: 0;
+  margin-top: 0.4em;
 }
 
 .input-field {
@@ -747,8 +724,8 @@ body {
   width: 100%;
   color: #d3d3d3;
   font-size: 0.9em;
-  padding: 0.4em 0;
-  line-height: 1.2em;
+  padding: 0.1em 0 0.2em 0;
+  line-height: 1em;
 }
 
 .form .btn {
