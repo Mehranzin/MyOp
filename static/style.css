@@ -697,7 +697,7 @@ button:active {
   justify-content: flex-start;
   gap: 0.5em;
   border-radius: 25px;
-  padding: 0.4em 0.8em;
+  padding: 0.2em 0.8em;
   background-color: #171717;
   box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
