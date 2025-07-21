@@ -12,6 +12,13 @@
   <body>
     <form class="form" method="POST" action="{{ url_for('login') }}">
       <p id="heading">Bem-Vindos<br />a Opinion</p>
+      <video autoplay muted loop id="bg-video">
+        <source
+          src="{{ url_for('static', filename='backround.mp4') }}"
+          type="video/mp4"
+        />
+        Seu navegador não suporta vídeo.
+      </video>
 
       <div class="field">
         <svg

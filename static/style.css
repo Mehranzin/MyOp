@@ -728,6 +728,16 @@ body {
   transform: translateY(2px);
 }
 
+#bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 10px 12px;
