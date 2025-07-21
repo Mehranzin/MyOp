@@ -53,15 +53,21 @@
         />
       </div>
 
-      <div class="btn">
-        <button class="button1" type="submit">Entrar</button>
-        <a href="{{ url_for('register') }}">
-          <button type="button" class="button2">Criar Conta</button>
-        </a>
+      <div class="btn" style="display: flex; justify-content: center">
+        <button class="button-name" type="submit">Entrar</button>
       </div>
-      <p class="extra">
-        Ainda NÃO tem conta? <a href="{{ url_for('register') }}">Registrar</a>
-      </p>
+
+      <div style="text-align: center; margin-top: 1em">
+        <span style="color: #999">Ainda NÃO tem conta?</span><br />
+        <button
+          type="button"
+          class="button-name"
+          onclick="window.location='{{ url_for('register') }}'"
+          style="margin-top: 0.5em"
+        >
+          Criar Conta
+        </button>
+      </div>
     </form>
 
     <script>
