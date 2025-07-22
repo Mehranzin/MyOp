@@ -607,7 +607,7 @@ button:active {
   gap: 10px;
 }
 
-body {
+.body-login {
   margin: 0;
   padding: 0;
   height: 100vh;
