@@ -616,7 +616,6 @@ body {
   justify-content: center;
   background: #111111;
   padding-top: 80px;
-  overflow: hidden;
 
   .form {
     display: flex;
