@@ -11,18 +11,68 @@
   </head>
   <body>
     <p>Olá essas são as tendencias</p>
-    <h2>Mais populares do dia</h2>
     {% for post, tempo, likes_count, comentarios_count, comentarios, liked in
     posts %}
-    <div class="post">
-      <p><strong>@{{ post.autor.apelido }}</strong> • {{ tempo }}</p>
-      <p>{{ post.texto }}</p>
-      <p>👍 {{ likes_count }} • 💬 {{ comentarios_count }}</p>
-      {% if liked %}
-      <span style="color: red">Você curtiu</span>
-      {% endif %}
-      <hr />
+    <div class="post-container">
+      <div class="user-box">
+        <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
+          {{ post.autor.apelido }}
+        </a>
+      </div>
+
+      <div
+        class="post-content {% if post.user_id != session['user_id'] %}post-outro{% endif %}"
+      >
+        {% if post.user_id == session['user_id'] %}
+        <img
+          src="{{ url_for('static', filename='images/three points.png') }}"
+          onclick="toggleOpcoes({{ post.id }})"
+          class="tres-pontos"
+        />
+        <div id="opcoes-{{ post.id }}" class="post-opcoes">
+          <form
+            method="GET"
+            action="{{ url_for('delete_post', post_id=post.id) }}"
+            onsubmit="return confirmarExclusao()"
+          >
+            <button type="submit">Deletar Opinião</button>
+          </form>
+        </div>
+        {% endif %} {{ post.texto|e }}
+        <br />
+        <small>{{ tempo }}</small>
+
+        <div class="post-acoes">
+          <a
+            href="{{ url_for('like_post', post_id=post.id) }}"
+            class="like-link"
+          >
+            {% if liked %}
+            <img
+              src="{{ url_for('static', filename='images/heart y.png') }}"
+              class="icone"
+            />
+            {% else %}
+            <img
+              src="{{ url_for('static', filename='images/heart n.webp') }}"
+              class="icone"
+            />
+            {% endif %}
+          </a>
+          <span class="like-count">{{ likes_count }}</span>
+
+          <a href="{{ url_for('ver_post', post_id=post.id) }}">
+            <img
+              src="{{ url_for('static', filename='images/comment.png') }}"
+              class="icone"
+            />
+          </a>
+
+          <span class="resposta-numero">{{ comentarios_count }}</span>
+        </div>
+      </div>
     </div>
+    <hr />
     {% endfor %}
 
     <footer class="nav-footer">
