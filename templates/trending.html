@@ -11,6 +11,19 @@
   </head>
   <body>
     <p>Olá essas são as tendencias</p>
+    <h2>Mais populares do dia</h2>
+    {% for post, tempo, likes_count, comentarios_count, comentarios, liked in
+    posts %}
+    <div class="post">
+      <p><strong>@{{ post.autor.apelido }}</strong> • {{ tempo }}</p>
+      <p>{{ post.texto }}</p>
+      <p>👍 {{ likes_count }} • 💬 {{ comentarios_count }}</p>
+      {% if liked %}
+      <span style="color: red">Você curtiu</span>
+      {% endif %}
+      <hr />
+    </div>
+    {% endfor %}
 
     <footer class="nav-footer">
       <nav>

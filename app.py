@@ -237,7 +237,30 @@ def ver_post(post_id):
 
 @app.route('/trending')
 def trending():
-    return render_template('trending.html')
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    usuario = User.query.get(session['user_id'])
+
+    posts = (
+        db.session.query(Post, db.func.count(Like.id).label('likes_count'))
+        .outerjoin(Like)
+        .group_by(Post.id)
+        .order_by(db.desc('likes_count'), db.desc(Post.created_at))
+        .limit(10)
+        .all()
+    )
+
+    posts_com_tempo = []
+    for post, likes_count in posts:
+        tempo = tempo_relativo(post.created_at)
+        comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
+        comentarios_count = len(comentarios)
+        liked = Like.query.filter_by(post_id=post.id, user_id=usuario.id).first() is not None
+        posts_com_tempo.append((post, tempo, likes_count, comentarios_count, comentarios, liked))
+
+    return render_template('trending.html', posts=posts_com_tempo, apelido=usuario.apelido)
+
 
 @app.route('/search')
 def search():
