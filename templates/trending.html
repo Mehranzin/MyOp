@@ -27,7 +27,7 @@
       Opiniões mais virais do dia:
     </h3>
     <div class="container">
-      {% for item in posts %} {% if loop.index > 10 %} {% break %} {% endif %}
+      {% for item in posts[:10] %}
       <div class="post-container {% if item.is_viral %}viral-post{% endif %}">
         <div class="user-box">
           <a href="{{ url_for('perfil', usuario=item.post.autor.apelido) }}">
