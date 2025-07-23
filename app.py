@@ -144,7 +144,7 @@ def feed():
     posts = Post.query.order_by(Post.id.desc()).all()
     posts_com_tempo = []
     for post in posts:
-        tempo = tempo_relativo(post.created.at)
+        tempo = tempo_relativo(post.created_at)
         likes_count = Like.query.filter_by(post_id=post.id).count()
         comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
         comentarios_count = len(comentarios)
