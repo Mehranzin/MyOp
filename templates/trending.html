@@ -23,41 +23,10 @@
         <div
           class="post-content {% if item.post.user_id != session['user_id'] %}post-outro{% endif %}"
         >
-          {% if item.post.user_id == session['user_id'] %}
-          <img
-            src="{{ url_for('static', filename='images/three points.png') }}"
-            onclick="toggleOpcoes({{ item.post.id }})"
-            class="tres-pontos"
-          />
-          <div id="opcoes-{{ item.post.id }}" class="post-opcoes">
-            <form
-              action="{{ url_for('delete_post', post_id=item.post.id) }}"
-              method="get"
-              style="display: inline"
-            >
-              <button type="submit" class="delete-btn">Deletar</button>
-            </form>
-            <form
-              action="{{ url_for('edit_post', post_id=item.post.id) }}"
-              method="post"
-              class="edit-form"
-              style="display: inline"
-            >
-              <input
-                type="text"
-                name="novo_texto"
-                placeholder="Novo texto"
-                required
-              />
-              <button type="submit" class="edit-btn">Editar</button>
-            </form>
-          </div>
-          {% endif %} {{ item.post.texto|e }}
+          {{ item.post.texto|e }}
           <br />
           <small>{{ item.tempo }}</small>
           <div class="post-acoes">
-            <span>{{ item.likes_count }} Curtidas</span> |
-            <span>{{ item.comentarios_count }} Comentários</span>
             <a href="{{ url_for('ver_post', post_id=item.post.id) }}"
               >Ver post</a
             >
@@ -133,13 +102,7 @@
         });
       }
 
-      function toggleOpcoes(postId) {
-        const opcoes = document.getElementById(`opcoes-${postId}`);
-        if (opcoes) {
-          opcoes.style.display =
-            opcoes.style.display === "block" ? "none" : "block";
-        }
-      }
+      // Função toggleOpcoes removida pois o botão de 3 pontos foi removido
     </script>
   </body>
 </html>
