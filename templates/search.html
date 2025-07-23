@@ -12,134 +12,134 @@
   <body>
     <div class="nav-top">Pesquisa • Opinion</div>
     <div class="container">
+      <div class="container">
+        <div class="search-container">
+          <img
+            src="{{ url_for('static', filename='images/search2.PNG') }}"
+            alt="search icon"
+            class="search-icon"
+          />
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="O que deseja pesquisar?"
+          />
+        </div>
 
-    <div class="container">
-      <div class="search-container">
-        <img
-          src="{{ url_for('static', filename='images/search2.PNG') }}"
-          alt="search icon"
-          class="search-icon"
-        />
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="O que deseja pesquisar?"
-        />
+        <h2>Usuários encontrados:</h2>
+        <ul id="usuariosResultado"></ul>
+
+        <h2>Posts encontrados:</h2>
+        <ul id="postsResultado"></ul>
       </div>
+      <footer class="nav-footer">
+        <nav>
+          <a href="{{ url_for('feed') }}">
+            <img
+              src="{{ url_for('static', filename='images/home.png') }}"
+              alt="Feed"
+              class="icone"
+            />
+          </a>
+          <a href="{{ url_for('search') }}">
+            <img
+              src="{{ url_for('static', filename='images/search.png') }}"
+              alt="Search"
+              class="icone"
+            />
+          </a>
+          <a href="{{ url_for('trending') }}">
+            <img
+              src="{{ url_for('static', filename='images/trending.PNG') }}"
+              alt="Trending"
+              class="icone"
+            />
+          </a>
+          <a href="{{ url_for('groups') }}">
+            <img
+              src="{{ url_for('static', filename='images/groups.PNG') }}"
+              alt="Groups"
+              class="icone"
+            />
+          </a>
+          <a href="{{ url_for('perfil') }}">
+            <img
+              src="{{ url_for('static', filename='images/perfil.png') }}"
+              alt="Perfil"
+              class="icone"
+            />
+          </a>
+        </nav>
+      </footer>
+      <script>
+        const input = document.getElementById("searchInput");
+        const usuariosLista = document.getElementById("usuariosResultado");
+        const postsLista = document.getElementById("postsResultado");
 
-      <h2>Usuários encontrados:</h2>
-      <ul id="usuariosResultado"></ul>
-
-      <h2>Posts encontrados:</h2>
-      <ul id="postsResultado"></ul>
-    </div>
-    <footer class="nav-footer">
-      <nav>
-        <a href="{{ url_for('feed') }}">
-          <img
-            src="{{ url_for('static', filename='images/home.png') }}"
-            alt="Feed"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('search') }}">
-          <img
-            src="{{ url_for('static', filename='images/search.png') }}"
-            alt="Search"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('trending') }}">
-          <img
-            src="{{ url_for('static', filename='images/trending.PNG') }}"
-            alt="Trending"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('groups') }}">
-          <img
-            src="{{ url_for('static', filename='images/groups.PNG') }}"
-            alt="Groups"
-            class="icone"
-          />
-        </a>
-        <a href="{{ url_for('perfil') }}">
-          <img
-            src="{{ url_for('static', filename='images/perfil.png') }}"
-            alt="Perfil"
-            class="icone"
-          />
-        </a>
-      </nav>
-    </footer>
-    <script>
-      const input = document.getElementById("searchInput");
-      const usuariosLista = document.getElementById("usuariosResultado");
-      const postsLista = document.getElementById("postsResultado");
-
-      input.addEventListener("input", async () => {
-        const query = input.value.trim();
-        if (query === "") {
-          usuariosLista.innerHTML = "";
-          postsLista.innerHTML = "";
-          return;
-        }
-
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-        const data = await res.json();
-
-        usuariosLista.innerHTML = "";
-        data.usuarios.forEach((u) => {
-          const li = document.createElement("li");
-          li.classList.add("usuario-item");
-          li.innerHTML = `<a href="/perfil?usuario=${u.apelido}">@${u.apelido}</a>`;
-          usuariosLista.appendChild(li);
-        });
-
-        postsLista.innerHTML = "";
-        data.posts.forEach((p) => {
-          const li = document.createElement("li");
-          li.classList.add("post-container");
-          li.innerHTML = `
-        <div class="user-box">
-          <a href="/perfil?usuario=${p.autor_apelido}">@${p.autor_apelido}</a>
-        </div>
-        <div class="post-content">
-          ${p.texto}
-          <br />
-          <div class="post-acoes">
-            <a href="/post/${p.id}">Ver post</a>
-          </div>
-        </div>
-      `;
-          postsLista.appendChild(li);
-        });
-      });
-      
-      /*SCRIPT DE SUMIR A NAV*/
-      let lastScroll = 0;
-      const navFooter = document.querySelector(".nav-footer");
-      let timeoutId;
-
-      if (navFooter) {
-        window.addEventListener("scroll", () => {
-          const currentScroll = window.pageYOffset;
-
-          clearTimeout(timeoutId);
-
-          if (currentScroll > lastScroll) {
-            timeoutId = setTimeout(() => {
-              navFooter.style.transform = "translateY(100%)";
-            }, 170);
-          } else {
-            timeoutId = setTimeout(() => {
-              navFooter.style.transform = "translateY(0%)";
-            }, 80);
+        input.addEventListener("input", async () => {
+          const query = input.value.trim();
+          if (query === "") {
+            usuariosLista.innerHTML = "";
+            postsLista.innerHTML = "";
+            return;
           }
 
-          lastScroll = currentScroll;
+          const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+          const data = await res.json();
+
+          usuariosLista.innerHTML = "";
+          data.usuarios.forEach((u) => {
+            const li = document.createElement("li");
+            li.classList.add("usuario-item");
+            li.innerHTML = `<a href="/perfil?usuario=${u.apelido}">${u.apelido}</a>`;
+            usuariosLista.appendChild(li);
+          });
+
+          postsLista.innerHTML = "";
+          data.posts.forEach((p) => {
+            const li = document.createElement("li");
+            li.classList.add("post-container");
+            li.innerHTML = `
+            <div class="user-box">
+              <a href="/perfil?usuario=${p.autor_apelido}">${p.autor_apelido}</a>
+            </div>
+            <div class="post-content">
+              ${p.texto}
+              <br />
+              <small>${p.tempo}</small> <div class="post-acoes">
+                <a href="/post/${p.id}">Ver post</a>
+              </div>
+            </div>
+          `;
+            postsLista.appendChild(li);
+          });
         });
-      }
-    </script>
+
+        /*SCRIPT DE SUMIR A NAV*/
+        let lastScroll = 0;
+        const navFooter = document.querySelector(".nav-footer");
+        let timeoutId;
+
+        if (navFooter) {
+          window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            clearTimeout(timeoutId);
+
+            if (currentScroll > lastScroll) {
+              timeoutId = setTimeout(() => {
+                navFooter.style.transform = "translateY(100%)";
+              }, 170);
+            } else {
+              timeoutId = setTimeout(() => {
+                navFooter.style.transform = "translateY(0%)";
+              }, 80);
+            }
+
+            lastScroll = currentScroll;
+          });
+        }
+      </script>
+    </div>
   </body>
 </html>
