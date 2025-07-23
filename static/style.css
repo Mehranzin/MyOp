@@ -247,7 +247,7 @@ a:hover {
 .nav-footer nav {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 36px;
   width: 100%;
 }
 
@@ -762,7 +762,7 @@ button:active {
   }
 
   .post-container {
-    max-width: 95%; /* Ajustado para telas menores */
+    max-width: 95%;
     margin: 10px auto;
   }
 
