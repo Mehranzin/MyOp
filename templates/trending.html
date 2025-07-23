@@ -12,45 +12,38 @@
   <body>
     <div class="nav-top">Tendências • Opinion</div>
     <div class="container">
-    {% for post, tempo, likes_count, comentarios_count, comentarios, liked in
-    posts %}
-    <div class="post-container">
-      <div class="user-box">
-        <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
-          {{ post.autor.apelido }}
-        </a>
-      </div>
-
-      <div
-        class="post-content {% if post.user_id != session['user_id'] %}post-outro{% endif %}"
-      >
-        {% if post.user_id == session['user_id'] %}
-        <img
-          src="{{ url_for('static', filename='images/three points.png') }}"
-          onclick="toggleOpcoes({{ post.id }})"
-          class="tres-pontos"
-        />
-        <div id="opcoes-{{ post.id }}" class="post-opcoes">
-          <form
-            method="GET"
-            action="{{ url_for('delete_post', post_id=post.id) }}"
-            onsubmit="return confirmarExclusao()"
-          >
-            <button type="submit">Deletar Opinião</button>
-          </form>
-        </div>
-        {% endif %} {{ post.texto|e }}
-        <br />
-        <small>{{ tempo }}</small>
-
-        <div class="post-acoes">
-          <a href="{{ url_for('ver_post', post_id=post.id) }}">
+      {% for post, tempo, likes_count, comentarios_count, comentarios, liked in
+      posts %}
+      <div class="post-container">
+        <div class="user-box">
+          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
+            @{{ post.autor.apelido }}
           </a>
         </div>
+
+        <div
+          class="post-content {% if post.user_id != session['user_id'] %}post-outro{% endif %}"
+        >
+          {% if post.user_id == session['user_id'] %}
+          <img
+            src="{{ url_for('static', filename='images/three points.png') }}"
+            onclick="toggleOpcoes({{ post.id }})"
+            class="tres-pontos"
+          />
+          <div id="opcoes-{{ post.id }}" class="post-opcoes">
+            </form>
+          </div>
+          {% endif %} {{ post.texto|e }}
+          <br />
+          <small>{{ tempo }}</small>
+          <div class="post-acoes">
+            <a href="{{ url_for('ver_post', post_id=post.id) }}">Ver post</a>
+          </div>
+        </div>
       </div>
+      <hr />
+      {% endfor %}
     </div>
-    <hr />
-    {% endfor %}
 
     <footer class="nav-footer">
       <nav>
@@ -92,5 +85,39 @@
         </a>
       </nav>
     </footer>
+    <script>
+      let lastScroll = 0;
+      const navFooter = document.querySelector(".nav-footer");
+      let timeoutId;
+
+      if (navFooter) {
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
+
+          clearTimeout(timeoutId);
+
+          if (currentScroll > lastScroll) {
+            timeoutId = setTimeout(() => {
+              navFooter.style.transform = "translateY(100%)";
+            }, 170);
+          } else {
+            timeoutId = setTimeout(() => {
+              navFooter.style.transform = "translateY(0%)";
+            }, 80);
+          }
+
+          lastScroll = currentScroll;
+        });
+      }
+
+      // Função para mostrar/esconder opções de post (se aplicável, mantenha ou remova)
+      function toggleOpcoes(postId) {
+        const opcoes = document.getElementById(`opcoes-${postId}`);
+        if (opcoes) {
+          opcoes.style.display =
+            opcoes.style.display === "block" ? "none" : "block";
+        }
+      }
+    </script>
   </body>
 </html>
