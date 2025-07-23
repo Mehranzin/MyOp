@@ -751,16 +751,21 @@ button:active {
   fill: white;
 }
 
-.viral-post {
-  border: 2px solid #007bff;
+.post-container.viral-post .post-content {
+  border: 1.6px solid #007bff;
   box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+  animation: blink-border 1.5s infinite alternate;
 }
 
-.post-container {
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  overflow: hidden;
+@keyframes blink-border {
+  from {
+    border-color: #007bff;
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+  }
+  to {
+    border-color: #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+  }
 }
 
 @media (max-width: 600px) {
