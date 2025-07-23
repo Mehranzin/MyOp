@@ -330,7 +330,7 @@ button:active {
   z-index: 999;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%); /* Centraliza a caixa */
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -376,7 +376,7 @@ button:active {
 .container_chat_bot .chat .chat-bot {
   position: relative;
   display: flex;
-  padding-top: 5px; /* Empurra a textarea um pouco para baixo */
+  padding-top: 5px;
 }
 
 .container_chat_bot .chat .chat-bot textarea {
@@ -749,6 +749,18 @@ button:active {
   width: 1em;
   height: 1em;
   fill: white;
+}
+
+.viral-post {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
+}
+
+.post-container {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 @media (max-width: 600px) {

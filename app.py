@@ -2,8 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from models import db, User, Post, Comment, Like
 from datetime import datetime, timezone, timedelta
 from config import Config
-from sqlalchemy import or_, text
-from forms import RegistrationForm
+from sqlalchemy import or_, text, func
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -54,6 +53,7 @@ def register():
         flash('Já está logado.', 'info')
         return redirect(url_for('feed'))
 
+    from forms import RegistrationForm
     form = RegistrationForm()
     if form.validate_on_submit():
         apelido = form.apelido.data.strip()
@@ -94,7 +94,7 @@ def login():
         if usuario and usuario.checa_senha(senha):
             session.permanent = True
             session['user_id'] = usuario.id
-            session['user_email'] = usuario.email  # salva o email na sessão
+            session['user_email'] = usuario.email
             flash('Login bem-sucedido.', 'success')
             return redirect(url_for('feed'))
         flash('Credenciais inválidas.', 'danger')
@@ -144,7 +144,7 @@ def feed():
     posts = Post.query.order_by(Post.id.desc()).all()
     posts_com_tempo = []
     for post in posts:
-        tempo = tempo_relativo(post.created_at)
+        tempo = tempo_relativo(post.created.at)
         likes_count = Like.query.filter_by(post_id=post.id).count()
         comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
         comentarios_count = len(comentarios)
@@ -167,7 +167,7 @@ def like_post(post_id):
         novo_like = Like(post_id=post_id, user_id=user_id)
         db.session.add(novo_like)
     db.session.commit()
-    return redirect(url_for('feed'))
+    return redirect(request.referrer or url_for('feed'))
 
 @app.route('/comment/<int:post_id>', methods=['POST'])
 def comment_post(post_id):
@@ -179,7 +179,7 @@ def comment_post(post_id):
         comentario = Comment(texto=texto, post_id=post_id, user_id=session['user_id'])
         db.session.add(comentario)
         db.session.commit()
-    return redirect(url_for('feed'))
+    return redirect(request.referrer or url_for('feed'))
 
 @app.route('/delete_post/<int:post_id>')
 def delete_post(post_id):
@@ -242,25 +242,45 @@ def trending():
 
     usuario = User.query.get(session['user_id'])
 
-    posts = (
-        db.session.query(Post, db.func.count(Like.id).label('likes_count'))
-        .outerjoin(Like)
+    posts_data = (
+        db.session.query(
+            Post,
+            db.func.count(db.distinct(Like.id)).label('likes_count'),
+            db.func.count(db.distinct(Comment.id)).label('comentarios_count')
+        )
+        .outerjoin(Like, Post.id == Like.post_id)
+        .outerjoin(Comment, Post.id == Comment.post_id)
         .group_by(Post.id)
-        .order_by(db.desc('likes_count'), db.desc(Post.created_at))
-        .limit(10)
         .all()
     )
 
-    posts_com_tempo = []
-    for post, likes_count in posts:
-        tempo = tempo_relativo(post.created_at)
-        comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
-        comentarios_count = len(comentarios)
-        liked = Like.query.filter_by(post_id=post.id, user_id=usuario.id).first() is not None
-        posts_com_tempo.append((post, tempo, likes_count, comentarios_count, comentarios, liked))
+    posts_com_score = []
+    for post, likes_count, comentarios_count in posts_data:
+        engagement_score = likes_count + comentarios_count
+        posts_com_score.append({
+            'post': post,
+            'likes_count': likes_count,
+            'comentarios_count': comentarios_count,
+            'engagement_score': engagement_score
+        })
 
-    return render_template('trending.html', posts=posts_com_tempo, apelido=usuario.apelido)
+    posts_com_score.sort(key=lambda x: x['engagement_score'], reverse=True)
 
+    posts_para_template = []
+    for i, item in enumerate(posts_com_score):
+        tempo = tempo_relativo(item['post'].created_at)
+        liked = Like.query.filter_by(post_id=item['post'].id, user_id=usuario.id).first() is not None
+        
+        posts_para_template.append({
+            'post': item['post'],
+            'tempo': tempo,
+            'likes_count': item['likes_count'],
+            'comentarios_count': item['comentarios_count'],
+            'liked': liked,
+            'is_viral': True if i < 3 else False
+        })
+
+    return render_template('trending.html', posts=posts_para_template, apelido=usuario.apelido)
 
 @app.route('/search')
 def search():

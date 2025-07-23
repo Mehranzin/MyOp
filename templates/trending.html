@@ -12,32 +12,55 @@
   <body>
     <div class="nav-top">Tendências • Opinion</div>
     <div class="container">
-      {% for post, tempo, likes_count, comentarios_count, comentarios, liked in
-      posts %}
-      <div class="post-container">
+      {% for item in posts %}
+      <div class="post-container {% if item.is_viral %}viral-post{% endif %}">
         <div class="user-box">
-          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
-            {{ post.autor.apelido }}
+          <a href="{{ url_for('perfil', usuario=item.post.autor.apelido) }}">
+            {{ item.post.autor.apelido }}
           </a>
         </div>
 
         <div
-          class="post-content {% if post.user_id != session['user_id'] %}post-outro{% endif %}"
+          class="post-content {% if item.post.user_id != session['user_id'] %}post-outro{% endif %}"
         >
-          {% if post.user_id == session['user_id'] %}
+          {% if item.post.user_id == session['user_id'] %}
           <img
             src="{{ url_for('static', filename='images/three points.png') }}"
-            onclick="toggleOpcoes({{ post.id }})"
+            onclick="toggleOpcoes({{ item.post.id }})"
             class="tres-pontos"
           />
-          <div id="opcoes-{{ post.id }}" class="post-opcoes">
+          <div id="opcoes-{{ item.post.id }}" class="post-opcoes">
+            <form
+              action="{{ url_for('delete_post', post_id=item.post.id) }}"
+              method="get"
+              style="display: inline"
+            >
+              <button type="submit" class="delete-btn">Deletar</button>
+            </form>
+            <form
+              action="{{ url_for('edit_post', post_id=item.post.id) }}"
+              method="post"
+              class="edit-form"
+              style="display: inline"
+            >
+              <input
+                type="text"
+                name="novo_texto"
+                placeholder="Novo texto"
+                required
+              />
+              <button type="submit" class="edit-btn">Editar</button>
             </form>
           </div>
-          {% endif %} {{ post.texto|e }}
+          {% endif %} {{ item.post.texto|e }}
           <br />
-          <small>{{ tempo }}</small>
+          <small>{{ item.tempo }}</small>
           <div class="post-acoes">
-            <a href="{{ url_for('ver_post', post_id=post.id) }}">Ver post</a>
+            <span>{{ item.likes_count }} Curtidas</span> |
+            <span>{{ item.comentarios_count }} Comentários</span>
+            <a href="{{ url_for('ver_post', post_id=item.post.id) }}"
+              >Ver post</a
+            >
           </div>
         </div>
       </div>
@@ -110,7 +133,6 @@
         });
       }
 
-      // Função para mostrar/esconder opções de post (se aplicável, mantenha ou remova)
       function toggleOpcoes(postId) {
         const opcoes = document.getElementById(`opcoes-${postId}`);
         if (opcoes) {
