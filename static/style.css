@@ -95,7 +95,7 @@ a:hover {
 }
 
 .post-container {
-  max-width: 780px; /* Aumentado para dar mais espaço nas laterais */
+  max-width: 780px;
   margin: 12px auto;
   padding: 0;
   position: relative;
