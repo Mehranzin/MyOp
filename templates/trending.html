@@ -44,32 +44,8 @@
         <small>{{ tempo }}</small>
 
         <div class="post-acoes">
-          <a
-            href="{{ url_for('like_post', post_id=post.id) }}"
-            class="like-link"
-          >
-            {% if liked %}
-            <img
-              src="{{ url_for('static', filename='images/heart y.png') }}"
-              class="icone"
-            />
-            {% else %}
-            <img
-              src="{{ url_for('static', filename='images/heart n.webp') }}"
-              class="icone"
-            />
-            {% endif %}
-          </a>
-          <span class="like-count">{{ likes_count }}</span>
-
           <a href="{{ url_for('ver_post', post_id=post.id) }}">
-            <img
-              src="{{ url_for('static', filename='images/comment.png') }}"
-              class="icone"
-            />
           </a>
-
-          <span class="resposta-numero">{{ comentarios_count }}</span>
         </div>
       </div>
     </div>
