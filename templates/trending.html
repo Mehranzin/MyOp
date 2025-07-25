@@ -8,9 +8,28 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <style>
+      .bubble-img {
+        height: 1em;
+        margin-right: 8px;
+        animation: bubble 4s ease-in-out infinite;
+        transform-origin: center center;
+      }
+
+      @keyframes bubble {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.08);
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="nav-top">Trends • Opinion</div>
+
     <h3
       style="
         display: flex;
@@ -19,13 +38,10 @@
         font-size: 1.2em;
       "
     >
-      <img
-        src="static/images/12.png"
-        alt="Ícone"
-        style="height: 1em; margin-right: 8px"
-      />
+      <img src="static/images/12.png" alt="Ícone" class="bubble-img" />
       Opiniões mais virais do dia:
     </h3>
+
     <div class="container">
       {% for item in posts[:10] %}
       <div class="post-container {% if item.is_viral %}viral-post{% endif %}">
@@ -69,7 +85,6 @@
             class="icone"
           />
         </a>
-
         <a href="{{ url_for('trending') }}">
           <img
             src="{{ url_for('static', filename='images/trending.PNG') }}"
@@ -101,7 +116,6 @@
       if (navFooter) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
-
           clearTimeout(timeoutId);
 
           if (currentScroll > lastScroll) {
@@ -117,8 +131,6 @@
           lastScroll = currentScroll;
         });
       }
-
-      // Função toggleOpcoes removida pois o botão de 3 pontos foi removido
     </script>
   </body>
 </html>
