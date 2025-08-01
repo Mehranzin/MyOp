@@ -101,23 +101,19 @@
           <small>{{ tempo }}</small>
 
           <div class="post-acoes">
-            <a
-              href="{{ url_for('like_post', post_id=post.id) }}"
-              class="like-link"
+            <button
+              class="like-btn"
+              data-post-id="{{ post.id }}"
+              data-liked="{{ 'true' if liked else 'false' }}"
             >
-              {% if liked %}
               <img
-                src="{{ url_for('static', filename='images/heart y.png') }}"
-                class="icone"
+                src="{{ url_for('static', filename='images/heart' + (' y.png' if liked else ' n.webp')) }}"
+                class="icone like-icon"
               />
-              {% else %}
-              <img
-                src="{{ url_for('static', filename='images/heart n.webp') }}"
-                class="icone"
-              />
-              {% endif %}
-            </a>
-            <span class="like-count">{{ likes_count }}</span>
+            </button>
+            <span class="like-count" id="like-count-{{ post.id }}"
+              >{{ likes_count }}</span
+            >
 
             <a href="{{ url_for('ver_post', post_id=post.id) }}">
               <img
@@ -202,15 +198,70 @@
         }
       }
 
-      function saveScroll() {
-        sessionStorage.setItem("scrollPos", window.scrollY);
-      }
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".like-btn").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const postId = button.dataset.postId;
+            const isLiked = button.dataset.liked === "true";
+            const likeIcon = button.querySelector(".like-icon");
+            const likeCountSpan = document.getElementById(
+              `like-count-${postId}`
+            );
 
-      document.querySelectorAll(".like-link").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          saveScroll();
-          window.location = this.href;
+            if (isLiked) {
+              likeIcon.src =
+                '{{ url_for("static", filename="images/heart n.webp") }}';
+              likeCountSpan.textContent =
+                parseInt(likeCountSpan.textContent) - 1;
+            } else {
+              likeIcon.src =
+                '{{ url_for("static", filename="images/heart y.png") }}';
+              likeCountSpan.textContent =
+                parseInt(likeCountSpan.textContent) + 1;
+            }
+            button.dataset.liked = !isLiked;
+
+            try {
+              const response = await fetch(`/api/like/${postId}`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+
+              const data = await response.json();
+
+              if (data.status === "success") {
+                likeCountSpan.textContent = data.likes_count;
+                button.dataset.liked = data.liked;
+
+                if (data.liked) {
+                  likeIcon.src =
+                    '{{ url_for("static", filename="images/heart y.png") }}';
+                } else {
+                  likeIcon.src =
+                    '{{ url_for("static", filename="images/heart n.webp") }}';
+                }
+              } else {
+                likeIcon.src = isLiked
+                  ? '{{ url_for("static", filename="images/heart y.png") }}'
+                  : '{{ url_for("static", filename="images/heart n.webp") }}';
+                likeCountSpan.textContent = isLiked
+                  ? parseInt(likeCountSpan.textContent) + 1
+                  : parseInt(likeCountSpan.textContent) - 1;
+                button.dataset.liked = isLiked;
+              }
+            } catch (error) {
+              console.error("Erro:", error);
+              likeIcon.src = isLiked
+                ? '{{ url_for("static", filename="images/heart y.png") }}'
+                : '{{ url_for("static", filename="images/heart n.webp") }}';
+              likeCountSpan.textContent = isLiked
+                ? parseInt(likeCountSpan.textContent) + 1
+                : parseInt(likeCountSpan.textContent) - 1;
+              button.dataset.liked = isLiked;
+            }
+          });
         });
       });
 

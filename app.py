@@ -157,7 +157,7 @@ def feed():
 def like_post(post_id):
     if not session.get('user_id'):
         return redirect(url_for('login'))
-
+        
     user_id = session['user_id']
     like = Like.query.filter_by(post_id=post_id, user_id=user_id).first()
 
@@ -169,6 +169,31 @@ def like_post(post_id):
     db.session.commit()
     return redirect(request.referrer or url_for('feed'))
 
+@app.route('/api/like/<int:post_id>', methods=['POST'])
+def like_post_api(post_id):
+    if not session.get('user_id'):
+        return jsonify({'status': 'error', 'message': 'Usuário não autenticado.'}), 401
+
+    user_id = session['user_id']
+    like = Like.query.filter_by(post_id=post_id, user_id=user_id).first()
+    
+    if like:
+        db.session.delete(like)
+        liked_status = False
+    else:
+        novo_like = Like(post_id=post_id, user_id=user_id)
+        db.session.add(novo_like)
+        liked_status = True
+    
+    db.session.commit()
+    
+    likes_count = Like.query.filter_by(post_id=post_id).count()
+    
+    return jsonify({
+        'status': 'success',
+        'liked': liked_status,
+        'likes_count': likes_count
+    })
 @app.route('/comment/<int:post_id>', methods=['POST'])
 def comment_post(post_id):
     if not session.get('user_id'):
