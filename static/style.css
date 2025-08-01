@@ -174,8 +174,7 @@ a:hover {
 
 .like-btn {
   background: none;
-  border: none; /* Para remover a borda padrão do botão, se houver /
-padding: 0; / Para remover qualquer espaçamento interno padrão */
+  border: none;
 }
 
 .resposta-numero {
