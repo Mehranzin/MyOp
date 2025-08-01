@@ -252,7 +252,7 @@ a:hover {
 .nav-footer nav {
   display: flex;
   justify-content: center;
-  gap: 36px;
+  gap: clamp(15px, 6vw, 36px);
   width: 100%;
 }
 
