@@ -189,7 +189,7 @@ a:hover {
   display: flex;
   gap: 10px;
   margin-top: 10px;
-  margin-right: 18px;
+  margin-right: auto;
   align-items: center;
 }
 
