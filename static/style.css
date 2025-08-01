@@ -172,6 +172,12 @@ a:hover {
   font-weight: 600;
 }
 
+.like-btn {
+  background: none;
+  border: none; /* Para remover a borda padrão do botão, se houver /
+padding: 0; / Para remover qualquer espaçamento interno padrão */
+}
+
 .resposta-numero {
   font-size: 14px;
   font-weight: normal;
