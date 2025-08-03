@@ -126,13 +126,14 @@ a:hover {
 
 .post-content {
   background-color: #000;
-  padding: 18px 30px; /* Padding horizontal aumentado */
+  padding: 18px 30px;
   border-radius: 0 0 20px 20px;
   color: white;
   border: 1.6px solid #444;
   margin-bottom: 12px;
   margin-top: -4px;
   position: relative;
+  word-break: break-all;
 }
 
 .post-outro {
