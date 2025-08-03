@@ -210,12 +210,12 @@
 
             if (isLiked) {
               likeIcon.src =
-                '{{ url_for("static", filename="images/heart n.webp") }}';
+                "{{ url_for('static', filename='images/heart n.webp') }}";
               likeCountSpan.textContent =
                 parseInt(likeCountSpan.textContent) - 1;
             } else {
               likeIcon.src =
-                '{{ url_for("static", filename="images/heart y.png") }}';
+                "{{ url_for('static', filename='images/heart y.png') }}";
               likeCountSpan.textContent =
                 parseInt(likeCountSpan.textContent) + 1;
             }
@@ -237,15 +237,15 @@
 
                 if (data.liked) {
                   likeIcon.src =
-                    '{{ url_for("static", filename="images/heart y.png") }}';
+                    "{{ url_for('static', filename='images/heart y.png') }}";
                 } else {
                   likeIcon.src =
-                    '{{ url_for("static", filename="images/heart n.webp") }}';
+                    "{{ url_for('static', filename='images/heart n.webp') }}";
                 }
               } else {
                 likeIcon.src = isLiked
-                  ? '{{ url_for("static", filename="images/heart y.png") }}'
-                  : '{{ url_for("static", filename="images/heart n.webp") }}';
+                  ? "{{ url_for('static', filename='images/heart y.png') }}"
+                  : "{{ url_for('static', filename='images/heart n.webp') }}";
                 likeCountSpan.textContent = isLiked
                   ? parseInt(likeCountSpan.textContent) + 1
                   : parseInt(likeCountSpan.textContent) - 1;
@@ -254,8 +254,8 @@
             } catch (error) {
               console.error("Erro:", error);
               likeIcon.src = isLiked
-                ? '{{ url_for("static", filename="images/heart y.png") }}'
-                : '{{ url_for("static", filename="images/heart n.webp") }}';
+                ? "{{ url_for('static', filename='images/heart y.png') }}"
+                : "{{ url_for('static', filename='images/heart n.webp') }}";
               likeCountSpan.textContent = isLiked
                 ? parseInt(likeCountSpan.textContent) + 1
                 : parseInt(likeCountSpan.textContent) - 1;
@@ -265,6 +265,9 @@
         });
       });
 
+      function saveScroll() {
+        sessionStorage.setItem("scrollPos", window.pageYOffset);
+      }
       document.querySelectorAll(".icone").forEach((icon) => {
         icon.addEventListener("click", saveScroll);
       });
