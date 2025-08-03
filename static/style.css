@@ -861,6 +861,18 @@ button:active {
   padding-bottom: 40vh;
 }
 
+.container_chat_bot.chat-comment {
+  max-width: 95% !important;
+  padding: 0 10px !important;
+  box-sizing: border-box;
+}
+
+.container_chat_bot.chat-comment .container-chat-options {
+  width: 100% !important;
+}
+
+/* FIM DO CÓDIGO */
+
 img,
 img:focus,
 img:active,
