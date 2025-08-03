@@ -349,10 +349,9 @@ button:active {
 }
 
 .container_chat_bot.chat-comment .container-chat-options {
-  max-width: 100% !important;
+  max-width: 450px !important;
   width: 100% !important;
 
-  /* Retorna as cores e o layout original da caixinha */
   background: linear-gradient(
     to bottom right,
     #000000,
