@@ -330,6 +330,21 @@ button:active {
   outline: none !important;
 }
 
+.chat-comment {
+  display: flex !important;
+  position: static;
+  z-index: auto;
+  transform: none;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  padding-bottom: 0;
+}
+
+.chat-comment .container-chat-options {
+  max-width: 100%;
+}
+
 .container_chat_bot {
   display: none;
   position: fixed;
