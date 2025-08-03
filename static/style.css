@@ -133,7 +133,7 @@ a:hover {
   margin-bottom: 12px;
   margin-top: -4px;
   position: relative;
-  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .post-outro {
