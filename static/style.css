@@ -338,13 +338,11 @@ button:active {
   height: auto !important;
   padding-bottom: 0 !important;
   z-index: auto !important;
-
-  /* Estilos para o layout na página */
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
   margin: 20px auto !important;
-  max-width: 600px !important;
+  max-width: auto !important;
   background-color: transparent !important;
 }
 
