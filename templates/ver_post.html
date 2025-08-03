@@ -54,21 +54,54 @@
         </div>
       </div>
       <hr />
-      <div class="comment-box">
-        <form
-          method="POST"
-          action="{{ url_for('comment_post', post_id=post.id) }}"
-        >
-          <textarea
-            name="comentario"
-            rows="2"
-            placeholder="Escreva sua reposta..."
-            required
-          ></textarea>
-          <button type="submit">Comentar</button>
-        </form>
-      </div>
 
+      <div class="container_chat_bot">
+        <div class="container-chat-options">
+          <div class="chat">
+            <form
+              method="POST"
+              action="{{ url_for('comment_post', post_id=post.id) }}"
+              id="commentForm"
+            >
+              <div class="chat-bot">
+                <textarea
+                  id="comment_textarea"
+                  name="comentario"
+                  required
+                  placeholder="Escreva sua resposta..."
+                ></textarea>
+              </div>
+              <div class="options">
+                <div class="btns-add">
+                  <button type="button" id="commentEmojiButton">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12s12-5.373 12-12s-5.373-12-12-12zm-3.5 8c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5zm7 0c.828 0 1.5.672 1.5 1.5s-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5s.672-1.5 1.5-1.5zm-3.5 10c-3.14 0-5.738-2.203-6.49-5h12.98c-.752 2.797-3.35 5-6.49 5z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <button type="submit" class="btn-submit">
+                  <i>
+                    <svg viewBox="0 0 512 512">
+                      <path
+                        fill="currentColor"
+                        d="M473 39.05a24 24 0 0 0-25.5-5.46L47.47 185h-.08a24 24 0 0 0 1 45.16l.41.13l137.3 58.63a16 16 0 0 0 15.54-3.59L422 80a7.07 7.07 0 0 1 10 10L226.66 310.26a16 16 0 0 0-3.59 15.54l58.65 137.38c.06.2.12.38.19.57c3.2 9.27 11.3 15.81 21.09 16.25h1a24.63 24.63 0 0 0 23-15.46L478.39 64.62A24 24 0 0 0 473 39.05"
+                      ></path>
+                    </svg>
+                  </i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
       <hr />
 
       <h3>Comentários:</h3>
@@ -150,6 +183,12 @@
           t.style.height = t.scrollHeight + "px";
         });
       });
+
+      document
+        .getElementById("commentEmojiButton")
+        .addEventListener("click", function () {
+          document.getElementById("comment_textarea").focus();
+        });
     </script>
   </body>
 </html>
