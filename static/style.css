@@ -330,19 +330,27 @@ button:active {
   outline: none !important;
 }
 
-.chat-comment {
+.container_chat_bot.chat-comment {
   display: flex !important;
-  position: static;
-  z-index: auto;
-  transform: none;
-  width: auto;
-  height: auto;
-  background-color: transparent;
-  padding-bottom: 0;
+  position: static !important; /* Adicionei !important para reforçar */
+  z-index: auto !important;
+  transform: none !important;
+  width: 100% !important; /* Ajuste para ocupar a largura total do container */
+  height: auto !important;
+  background-color: transparent !important;
+  padding-bottom: 0 !important;
+  flex-direction: column !important; /* Para garantir que o layout interno funcione */
+  align-items: center !important;
+  justify-content: flex-start !important;
+  margin-top: 20px !important;
 }
 
-.chat-comment .container-chat-options {
-  max-width: 100%;
+.container_chat_bot.chat-comment .container-chat-options {
+  max-width: 100% !important;
+  border: 2px solid #ff0000;
+  box-shadow: none; /* Remover a sombra do modal */
+  padding: 0;
+  background: transparent;
 }
 
 .container_chat_bot {
