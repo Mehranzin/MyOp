@@ -10,7 +10,93 @@
     />
   </head>
   <body>
-        <div class="nav-top">Perfil • Opinion</div>
+    <div class="nav-top">
+      Perfil de <span class="apelido-perfil">{{ usuario.apelido }}</span>
+    </div>
+    <div class="container">
+      <div class="perfil-info">
+        <p><strong>Nome:</strong> {{ usuario.nome }} {{ usuario.sobrenome }}</p>
+        <p><strong>Idade:</strong> {{ usuario.idade }}</p>
+        {% if is_owner %}
+        <a
+          href="{{ url_for('logout') }}"
+          onclick="return confirmarLogout()"
+          class="btn-sair"
+          >Sair</a
+        >
+        {% endif %}
+      </div>
+
+      <hr />
+
+      <h2>Posts</h2>
+
+      {% if posts %} {% for item in posts %} {% set post = item['post'] %} {%
+      set tempo = item['tempo'] %} {% set likes_count = item['likes_count'] %}
+      {% set comentarios_count = item['comentarios_count'] %} {% set liked =
+      item['liked'] %}
+
+      <div class="post-container">
+        <div class="user-box">
+          <a href="{{ url_for('perfil', usuario=post.autor.apelido) }}">
+            {{ post.autor.apelido }}
+          </a>
+        </div>
+
+        <div
+          class="post-content {% if post.user_id != session['user_id'] %}post-outro{% endif %}"
+        >
+          {% if post.user_id == session['user_id'] %}
+          <img
+            src="{{ url_for('static', filename='images/three points.png') }}"
+            onclick="toggleOpcoes({{ post.id }})"
+            class="tres-pontos"
+          />
+          <div id="opcoes-{{ post.id }}" class="post-opcoes">
+            <form
+              method="GET"
+              action="{{ url_for('delete_post', post_id=post.id) }}"
+              onsubmit="return confirmarExclusao()"
+            >
+              <button type="submit">Deletar Opinião</button>
+            </form>
+          </div>
+          {% endif %} {{ post.texto|e }}
+          <br />
+          <small>{{ tempo }}</small>
+
+          <div class="post-acoes">
+            <button
+              class="like-btn"
+              data-post-id="{{ post.id }}"
+              data-liked="{{ 'true' if liked else 'false' }}"
+            >
+              <img
+                src="{{ url_for('static', filename='images/heart' + (' y.png' if liked else ' n.webp')) }}"
+                class="icone like-icon"
+              />
+            </button>
+            <span class="like-count" id="like-count-{{ post.id }}"
+              >{{ likes_count }}</span
+            >
+
+            <a href="{{ url_for('ver_post', post_id=post.id) }}">
+              <img
+                src="{{ url_for('static', filename='images/comment.png') }}"
+                class="icone"
+              />
+            </a>
+
+            <span class="resposta-numero">{{ comentarios_count }}</span>
+          </div>
+        </div>
+      </div>
+      <hr />
+      {% endfor %} {% else %}
+      <p>Este usuário não tem posts ainda.</p>
+      {% endif %}
+    </div>
+
     <footer class="nav-footer">
       <nav>
         <a href="{{ url_for('feed') }}">
@@ -27,13 +113,12 @@
             class="icone"
           />
         </a>
-
         <a href="{{ url_for('trending') }}">
           <img
             src="{{ url_for('static', filename='images/12.png') }}"
             alt="Trending"
             class="icone"
-          />  
+          />
         </a>
         <a href="{{ url_for('groups') }}">
           <img
@@ -52,20 +137,97 @@
       </nav>
     </footer>
 
-      <hr />
-      <p><strong>Apelido:</strong> {{ apelido }}</p>
-      <p><strong>Idade:</strong> {{ idade }}</p>
-      <a href="{{ url_for('logout') }}" onclick="return confirmarLogout()">Sair</a>
-      <scirpt>
-        <script>
-        function confirmarLogout() {
-          return confirm("Tem certeza que deseja sair da conta?");
+    <script>
+      function toggleOpcoes(postId) {
+        const menu = document.getElementById("opcoes-" + postId);
+        if (menu.style.display === "block") {
+          menu.style.display = "none";
+        } else {
+          document
+            .querySelectorAll(".post-opcoes")
+            .forEach((el) => (el.style.display = "none"));
+          menu.style.display = "block";
         }
-        
-  setInterval(() => {
-    fetch("/ping", { method: "POST" });
-  }, 5000);
-      </script>
-    </div>
+      }
+
+      function confirmarExclusao() {
+        return confirm("Tem certeza que deseja deletar sua opinião?");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".like-btn").forEach((button) => {
+          button.addEventListener("click", async () => {
+            const postId = button.dataset.postId;
+            const isLiked = button.dataset.liked === "true";
+            const likeIcon = button.querySelector(".like-icon");
+            const likeCountSpan = document.getElementById(
+              `like-count-${postId}`
+            );
+
+            if (isLiked) {
+              likeIcon.src =
+                "{{ url_for('static', filename='images/heart n.webp') }}";
+              likeCountSpan.textContent =
+                parseInt(likeCountSpan.textContent) - 1;
+            } else {
+              likeIcon.src =
+                "{{ url_for('static', filename='images/heart y.png') }}";
+              likeCountSpan.textContent =
+                parseInt(likeCountSpan.textContent) + 1;
+            }
+            button.dataset.liked = !isLiked;
+
+            try {
+              const response = await fetch(`/api/like/${postId}`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+
+              const data = await response.json();
+
+              if (data.status === "success") {
+                likeCountSpan.textContent = data.likes_count;
+                button.dataset.liked = data.liked;
+
+                if (data.liked) {
+                  likeIcon.src =
+                    "{{ url_for('static', filename='images/heart y.png') }}";
+                } else {
+                  likeIcon.src =
+                    "{{ url_for('static', filename='images/heart n.webp') }}";
+                }
+              } else {
+                likeIcon.src = isLiked
+                  ? "{{ url_for('static', filename='images/heart y.png') }}"
+                  : "{{ url_for('static', filename='images/heart n.webp') }}";
+                likeCountSpan.textContent = isLiked
+                  ? parseInt(likeCountSpan.textContent) + 1
+                  : parseInt(likeCountSpan.textContent) - 1;
+                button.dataset.liked = isLiked;
+              }
+            } catch (error) {
+              console.error("Erro:", error);
+              likeIcon.src = isLiked
+                ? "{{ url_for('static', filename='images/heart y.png') }}"
+                : "{{ url_for('static', filename='images/heart n.webp') }}";
+              likeCountSpan.textContent = isLiked
+                ? parseInt(likeCountSpan.textContent) + 1
+                : parseInt(likeCountSpan.textContent) - 1;
+              button.dataset.liked = isLiked;
+            }
+          });
+        });
+      });
+
+      function confirmarLogout() {
+        return confirm("Tem certeza que deseja sair da conta?");
+      }
+
+      setInterval(() => {
+        fetch("/ping", { method: "POST" });
+      }, 5000);
+    </script>
   </body>
 </html>

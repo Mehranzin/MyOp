@@ -119,10 +119,31 @@ def perfil():
         if not usuario:
             flash('Usuário não encontrado.', 'danger')
             return redirect(url_for('feed'))
+        posts_do_usuario = Post.query.filter_by(user_id=usuario.id).order_by(Post.id.desc()).all()
+        is_owner = (usuario.id == session['user_id'])
     else:
         usuario = User.query.get(session['user_id'])
+        posts_do_usuario = Post.query.filter_by(user_id=usuario.id).order_by(Post.id.desc()).all()
+        is_owner = True
 
-    return render_template('perfil.html', apelido=usuario.apelido, idade=usuario.idade)
+    posts_com_detalhes = []
+    for post in posts_do_usuario:
+        tempo = tempo_relativo(post.created_at)
+        likes_count = Like.query.filter_by(post_id=post.id).count()
+        comentarios_count = Comment.query.filter_by(post_id=post.id).count()
+        liked = Like.query.filter_by(post_id=post.id, user_id=session['user_id']).first() is not None
+        posts_com_detalhes.append({
+            'post': post,
+            'tempo': tempo,
+            'likes_count': likes_count,
+            'comentarios_count': comentarios_count,
+            'liked': liked
+        })
+
+    return render_template('perfil.html',
+                           usuario=usuario,
+                           posts=posts_com_detalhes,
+                           is_owner=is_owner)
 
 @app.route('/feed', methods=['GET', 'POST'])
 def feed():
