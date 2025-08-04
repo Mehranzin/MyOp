@@ -10,6 +10,19 @@
     />
   </head>
   <body class="body-login">
+    <div class="welcome-card" id="welcome-card">
+      <div class="welcome-card__content">
+        <div class="welcome-card__title">Bem-vindos á opinion</div>
+        <div class="welcome-card__description">
+          Aqui VOCÊ, fala e PENSA oque quiser sem medo e sem NINGUEM saber que é
+          VOCÊ!<br />
+          Ou seja de forma ANÔNIMA
+        </div>
+      </div>
+      <button class="welcome-card__button" onclick="fecharWelcomeCard()">
+        OK, CRIAR MINHA CONTA
+      </button>
+    </div>
     <form class="form" method="POST" action="{{ url_for('login') }}">
       <p id="heading">Bem-Vindos<br />a Opinion</p>
       <video autoplay muted loop id="bg-video">
@@ -114,6 +127,12 @@
           eyeIcon.innerHTML =
             '<path d="M1.173 8.5a13.133 13.133 0 0 1 2.43-2.611L1.354 3.646a.5.5 0 1 1 .707-.707l13 13a.5.5 0 0 1-.707.707l-2.53-2.53A8.74 8.74 0 0 1 8 13.5C3.5 13.5 1 8.5 1 8.5a13.134 13.134 0 0 1 .173-.5zM8 4.5c2.5 0 4.5 2 4.5 4s-2 4-4.5 4a4.5 4.5 0 0 1-4.5-4c0-.538.09-1.052.253-1.53l1.378 1.378A2.5 2.5 0 1 0 8 6a2.5 2.5 0 0 0-1.53.253l1.378 1.378A4.493 4.493 0 0 1 8 4.5z"></path>';
         }
+      }
+
+      /*FUNÇÃO DE FECHAR O CARD DE BOAS VINDAS*/
+      function fecharWelcomeCard() {
+        const card = document.getElementById("welcome-card");
+        if (card) card.style.display = "none";
       }
     </script>
   </body>
