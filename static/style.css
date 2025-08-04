@@ -827,11 +827,16 @@ button:active {
   box-shadow: 0 10px 15px -3px rgba(255 255 255 / 0.4),
     0 4px 6px -4px rgba(255 255 255 / 0.4);
   border-radius: 10px;
-  background: linear-gradient(45deg, #111111ea 0%, #ff0000 100%);
+  background: linear-gradient(45deg, #111111 0%, #ff0000 100%);
   color: white;
   user-select: none;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
+
 .welcome-card__content {
   padding: 20px;
 }
