@@ -815,19 +815,19 @@ button:active {
 }
 
 .bubble-img {
-  animation: pulse 1s infinite ease-in-out;
-  transform-origin: center;
+  height: 1em;
+  margin-right: 8px;
+  animation: pulse 1.5s ease-in-out infinite;
+  transform-origin: center center;
 }
 
 @keyframes pulse {
-  0% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
-    transform: scale(1.2); /* aumenta */
-  }
-  100% {
-    transform: scale(1); /* volta ao normal */
+    transform: scale(1.2);
   }
 }
 
