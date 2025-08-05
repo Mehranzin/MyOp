@@ -167,7 +167,7 @@ a:hover {
 }
 
 .like-count {
-  margin-left: -8px;
+  margin-left: -9px;
   font-size: 14px;
   vertical-align: middle;
   font-weight: 600;
@@ -181,7 +181,7 @@ a:hover {
 .resposta-numero {
   font-size: 14px;
   font-weight: normal;
-  margin-left: -6px;
+  margin-left: -5px;
   vertical-align: middle;
   font-weight: 600;
 }

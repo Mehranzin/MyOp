@@ -111,21 +111,29 @@
     <script>
       let lastScroll = 0;
       const navFooter = document.querySelector(".nav-footer");
-      let timeoutId;
+      const openPostBtn = document.getElementById("openPostBtn");
 
-      if (navFooter) {
+      if (navFooter && openPostBtn) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
-          clearTimeout(timeoutId);
+          const descendo = currentScroll > lastScroll;
 
-          if (currentScroll > lastScroll) {
-            timeoutId = setTimeout(() => {
+          if (descendo) {
+            setTimeout(() => {
               navFooter.style.transform = "translateY(100%)";
             }, 170);
+
+            setTimeout(() => {
+              openPostBtn.style.transform = "translateY(60px)";
+            }, 230);
           } else {
-            timeoutId = setTimeout(() => {
+            setTimeout(() => {
               navFooter.style.transform = "translateY(0%)";
             }, 80);
+
+            setTimeout(() => {
+              openPostBtn.style.transform = "translateY(0px)";
+            }, 70);
           }
 
           lastScroll = currentScroll;

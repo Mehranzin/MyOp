@@ -29,7 +29,7 @@
 
       <hr />
 
-      <h2>Opiniões do Usuario</h2>
+      <h2>Opiniões do Usuario:</h2>
 
       {% if posts %} {% for item in posts %} {% set post = item['post'] %} {%
       set tempo = item['tempo'] %} {% set likes_count = item['likes_count'] %}
@@ -228,6 +228,37 @@
       setInterval(() => {
         fetch("/ping", { method: "POST" });
       }, 5000);
+
+      let lastScroll = 0;
+      const navFooter = document.querySelector(".nav-footer");
+      const openPostBtn = document.getElementById("openPostBtn");
+
+      if (navFooter && openPostBtn) {
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
+          const descendo = currentScroll > lastScroll;
+
+          if (descendo) {
+            setTimeout(() => {
+              navFooter.style.transform = "translateY(100%)";
+            }, 170);
+
+            setTimeout(() => {
+              openPostBtn.style.transform = "translateY(60px)";
+            }, 230);
+          } else {
+            setTimeout(() => {
+              navFooter.style.transform = "translateY(0%)";
+            }, 80);
+
+            setTimeout(() => {
+              openPostBtn.style.transform = "translateY(0px)";
+            }, 70);
+          }
+
+          lastScroll = currentScroll;
+        });
+      }
     </script>
   </body>
 </html>
