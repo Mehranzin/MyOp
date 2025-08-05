@@ -8,17 +8,18 @@
       body {
         font-family: Arial, sans-serif;
         display: flex;
-        justify-content: center;
-        align-items: flex-start;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
         height: 100vh;
         margin: 0;
         background: #000;
         color: #fff;
-        flex-direction: column;
         text-align: center;
         padding-top: 40px;
       }
     </style>
+
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
