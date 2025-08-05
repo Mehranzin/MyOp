@@ -350,9 +350,18 @@ def api_search():
         Post.texto.ilike(f"%{query}%")
     ).all()
 
+    posts_formatados = []
+    for p in posts:
+        posts_formatados.append({
+            'id': p.id,
+            'texto': p.texto,
+            'autor_apelido': p.autor.apelido,
+            'tempo': tempo_relativo(p.created_at)
+        })
+
     return jsonify({
         'usuarios': [{'apelido': u.apelido} for u in usuarios],
-        'posts': [{'id': p.id, 'texto': p.texto, 'autor_apelido': p.autor.apelido} for p in posts]
+        'posts': posts_formatados
     })
 
 @app.route('/groups')
