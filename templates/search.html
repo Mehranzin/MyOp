@@ -91,7 +91,9 @@
           data.usuarios.forEach((u) => {
             const li = document.createElement("li");
             li.classList.add("usuario-item");
-            li.innerHTML = `<a href="/perfil?usuario=${u.apelido}">@${u.apelido}</a>`;
+            li.innerHTML = `<a href="/perfil?usuario=${encodeURIComponent(
+              u.apelido
+            )}">@${u.apelido}</a>`;
             usuariosLista.appendChild(li);
           });
 
@@ -101,7 +103,9 @@
             li.classList.add("post-container");
             li.innerHTML = `
             <div class="user-box">
-              <a href="/perfil?usuario=${p.autor_apelido}">${p.autor_apelido}</a>
+              <a href="/perfil?usuario=${encodeURIComponent(
+                p.autor_apelido
+              )}">${p.autor_apelido}</a>
             </div>
             <div class="post-content">
               ${p.texto}
