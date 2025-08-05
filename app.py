@@ -338,12 +338,9 @@ def api_search():
     if not query:
         return jsonify({'usuarios': [], 'posts': []})
 
+    # Agora só busca por apelido!
     usuarios = User.query.filter(
-        or_(
-            User.nome.ilike(f"%{query}%"),
-            User.sobrenome.ilike(f"%{query}%"),
-            User.apelido.ilike(f"%{query}%")
-        )
+        User.apelido.ilike(f"%{query}%")
     ).all()
 
     posts = Post.query.filter(
