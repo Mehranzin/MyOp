@@ -231,29 +231,18 @@
 
       let lastScroll = 0;
       const navFooter = document.querySelector(".nav-footer");
-      const openPostBtn = document.getElementById("openPostBtn");
 
-      if (navFooter && openPostBtn) {
+      if (navFooter) {
         window.addEventListener("scroll", () => {
           const currentScroll = window.pageYOffset;
           const descendo = currentScroll > lastScroll;
 
           if (descendo) {
-            setTimeout(() => {
-              navFooter.style.transform = "translateY(100%)";
-            }, 170);
-
-            setTimeout(() => {
-              openPostBtn.style.transform = "translateY(60px)";
-            }, 230);
+            // Esconde o footer
+            navFooter.style.transform = "translateY(100%)";
           } else {
-            setTimeout(() => {
-              navFooter.style.transform = "translateY(0%)";
-            }, 80);
-
-            setTimeout(() => {
-              openPostBtn.style.transform = "translateY(0px)";
-            }, 70);
+            // Mostra o footer
+            navFooter.style.transform = "translateY(0%)";
           }
 
           lastScroll = currentScroll;
