@@ -814,6 +814,23 @@ button:active {
   }
 }
 
+.bubble-img {
+  animation: pulse 1s infinite ease-in-out;
+  transform-origin: center;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2); /* aumenta */
+  }
+  100% {
+    transform: scale(1); /* volta ao normal */
+  }
+}
+
 .welcome-card {
   position: fixed;
   top: 50%;
