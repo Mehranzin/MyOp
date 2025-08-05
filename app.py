@@ -332,20 +332,31 @@ def trending():
 def search():
     return render_template('search.html')
 
+from sqlalchemy import func
+
 @app.route('/api/search')
 def api_search():
     query = request.args.get('q', '').strip()
     if not query:
         return jsonify({'usuarios': [], 'posts': []})
 
-    # Agora só busca por apelido!
+    unaccented_query = func.unaccent(query.lower())
+
     usuarios = User.query.filter(
-        User.apelido.ilike(f"%{query}%")
+        func.unaccent(func.lower(User.apelido)).ilike(f"%{query.lower()}%")
     ).all()
 
-    posts = Post.query.filter(
-        Post.texto.ilike(f"%{query}%")
+    posts_texto = Post.query.filter(
+        func.unaccent(func.lower(Post.texto)).ilike(f"%{query.lower()}%")
     ).all()
+
+    user_ids = [u.id for u in usuarios]
+    posts_usuario = Post.query.filter(Post.user_id.in_(user_ids)).all() if user_ids else []
+
+    posts = {p.id: p for p in posts_texto}
+    for p in posts_usuario:
+        posts[p.id] = p
+    posts = list(posts.values())
 
     posts_formatados = []
     for p in posts:
