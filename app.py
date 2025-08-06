@@ -56,7 +56,7 @@ def register():
     from forms import RegistrationForm
     form = RegistrationForm()
     if form.validate_on_submit():
-        apelido = form.apelido.data.strip()
+        apelido = form.apelido.data.strip() if form.apelido.data else ''
         if not apelido:
             apelido = gera_apelido()
             if not apelido:
