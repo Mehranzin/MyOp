@@ -382,9 +382,10 @@ def groups():
 
 @app.route('/admin/uso')
 def admin_uso_banco():
-    if 'user_id' not in session or session.get('user_email') != 'mehranmesrob@gmail.com':
+    email = session.get('user_email', '').lower()
+    if 'user_id' not in session or email != 'mehranmesrob@gmail.com':
         return redirect(url_for('login'))
-
+    
     query = text("""
         SELECT 
             relname AS tabela,
