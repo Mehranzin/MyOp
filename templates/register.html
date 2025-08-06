@@ -24,6 +24,8 @@
             type="text"
             required
             autocomplete="off"
+            pattern="[A-Za-zÀ-ÿ\s]+"
+            oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
           />
           {% for error in form.nome.errors %}
           <div class="erro">{{ error }}</div>
@@ -36,6 +38,8 @@
             type="text"
             required
             autocomplete="off"
+            pattern="[A-Za-zÀ-ÿ\s]+"
+            oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
           />
           {% for error in form.sobrenome.errors %}
           <div class="erro">{{ error }}</div>
@@ -56,6 +60,8 @@
             name="apelido"
             type="text"
             autocomplete="off"
+            maxlength="2"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,2)"
           />
           {% for error in form.apelido.errors %}
           <div class="erro">{{ error }}</div>
