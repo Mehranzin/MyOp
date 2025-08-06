@@ -15,7 +15,6 @@
       <form method="POST" action="{{ url_for('register') }}">
         {{ form.hidden_tag() }}
 
-        <!-- Etapa 1 -->
         <div class="step active">
           <input
             placeholder="Nome"
@@ -52,7 +51,6 @@
           </div>
         </div>
 
-        <!-- Etapa 2 -->
         <div class="step">
           <div style="margin-bottom: 10px">
             <input
@@ -102,7 +100,6 @@
           </div>
         </div>
 
-        <!-- Etapa 3 -->
         <div class="step">
           <input
             placeholder="Email"
@@ -172,6 +169,7 @@
               return response.json();
             })
             .then((data) => {
+              // Desabilita e preenche o input com o apelido gerado
               inputApelido.value = data.apelido;
               inputApelido.disabled = true;
             })
@@ -180,6 +178,7 @@
               checkbox.checked = false;
             });
         } else {
+          // Reabilita o input e limpa o valor quando a checkbox é desmarcada
           inputApelido.disabled = false;
           inputApelido.value = "";
         }
