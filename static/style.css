@@ -824,11 +824,11 @@ button:active {
 @keyframes pulse {
   0%,
   100% {
-    transform: scale(1);
+    transform: scale(1.1);
     opacity: 1;
   }
   50% {
-    transform: scale(1.5);
+    transform: scale(1.4);
     opacity: 0.85;
   }
 }
