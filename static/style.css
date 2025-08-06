@@ -817,7 +817,7 @@ button:active {
 .bubble-img {
   height: 1em;
   margin-right: 8px;
-  animation: pulse 1.5s ease-in-out infinite;
+  animation: pulse 2.5s ease-in-out infinite;
   transform-origin: center center;
 }
 
@@ -825,9 +825,11 @@ button:active {
   0%,
   100% {
     transform: scale(1);
+    opacity: 1;
   }
   50% {
-    transform: scale(1.2);
+    transform: scale(1.1);
+    opacity: 0.85;
   }
 }
 
