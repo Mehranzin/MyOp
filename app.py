@@ -398,5 +398,13 @@ def admin_uso_banco():
 
     return render_template('uso_banco.html', tabelas=resultado, total=total)
 
+@app.route('/api/apelido_disponivel')
+def apelido_disponivel():
+    apelido = gera_apelido()
+    if apelido:
+        return jsonify({'apelido': apelido})
+    return jsonify({'erro': 'Limite esgotado'}), 400
+
+
 if __name__ == '__main__':
     app.run(debug=True)

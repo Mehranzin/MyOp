@@ -54,15 +54,28 @@
 
         <!-- Etapa 2 -->
         <div class="step">
-          <input
-            placeholder="Apelido (opcional)"
-            class="input"
-            name="apelido"
-            type="text"
-            autocomplete="off"
-            maxlength="2"
-            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,2)"
-          />
+          <div style="margin-bottom: 10px">
+            <input
+              id="apelido"
+              placeholder="Apelido (opcional)"
+              class="input"
+              name="apelido"
+              type="text"
+              autocomplete="off"
+              maxlength="15"
+              oninput="validarApelido(this)"
+            />
+
+            <div style="margin-top: 8px">
+              <input
+                type="checkbox"
+                id="apelidoPadraoCheckbox"
+                onchange="alternarApelidoPadrao()"
+              />
+              <label for="apelidoPadraoCheckbox">Definir apelido padrão</label>
+            </div>
+          </div>
+
           {% for error in form.apelido.errors %}
           <div class="erro">{{ error }}</div>
           {% endfor %}
@@ -140,6 +153,38 @@
     </div>
 
     <script>
+      function validarApelido(input) {
+        let letras = input.value.replace(/[^A-Za-zÀ-ÿ\s]/g, "");
+        let numeros = input.value.replace(/[^0-9]/g, "").slice(0, 2);
+        input.value = (letras + numeros).slice(0, 15);
+      }
+
+      function alternarApelidoPadrao() {
+        const checkbox = document.getElementById("apelidoPadraoCheckbox");
+        const inputApelido = document.getElementById("apelido");
+
+        if (checkbox.checked) {
+          fetch("/api/apelido_disponivel")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erro ao gerar apelido");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              inputApelido.value = data.apelido;
+              inputApelido.disabled = true;
+            })
+            .catch(() => {
+              alert("Não foi possível gerar apelido automático.");
+              checkbox.checked = false;
+            });
+        } else {
+          inputApelido.disabled = false;
+          inputApelido.value = "";
+        }
+      }
+
       let currentStep = 0;
       const steps = document.querySelectorAll(".step");
 
