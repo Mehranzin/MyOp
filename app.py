@@ -151,6 +151,10 @@ def feed():
         return redirect(url_for('login'))
 
     usuario = User.query.get(session['user_id'])
+    if not usuario:
+        session.clear()
+        flash('Sua sessão expirou. Faça login novamente.', 'warning')
+        return redirect(url_for('login'))
 
     if request.method == 'POST':
         texto = request.form.get('texto')
