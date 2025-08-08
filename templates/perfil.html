@@ -31,8 +31,12 @@
     </div>
     <div class="container">
       <div class="perfil-info">
-        <p><strong>Nome:</strong> {{ usuario.apelido }}</p>
-        <p><strong>Idade:</strong> {{ usuario.idade }}</p>
+        <div class="info-box">
+          <p><strong>Nome:</strong> {{ usuario.apelido }}</p>
+        </div>
+        <div class="info-box">
+          <p><strong>Idade:</strong> {{ usuario.idade }}</p>
+        </div>
         {% if is_owner %}
         <a
           href="{{ url_for('logout') }}"
@@ -45,7 +49,7 @@
 
       <hr />
 
-      <h2>Opiniões do Usuario:</h2>
+      <h2>Opiniões do Usuário:</h2>
 
       {% if posts %} {% for item in posts %} {% set post = item['post'] %} {%
       set tempo = item['tempo'] %} {% set likes_count = item['likes_count'] %}
