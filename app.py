@@ -435,6 +435,15 @@ def apelido_disponivel():
         return jsonify({'apelido': apelido})
     return jsonify({'erro': 'Limite esgotado'}), 400
 
+@app.route('/settings')
+def settings():
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+    
+    usuario = User.query.get(session['user_id'])
+    
+    return render_template('perfil_config.html', usuario=usuario)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
