@@ -31,20 +31,11 @@
     </div>
     <div class="container">
       <div class="perfil-info">
-        <div class="info-box">
+        <div class="perfil-info">
           <p><strong>Nome:</strong> {{ usuario.apelido }}</p>
-        </div>
-        <div class="info-box">
           <p><strong>Idade:</strong> {{ usuario.idade }}</p>
         </div>
-        {% if is_owner %}
-        <a
-          href="{{ url_for('logout') }}"
-          onclick="return confirmarLogout()"
-          class="btn-sair"
-          >Sair</a
-        >
-        {% endif %}
+        {% if is_owner %} > {% endif %}
       </div>
 
       <hr />
