@@ -979,6 +979,74 @@ button:active {
   transition: all 500ms ease-in-out;
 }
 
+.nav-top.btn-cont {
+  position: relative;
+}
+
+.button-settings {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 11;
+  display: block;
+}
+
+.button-settings:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.settings-btn {
+  display: block;
+  transition: transform 0.4s ease-in;
+}
+
+.settings-btn:hover {
+  transform: rotate(60deg);
+}
+
+.settings-btn:active {
+  animation: rot 1s linear infinite;
+}
+
+@keyframes rot {
+  from {
+    transform: rotate(-100deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.button-settings:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 10px 12px;
