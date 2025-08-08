@@ -12,7 +12,7 @@
   <body>
     <div class="container">
       <h2>Registrar</h2>
-      <form method="POST" action="{{ url_for('register') }}">
+      <form method="POST" action="{{ url_for('register') }}" id="registerForm">
         {{ form.hidden_tag() }}
 
         <div class="step active">
@@ -26,9 +26,7 @@
             pattern="[A-Za-zÀ-ÿ\s]+"
             oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
           />
-          {% for error in form.nome.errors %}
-          <div class="erro">{{ error }}</div>
-          {% endfor %}
+          <div class="erros-container" id="erros-nome"></div>
 
           <input
             placeholder="Sobrenome"
@@ -40,12 +38,10 @@
             pattern="[A-Za-zÀ-ÿ\s]+"
             oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
           />
-          {% for error in form.sobrenome.errors %}
-          <div class="erro">{{ error }}</div>
-          {% endfor %}
+          <div class="erros-container" id="erros-sobrenome"></div>
 
           <div class="buttons">
-            <button type="button" class="button-name" onclick="nextStep()">
+            <button type="button" class="button-name" onclick="validarPasso(1)">
               Próximo
             </button>
           </div>
@@ -80,10 +76,7 @@
               <label for="apelidoPadraoCheckbox">Definir apelido padrão</label>
             </div>
           </div>
-
-          {% for error in form.apelido.errors %}
-          <div class="erro">{{ error }}</div>
-          {% endfor %}
+          <div class="erros-container" id="erros-apelido"></div>
 
           <input
             placeholder="Idade"
@@ -93,15 +86,13 @@
             required
             autocomplete="off"
           />
-          {% for error in form.idade.errors %}
-          <div class="erro">{{ error }}</div>
-          {% endfor %}
+          <div class="erros-container" id="erros-idade"></div>
 
           <div class="buttons">
             <button type="button" class="button-name" onclick="prevStep()">
               Voltar
             </button>
-            <button type="button" class="button-name" onclick="nextStep()">
+            <button type="button" class="button-name" onclick="validarPasso(2)">
               Próximo
             </button>
           </div>
@@ -116,9 +107,7 @@
             required
             autocomplete="off"
           />
-          {% for error in form.email.errors %}
-          <div class="erro">{{ error }}</div>
-          {% endfor %}
+          <div class="erros-container" id="erros-email"></div>
 
           <input
             placeholder="Senha"
@@ -128,9 +117,7 @@
             required
             autocomplete="off"
           />
-          {% for error in form.password.errors %}
-          <div class="erro">{{ error }}</div>
-          {% endfor %}
+          <div class="erros-container" id="erros-password"></div>
 
           <input
             placeholder="Confirmar Senha"
@@ -140,9 +127,7 @@
             required
             autocomplete="off"
           />
-          {% for error in form.password2.errors %}
-          <div class="erro">{{ error }}</div>
-          {% endfor %}
+          <div class="erros-container" id="erros-password2"></div>
 
           <div class="buttons">
             <button type="button" class="button-name" onclick="prevStep()">
@@ -176,7 +161,6 @@
               return response.json();
             })
             .then((data) => {
-              // Desabilita e preenche o input com o apelido gerado
               inputApelido.value = data.apelido;
               inputApelido.disabled = true;
             })
@@ -185,7 +169,6 @@
               checkbox.checked = false;
             });
         } else {
-          // Reabilita o input e limpa o valor quando a checkbox é desmarcada
           inputApelido.disabled = false;
           inputApelido.value = "";
         }
@@ -200,25 +183,62 @@
         });
       }
 
-      function nextStep() {
-        const inputs = steps[currentStep].querySelectorAll("input");
-        for (let input of inputs) {
-          if (
-            input.name !== "apelido" &&
-            input.offsetParent !== null &&
-            input.value.trim() === ""
-          ) {
-            alert("Preencha todos os campos obrigatórios.");
-            return;
+      async function validarPasso(passo) {
+        const currentInputs = steps[currentStep].querySelectorAll("input");
+        const formData = {};
+
+        for (const input of currentInputs) {
+          if (!input.disabled && input.type !== "checkbox") {
+            formData[input.name] = input.value;
           }
         }
-        if (currentStep < steps.length - 1) {
-          currentStep++;
-          showStep(currentStep);
+
+        formData.passo = passo;
+
+        try {
+          const response = await fetch("/api/validar_passo", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const data = await response.json();
+
+          // Limpa todos os containers de erro antes de exibir novos
+          document
+            .querySelectorAll(".erros-container")
+            .forEach((el) => (el.innerHTML = ""));
+
+          if (data.success) {
+            // Se a validação for um sucesso, avança para o próximo passo
+            if (currentStep < steps.length - 1) {
+              currentStep++;
+              showStep(currentStep);
+            }
+          } else {
+            // Se houver erros, exibe-os nos containers corretos
+            for (const field in data.erros) {
+              const errosContainer = document.getElementById(`erros-${field}`);
+              if (errosContainer) {
+                data.erros[field].forEach((erro) => {
+                  errosContainer.innerHTML += `<div class="erro">${erro}</div>`;
+                });
+              }
+            }
+          }
+        } catch (error) {
+          console.error("Erro na validação:", error);
+          alert("Ocorreu um erro na validação. Por favor, tente novamente.");
         }
       }
 
       function prevStep() {
+        // Limpa os erros ao voltar de passo
+        document
+          .querySelectorAll(".erros-container")
+          .forEach((el) => (el.innerHTML = ""));
         if (currentStep > 0) {
           currentStep--;
           showStep(currentStep);

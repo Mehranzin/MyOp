@@ -3,6 +3,7 @@ from models import db, User, Post, Comment, Like
 from datetime import datetime, timezone, timedelta
 from config import Config
 from sqlalchemy import or_, text, func
+from forms import RegistrationForm
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -47,13 +48,50 @@ def index():
         return redirect(url_for('feed'))
     return redirect(url_for('login'))
 
+# Nova rota para validação de formulário via API
+@app.route('/api/validar_passo', methods=['POST'])
+def validar_passo():
+    data = request.json
+    passo = data.get('passo')
+    
+    form = RegistrationForm(data=data)
+    
+    erros = {}
+    
+    if passo == 1:
+        
+        # Validação do Passo 1: Nome e Sobrenome
+        if not form.nome.validate(form):
+            erros['nome'] = form.nome.errors
+        if not form.sobrenome.validate(form):
+            erros['sobrenome'] = form.sobrenome.errors
+    
+    elif passo == 2:
+
+        # Validação do Passo 2: Apelido e Idade
+        if not form.apelido.validate(form):
+            erros['apelido'] = form.apelido.errors
+        if not form.idade.validate(form):
+            erros['idade'] = form.idade.errors
+    
+    elif passo == 3:
+
+        # Validação do Passo 3: Email e Senhas
+        if not form.email.validate(form):
+            erros['email'] = form.email.errors
+        if not form.password.validate(form):
+            erros['password'] = form.password.errors
+        if not form.password2.validate(form):
+            erros['password2'] = form.password2.errors
+    
+    return jsonify({'success': not erros, 'erros': erros})
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if session.get('user_id'):
         flash('Já está logado.', 'info')
         return redirect(url_for('feed'))
 
-    from forms import RegistrationForm
     form = RegistrationForm()
     if form.validate_on_submit():
         apelido = form.apelido.data.strip() if form.apelido.data else ''
@@ -335,8 +373,6 @@ def trending():
 @app.route('/search')
 def search():
     return render_template('search.html')
-
-from sqlalchemy import func
 
 @app.route('/api/search')
 def api_search():
