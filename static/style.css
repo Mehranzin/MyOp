@@ -924,6 +924,13 @@ button:active {
   font-size: 12px;
 }
 
+.checkbox-container {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
 @media (max-width: 600px) {
   .container {
     padding: 10px 12px;
