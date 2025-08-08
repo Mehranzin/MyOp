@@ -228,24 +228,20 @@
 
           const data = await response.json();
 
-          // Limpa todos os containers de erro antes de exibir novos
           document
             .querySelectorAll(".erros-container")
             .forEach((el) => (el.innerHTML = ""));
 
           if (data.success) {
             if (passo === 3) {
-              // Se for o último passo, submete o formulário de verdade
               document.getElementById("registerForm").submit();
             } else {
-              // Se a validação for um sucesso, avança para o próximo passo
               if (currentStep < steps.length - 1) {
                 currentStep++;
                 showStep(currentStep);
               }
             }
           } else {
-            // Se houver erros, exibe-os nos containers corretos
             for (const field in data.erros) {
               const errosContainer = document.getElementById(`erros-${field}`);
               if (errosContainer) {
