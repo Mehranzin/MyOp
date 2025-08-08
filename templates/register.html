@@ -193,6 +193,26 @@
           }
         }
 
+        // Adiciona um placeholder para os campos dos outros passos para que o Flask-WTF não reclame de campos ausentes.
+        if (passo === 1) {
+          formData["apelido"] = "";
+          formData["idade"] = 0;
+          formData["email"] = "";
+          formData["password"] = "";
+          formData["password2"] = "";
+        } else if (passo === 2) {
+          formData["nome"] = "";
+          formData["sobrenome"] = "";
+          formData["email"] = "";
+          formData["password"] = "";
+          formData["password2"] = "";
+        } else if (passo === 3) {
+          formData["nome"] = "";
+          formData["sobrenome"] = "";
+          formData["apelido"] = "";
+          formData["idade"] = 0;
+        }
+
         formData.passo = passo;
 
         try {

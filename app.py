@@ -48,42 +48,28 @@ def index():
         return redirect(url_for('feed'))
     return redirect(url_for('login'))
 
-# Nova rota para validação de formulário via API
 @app.route('/api/validar_passo', methods=['POST'])
 def validar_passo():
     data = request.json
-    passo = data.get('passo')
-    
-    form = RegistrationForm(data=data)
-    
+    form = RegistrationForm(data=data, meta={'csrf': False})
     erros = {}
     
+    passo = data.get('passo')
+
     if passo == 1:
-        
-        # Validação do Passo 1: Nome e Sobrenome
-        if not form.nome.validate(form):
-            erros['nome'] = form.nome.errors
-        if not form.sobrenome.validate(form):
-            erros['sobrenome'] = form.sobrenome.errors
-    
+        campos_do_passo = ['nome', 'sobrenome']
     elif passo == 2:
-
-        # Validação do Passo 2: Apelido e Idade
-        if not form.apelido.validate(form):
-            erros['apelido'] = form.apelido.errors
-        if not form.idade.validate(form):
-            erros['idade'] = form.idade.errors
-    
+        campos_do_passo = ['apelido', 'idade']
     elif passo == 3:
+        campos_do_passo = ['email', 'password', 'password2']
+    else:
+        return jsonify({'success': False, 'erros': {'geral': ['Passo de validação inválido.']}}), 400
 
-        # Validação do Passo 3: Email e Senhas
-        if not form.email.validate(form):
-            erros['email'] = form.email.errors
-        if not form.password.validate(form):
-            erros['password'] = form.password.errors
-        if not form.password2.validate(form):
-            erros['password2'] = form.password2.errors
-    
+    for campo_nome in campos_do_passo:
+        campo = getattr(form, campo_nome)
+        if not campo.validate(form):
+            erros[campo_nome] = campo.errors
+
     return jsonify({'success': not erros, 'erros': erros})
 
 @app.route('/register', methods=['GET', 'POST'])
