@@ -924,11 +924,59 @@ button:active {
   font-size: 12px;
 }
 
-.checkbox-container {
-  margin-top: 8px;
-  display: inline-flex;
+.checkbox-wrapper {
+  display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  font-weight: normal;
+}
+
+.checkbox-wrapper input {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: relative;
+  box-shadow: rgb(255, 0, 0) 0px 0px 0px 2px;
+  background-color: rgba(16, 16, 16, 0.5);
+  height: 20px;
+  width: 20px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.checkbox-wrapper input:checked ~ .checkmark {
+  background-color: rgba(245, 24, 24, 0.5);
+  box-shadow: rgb(255, 0, 0) 0px 0px 0px 2px;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-wrapper input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-wrapper .checkmark:after {
+  left: 0.45em;
+  top: 0.25em;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid white;
+  border-width: 0 0.15em 0.15em 0;
+  transform: rotate(45deg);
+  transition: all 500ms ease-in-out;
 }
 
 @media (max-width: 600px) {
