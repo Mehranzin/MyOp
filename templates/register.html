@@ -67,7 +67,7 @@
                 onchange="alternarApelidoPadrao()"
               />
               <div class="checkmark"></div>
-              Definir apelido padrão e Anônimo.
+              Definir apelido padrão.
             </label>
           </div>
           <div class="erros-container" id="erros-apelido"></div>
@@ -144,26 +144,23 @@
         input.value = (letras + numeros).slice(0, 15);
       }
 
-      function alternarApelidoPadrao() {
+      async function alternarApelidoPadrao() {
         const checkbox = document.getElementById("apelidoPadraoCheckbox");
         const inputApelido = document.getElementById("apelido");
 
         if (checkbox.checked) {
-          fetch("/api/apelido_disponivel")
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Erro ao gerar apelido");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              inputApelido.value = data.apelido;
-              inputApelido.disabled = true;
-            })
-            .catch(() => {
-              alert("Não foi possível gerar apelido automático.");
-              checkbox.checked = false;
-            });
+          try {
+            const response = await fetch("/api/apelido_disponivel");
+            if (!response.ok) {
+              throw new Error("Erro ao gerar apelido");
+            }
+            const data = await response.json();
+            inputApelido.value = data.apelido;
+            inputApelido.disabled = true;
+          } catch (error) {
+            alert("Não foi possível gerar apelido automático.");
+            checkbox.checked = false;
+          }
         } else {
           inputApelido.disabled = false;
           inputApelido.value = "";
@@ -187,9 +184,11 @@
           if (!input.disabled && input.type !== "checkbox") {
             formData[input.name] = input.value;
           }
+          if (input.name === "apelido" && input.disabled) {
+            formData["apelido"] = input.value;
+          }
         }
 
-        // Adiciona um placeholder para os campos dos outros passos para que o Flask-WTF não reclame de campos ausentes.
         if (passo === 1) {
           formData["apelido"] = "";
           formData["idade"] = 0;
