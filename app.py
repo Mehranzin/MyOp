@@ -52,8 +52,9 @@ def index():
 def validar_passo():
     data = request.json
     form = RegistrationForm(data=data, meta={'csrf': False})
-    erros = {}
+    form.validate()
     
+    erros_do_passo = {}
     passo = data.get('passo')
 
     if passo == 1:
@@ -66,11 +67,13 @@ def validar_passo():
         return jsonify({'success': False, 'erros': {'geral': ['Passo de validação inválido.']}}), 400
 
     for campo_nome in campos_do_passo:
-        campo = getattr(form, campo_nome)
-        if not campo.validate(form):
-            erros[campo_nome] = campo.errors
+        if campo_nome in form.errors:
+            erros_do_passo[campo_nome] = form.errors[campo_nome]
 
-    return jsonify({'success': not erros, 'erros': erros})
+    if 'csrf_token' in erros_do_passo:
+        del erros_do_passo['csrf_token']
+    
+    return jsonify({'success': not erros_do_passo, 'erros': erros_do_passo})
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
