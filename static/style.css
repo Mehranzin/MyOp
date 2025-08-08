@@ -932,6 +932,7 @@ button:active {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   font-weight: normal;
+  font-size: 1.3em;
 }
 
 .checkbox-wrapper input {
