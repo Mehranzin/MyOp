@@ -10,13 +10,19 @@
     />
   </head>
   <body>
-    Bem vindos as configurações.
+    Bem-vindos às configurações.
     <a
       href="{{ url_for('logout') }}"
-      onclick="return
-confirmarLogout()"
+      onclick="return confirmarLogout()"
       class="btn-sair"
-      >Sair</a
     >
+      Sair
+    </a>
+
+    <script>
+      function confirmarLogout() {
+        return confirm("Tem certeza que deseja sair da conta?");
+      }
+    </script>
   </body>
 </html>
