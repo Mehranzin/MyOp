@@ -1060,7 +1060,6 @@ button:active {
 }
 
 .bio-container {
-  position: relative;
   background-color: transparent;
   padding: 0;
   margin-top: 10px;
@@ -1075,10 +1074,7 @@ button:active {
 }
 
 .edit-pen-link {
-  position: absolute;
-  top: 0;
   right: 0;
-  z-index: 10;
   width: 32px;
   height: 32px;
   display: flex;
