@@ -15,6 +15,7 @@ app.permanent_session_lifetime = timedelta(days=30)
 db.init_app(app)
 
 with app.app_context():
+    db.drop_all()
     db.create_all()
 
 def gera_apelido():
