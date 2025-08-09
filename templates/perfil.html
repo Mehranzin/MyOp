@@ -42,12 +42,13 @@
         <div class="bio-container">
           <div class="info-row">
             <p><strong>Bio:</strong></p>
+            {% if usuario.bio %}
+            <p class="bio-texto">{{ usuario.bio }}</p>
+            {% else %}
+            <p class="bio-texto">*Não tem biografia*</p>
+            {% endif %}
           </div>
-          {% if usuario.bio %}
-          <p class="bio-texto">{{ usuario.bio }}</p>
-          {% else %}
-          <p class="bio-texto">*Não tem biografia*</p>
-          {% endif %} {% if is_owner %}
+          {% if is_owner %}
           <div style="text-align: right; margin-top: 10px">
             <a
               href="{{ url_for('settings', tab='bio') }}"
