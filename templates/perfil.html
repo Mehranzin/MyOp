@@ -31,21 +31,34 @@
     </div>
     <div class="container">
       <div class="perfil-info">
-        <p><strong>Nome:</strong> {{ usuario.apelido }}</p>
-        <p><strong>Idade:</strong> {{ usuario.idade }}</p>
+        <div class="info-row">
+          <p><strong>Nome:</strong></p>
+          <p class="info-valor">{{ usuario.apelido }}</p>
+        </div>
+        <div class="info-row">
+          <p><strong>Idade:</strong></p>
+          <p class="info-valor">{{ usuario.idade }}</p>
+        </div>
         <div class="bio-container">
+          <div class="info-row">
+            <p><strong>Bio:</strong></p>
+            {% if is_owner %}
+            <a
+              href="{{ url_for('settings', tab='bio') }}"
+              class="edit-pen-link"
+            >
+              <img
+                src="{{ url_for('static', filename='images/edit pen.PNG') }}"
+                alt="Editar biografia"
+                class="edit-pen-icon"
+              />
+            </a>
+            {% endif %}
+          </div>
           {% if usuario.bio %}
           <p class="bio-texto">{{ usuario.bio }}</p>
           {% else %}
           <p class="bio-texto">Nenhuma biografia definida.</p>
-          {% endif %} {% if is_owner %}
-          <a href="{{ url_for('settings', tab='bio') }}">
-            <img
-              src="{{ url_for('static', filename='images/edit pen.PNG') }}"
-              alt="Editar biografia"
-              class="edit-pen-icon"
-            />
-          </a>
           {% endif %}
         </div>
       </div>

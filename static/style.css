@@ -349,7 +349,6 @@ button:active {
 .container_chat_bot.chat-comment .container-chat-options {
   max-width: 450px !important;
   width: 100% !important;
-
   background: linear-gradient(
     to bottom right,
     #000000,
@@ -1021,7 +1020,6 @@ button:active {
   }
 }
 
-/* Estilo para a caixinha de informações do perfil */
 .perfil-info {
   background-color: #000;
   padding: 18px 30px;
@@ -1030,18 +1028,31 @@ button:active {
   border: 1.6px solid #444;
   margin-bottom: 20px;
   position: relative;
+  font-size: 1em;
+}
+
+.perfil-info .info-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.perfil-info .info-valor {
+  font-weight: normal;
+  margin: 0;
+  color: #fff;
 }
 
 .perfil-info p {
-  margin-bottom: 10px;
+  margin: 0;
   color: #fff;
-  font-size: 1.1em;
 }
 
 .perfil-info p:last-of-type {
   margin-bottom: 0;
 }
-/*Fim - caixinha de info do perfil*/
 
 .titulo-opinioes {
   text-align: center;
@@ -1050,24 +1061,40 @@ button:active {
 
 .bio-container {
   position: relative;
-  padding: 10px;
-  background-color: #333;
-  border-radius: 8px;
+  background-color: transparent;
+  padding: 0;
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .bio-texto {
   margin: 0;
   color: #f0f0f0;
+  font-size: 1em;
+}
+
+.edit-pen-link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -10px;
 }
 
 .edit-pen-icon {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.edit-pen-icon:hover {
+  transform: scale(1.1);
 }
 
 @media (max-width: 600px) {
@@ -1107,6 +1134,17 @@ button:active {
   .post-outro {
     border-radius: 0 20px 20px 20px;
   }
+
+  .edit-pen-link {
+    width: 28px;
+    height: 28px;
+    margin: -8px;
+  }
+
+  .edit-pen-icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .container_chat_bot {
@@ -1124,8 +1162,6 @@ button:active {
 .container_chat_bot.chat-comment .container-chat-options {
   width: 100% !important;
 }
-
-/* FIM DO CÓDIGO */
 
 img,
 img:focus,
