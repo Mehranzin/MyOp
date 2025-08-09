@@ -1042,7 +1042,7 @@ button:active {
 .perfil-info .info-valor {
   font-weight: normal;
   margin: 0;
-  color: #fff;
+  color: #999999;
 }
 
 .perfil-info p {
@@ -1070,7 +1070,7 @@ button:active {
 
 .bio-texto {
   margin: 0;
-  color: #f0f0f0;
+  color: #999999;
   font-size: 1em;
 }
 
