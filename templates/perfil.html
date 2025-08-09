@@ -31,11 +31,10 @@
     </div>
     <div class="container">
       <div class="perfil-info">
-        <div class="perfil-info">
           <p><strong>Nome:</strong> {{ usuario.apelido }}</p>
           <p><strong>Idade:</strong> {{ usuario.idade }}</p>
         </div>
-        {% if is_owner %} > {% endif %}
+        {% if is_owner %} {% endif %}
       </div>
 
       <hr />
@@ -230,10 +229,6 @@
           });
         });
       });
-
-      function confirmarLogout() {
-        return confirm("Tem certeza que deseja sair da conta?");
-      }
 
       setInterval(() => {
         fetch("/ping", { method: "POST" });
