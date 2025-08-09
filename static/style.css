@@ -1029,6 +1029,7 @@ button:active {
   color: white;
   border: 1.6px solid #444;
   margin-bottom: 20px;
+  position: relative;
 }
 
 .perfil-info p {
@@ -1045,6 +1046,28 @@ button:active {
 .titulo-opinioes {
   text-align: center;
   color: white;
+}
+
+.bio-container {
+  position: relative;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.bio-texto {
+  margin: 0;
+  color: #f0f0f0;
+}
+
+.edit-pen-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {

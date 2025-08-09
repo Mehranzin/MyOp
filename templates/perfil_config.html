@@ -10,7 +10,25 @@
     />
   </head>
   <body>
-    Bem-vindos às configurações.
+    <h1>Configurações</h1>
+
+    <form action="{{ url_for('settings') }}" method="POST">
+      <h2>Editar Biografia</h2>
+      <textarea
+        name="bio"
+        rows="5"
+        cols="40"
+        maxlength="255"
+        placeholder="Escreva sua biografia aqui..."
+      >
+{{ usuario.bio or '' }}</textarea
+      >
+      <br />
+      <button type="submit">Salvar Biografia</button>
+    </form>
+
+    <hr />
+
     <a
       href="{{ url_for('logout') }}"
       onclick="return confirmarLogout()"

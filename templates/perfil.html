@@ -31,14 +31,27 @@
     </div>
     <div class="container">
       <div class="perfil-info">
-          <p><strong>Nome:</strong> {{ usuario.apelido }}</p>
-          <p><strong>Idade:</strong> {{ usuario.idade }}</p>
+        <p><strong>Nome:</strong> {{ usuario.apelido }}</p>
+        <p><strong>Idade:</strong> {{ usuario.idade }}</p>
+        <div class="bio-container">
+          {% if usuario.bio %}
+          <p class="bio-texto">{{ usuario.bio }}</p>
+          {% else %}
+          <p class="bio-texto">Nenhuma biografia definida.</p>
+          {% endif %} {% if is_owner %}
+          <a href="{{ url_for('settings', tab='bio') }}">
+            <img
+              src="{{ url_for('static', filename='images/edit pen.PNG') }}"
+              alt="Editar biografia"
+              class="edit-pen-icon"
+            />
+          </a>
+          {% endif %}
         </div>
-        {% if is_owner %} {% endif %}
       </div>
 
       <hr />
-      
+
       <h2 class="titulo-opinioes">Opiniões do Usuário:</h2>
 
       {% if posts %} {% for item in posts %} {% set post = item['post'] %} {%

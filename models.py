@@ -12,6 +12,7 @@ class User(db.Model):
     idade = db.Column(db.Integer, nullable=False)
     apelido = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(500), nullable=False)
+    bio = db.Column(db.Text, nullable=True) 
 
     def set_senha(self, senha):
         self.password_hash = generate_password_hash(senha)

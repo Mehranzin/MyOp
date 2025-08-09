@@ -95,7 +95,8 @@ def register():
             sobrenome=form.sobrenome.data.strip(),
             email=form.email.data.strip(),
             idade=form.idade.data,
-            apelido=apelido
+            apelido=apelido,
+            bio=None 
         )
         novo.set_senha(form.password.data.strip())
 
@@ -171,6 +172,29 @@ def perfil():
                            usuario=usuario,
                            posts=posts_com_detalhes,
                            is_owner=is_owner)
+
+
+@app.route('/salvar_bio', methods=['POST'])
+def salvar_bio():
+    if not session.get('user_id'):
+        return jsonify({'success': False, 'message': 'Usuário não autenticado.'}), 401
+    
+    user_id = session['user_id']
+    usuario = User.query.get(user_id)
+    if not usuario:
+        return jsonify({'success': False, 'message': 'Usuário não encontrado.'}), 404
+
+    bio_nova = request.form.get('bio')
+    
+    if len(bio_nova) > 255:
+        return jsonify({'success': False, 'message': 'A biografia deve ter no máximo 255 caracteres.'}), 400
+
+    usuario.bio = bio_nova.strip()
+    db.session.commit()
+
+    flash('Biografia atualizada com sucesso!', 'success')
+    return redirect(url_for('settings', bio_salva=True))
+
 
 @app.route('/feed', methods=['GET', 'POST'])
 def feed():
@@ -435,13 +459,20 @@ def apelido_disponivel():
         return jsonify({'apelido': apelido})
     return jsonify({'erro': 'Limite esgotado'}), 400
 
-@app.route('/settings')
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if not session.get('user_id'):
         return redirect(url_for('login'))
     
     usuario = User.query.get(session['user_id'])
-    
+
+    if request.method == 'POST':
+        nova_bio = request.form.get('bio')
+        usuario.bio = nova_bio.strip()
+        db.session.commit()
+        flash('Biografia atualizada com sucesso!', 'success')
+        return redirect(url_for('settings'))
+
     return render_template('perfil_config.html', usuario=usuario)
 
 
