@@ -1083,7 +1083,7 @@ button:active {
 .edit-pen-link {
   position: absolute;
   bottom: 0;
-  right: -10px;
+  right: -12px;
   width: 32px;
   height: 32px;
   display: flex;
