@@ -1065,6 +1065,7 @@ button:active {
   margin-top: 10px;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .bio-texto {
@@ -1074,6 +1075,8 @@ button:active {
 }
 
 .edit-pen-link {
+  position: absolute;
+  bottom: 0;
   right: 0;
   width: 32px;
   height: 32px;
@@ -1081,11 +1084,12 @@ button:active {
   justify-content: center;
   align-items: center;
   margin: -10px;
+  z-index: 10;
 }
 
 .edit-pen-icon {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   transition: transform 0.2s ease-in-out;
 }
 
