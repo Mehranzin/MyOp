@@ -1074,6 +1074,12 @@ button:active {
   font-size: 1em;
 }
 
+.perfil-info .bio-texto {
+  color: #999999;
+  margin: 0;
+  font-size: 1em;
+}
+
 .edit-pen-link {
   position: absolute;
   bottom: 0;
