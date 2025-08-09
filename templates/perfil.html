@@ -43,7 +43,7 @@
           <div class="info-row">
             <p><strong>Bio:</strong></p>
             {% if usuario.bio %}
-            <p class="bio-texto">{{ usuario.bio }}</p>
+            <p class="bio-texto">{{ usuario.bio | nl2br }}</p>
             {% else %}
             <p class="bio-texto">*Não tem biografia*</p>
             {% endif %}
