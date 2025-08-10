@@ -6,15 +6,15 @@ from models import User, db
 class RegistrationForm(FlaskForm):
     nome = StringField('Nome', validators=[
         DataRequired(message='Este campo é obrigatório.'),
-        Length(max=64, message='O nome deve ter no máximo 64 caracteres.')
+        Length(max=15, message='O nome deve ter no máximo 15 caracteres.')
     ])
     sobrenome = StringField('Sobrenome', validators=[
         DataRequired(message='Este campo é obrigatório.'),
-        Length(max=64, message='O sobrenome deve ter no máximo 64 caracteres.')
+        Length(max=15, message='O sobrenome deve ter no máximo 15 caracteres.')
     ])
     apelido = StringField('Apelido/Anônimo', validators=[
         Optional(),
-        Length(max=64, message='O apelido deve ter no máximo 64 caracteres.')
+        Length(max=13, message='O apelido deve ter no máximo 13 caracteres.')
     ])
     email = StringField('Email', validators=[
         DataRequired(message='Este campo é obrigatório.'),
