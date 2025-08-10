@@ -1008,7 +1008,7 @@ button:active {
 }
 
 .settings-btn:active {
-  animation: rot 1s linear infinite;
+  animation: rot 3s linear infinite;
 }
 
 @keyframes rot {
