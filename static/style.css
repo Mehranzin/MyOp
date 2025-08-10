@@ -792,13 +792,11 @@ button:active {
 
 .post-container.viral-post .user-box {
   border-color: #007bff;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.4);
   animation: blink-blue-border 1.5s infinite alternate;
 }
 
 .post-container.viral-post .post-content {
   border: 1.6px solid #007bff;
-  box-shadow: 0 0 12px rgba(0, 123, 255, 0.6);
   animation: blink-blue-border 1.5s infinite alternate;
 }
 
