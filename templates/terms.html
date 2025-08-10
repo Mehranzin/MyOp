@@ -9,40 +9,95 @@
       href="{{ url_for('static', filename='style.css') }}?v=2.0"
     />
     <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #0d0d0d;
+        color: #e0e0e0;
+        line-height: 1.6;
+      }
+
       .terms-container {
         max-width: 900px;
         margin: 40px auto;
-        padding: 20px 30px;
-        background: #000000;
-        color: #e0e0e0;
-        border-radius: 10px;
-        line-height: 1.6;
+        padding: 25px 30px;
+        background: #111;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
       }
-      .terms-container h1,
-      .terms-container h2 {
-        color: #ffffff;
+
+      h1,
+      h2 {
+        color: #fff;
         margin-bottom: 10px;
       }
-      .terms-container h1 {
-        font-size: 2rem;
+
+      h1 {
+        font-size: 1.9rem;
         margin-bottom: 20px;
       }
-      .terms-container h2 {
-        font-size: 1.4rem;
+
+      h2 {
+        font-size: 1.3rem;
         margin-top: 25px;
       }
-      .terms-container ul {
-        margin: 10px 0 20px 20px;
-      }
-      .terms-container li {
-        margin-bottom: 8px;
-      }
-      .terms-container p {
+
+      p,
+      ul {
         margin-bottom: 15px;
       }
+
+      ul {
+        padding-left: 20px;
+      }
+
+      li {
+        margin-bottom: 8px;
+      }
+
       .highlight {
-        color: #ff0000;
+        color: #ff4d4d;
         font-weight: bold;
+      }
+
+      /* Melhorando a leitura no celular */
+      @media (max-width: 768px) {
+        .terms-container {
+          margin: 20px;
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 1.6rem;
+        }
+
+        h2 {
+          font-size: 1.2rem;
+        }
+
+        body {
+          font-size: 0.95rem;
+        }
+      }
+
+      /* Melhorando em telas muito pequenas */
+      @media (max-width: 480px) {
+        .terms-container {
+          margin: 15px;
+          padding: 15px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+        }
+
+        h2 {
+          font-size: 1.1rem;
+        }
+
+        body {
+          font-size: 0.9rem;
+        }
       }
     </style>
   </head>
@@ -145,9 +200,9 @@
           responsabilidade do usuário consultá-los periodicamente.
         </li>
         <li class="highlight">
-          Em casos juridicos, o Opinion tem total responsabilidade de fornecer
-          os dados necessarios ao orgãos responsaveis, mesmo os quais sejam
-          dados pessoais do usuario, como: Nome, email.
+          Em casos jurídicos, o Opinion tem total responsabilidade de fornecer
+          os dados necessários aos órgãos responsáveis, mesmo que sejam dados
+          pessoais do usuário, como nome e e-mail.
         </li>
       </ul>
 
