@@ -2,34 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Groups • Opinion</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        height: 100vh;
-        margin: 0;
-        background: #000;
-        color: #fff;
-        text-align: center;
-      }
-    </style>
-
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <h2>⚠️FUNÇÃO DE GRUPOS EM BREVE</h2>
-    <p>
-      Esperamos trabalhando na criação dessa função no Opinion, onde irá
-      conectar pessoas com mesmos interesses de assuntos.
-    </p>
+    <div class="nav-top">Groups</div>
+
+    <div class="container">
+      <h2>⚠️ FUNÇÃO DE GRUPOS EM BREVE</h2>
+      <p>
+        Esperamos trabalhando na criação dessa função no Opinion, onde irá
+        conectar pessoas com mesmos interesses de assuntos.
+      </p>
+    </div>
+
     <footer class="nav-footer">
       <nav>
         <a href="{{ url_for('feed') }}">
@@ -46,7 +36,6 @@
             class="icone"
           />
         </a>
-
         <a href="{{ url_for('trending') }}">
           <img
             src="{{ url_for('static', filename='images/trending.PNG') }}"
