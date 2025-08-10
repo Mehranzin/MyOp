@@ -10,34 +10,38 @@
     />
   </head>
   <body>
-    <h1>Configurações</h1>
+    <div class="container config-container">
+      <h1>Configurações</h1>
 
-    <form action="{{ url_for('settings') }}" method="POST">
-      <h2>Editar Biografia</h2>
-      <textarea
-        name="bio"
-        rows="5"
-        cols="40"
-        maxlength="255"
-        placeholder="Escreva sua biografia aqui..."
-      >
+      <form action="{{ url_for('settings') }}" method="POST" class="form-card">
+        <h2>Editar Biografia</h2>
+        <div class="field">
+          <textarea
+            name="bio"
+            rows="5"
+            cols="40"
+            maxlength="255"
+            placeholder="Escreva sua biografia aqui..."
+          >
 {{ usuario.bio or '' }}</textarea
-      >
-      <br />
-      <button type="submit">Salvar Biografia</button>
-    </form>
+          >
+        </div>
+        <button type="submit" class="button-name">Salvar Biografia</button>
+      </form>
 
-    <hr />
-
-    <button href="{{ url_for('terms') }}">Termos e Diretrizes</button>
-
-    <a
-      href="{{ url_for('logout') }}"
-      onclick="return confirmarLogout()"
-      class="btn-sair"
-    >
-      Sair
-    </a>
+      <div class="options-container">
+        <a href="{{ url_for('terms') }}" class="option-link">
+          Termos e Diretrizes
+        </a>
+        <a
+          href="{{ url_for('logout') }}"
+          onclick="return confirmarLogout()"
+          class="option-link btn-sair"
+        >
+          Sair
+        </a>
+      </div>
+    </div>
 
     <script>
       function confirmarLogout() {
