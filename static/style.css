@@ -828,7 +828,7 @@ button:active {
   }
   50% {
     transform: scale(1.4);
-    opacity: 0.85;
+    opacity: 1;
   }
 }
 
