@@ -3,38 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}Opinion{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <title>404 Not Found</title>
+    <style>
+      /* Estilo para página 404 */
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: #121212;
+        color: #eee;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .not-found-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+      }
+
+      .not-found-container h1 {
+        font-size: 8rem;
+        margin: 0;
+        font-weight: 900;
+        color: #ff0000;
+      }
+
+      .not-found-container h2 {
+        font-size: 2rem;
+        margin: 10px 0 20px 0;
+        font-weight: 600;
+      }
+
+      .not-found-container p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        max-width: 400px;
+        color: #bbb;
+      }
+
+      .not-found-container a {
+        display: inline-block;
+        padding: 12px 25px;
+        background: #ff0000;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+        border-radius: 6px;
+        transition: background 0.3s ease;
+      }
+
+      .not-found-container a:hover {
+        background: #ff0000;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
-      <nav>
-        <a href="{{ url_for('perfil') }}">Perfil</a> |
-        <a href="{{ url_for('feed') }}">Feed</a> |
-        <a href="{{ url_for('logout') }}">Sair</a>
-      </nav>
-      <hr />
-
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %}
-      <ul class="flashes">
-        {% for category, message in messages %}
-        <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %} {% endwith %} {% block content %}{% endblock %}
+    <div class="not-found-container">
+      <h1>404</h1>
+      <h2>Not Found</h2>
+      <p>Desculpe, a página que você está procurando não foi encontrada.</p>
+      <a href="/">Voltar para a página inicial</a>
     </div>
-
-    <script>
-      window.addEventListener("load", function () {
-        history.pushState(null, document.title, location.href);
-        window.addEventListener("popstate", function (event) {
-          location.reload();
-        });
-      });
-    </script>
   </body>
 </html>
