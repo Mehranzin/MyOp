@@ -3,9 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit • Opinion</title>
+    <title>Edit Perfil • Opinion</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
   </head>
   <body>
-    <h2>Edit suas informaçoes do seu perfil</h2>
+        <div class="container config-container">
+    <form action="{{ url_for('settings') }}" method="POST" class="form-card">
+      <h2>Editar Biografia</h2>
+      <div class="field">
+        <textarea
+          name="bio"
+          rows="5"
+          cols="40"
+          maxlength="255"
+          placeholder="Escreva sua biografia aqui..."
+        >
+{{ usuario.bio or '' }}</textarea
+        >
+      </div>
+      <button type="submit" class="button-name">Salvar Biografia</button>
+    </form>
   </body>
 </html>

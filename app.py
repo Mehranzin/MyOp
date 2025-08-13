@@ -173,29 +173,6 @@ def perfil():
                            posts=posts_com_detalhes,
                            is_owner=is_owner)
 
-
-@app.route('/salvar_bio', methods=['POST'])
-def salvar_bio():
-    if not session.get('user_id'):
-        return jsonify({'success': False, 'message': 'Usuário não autenticado.'}), 401
-    
-    user_id = session['user_id']
-    usuario = User.query.get(user_id)
-    if not usuario:
-        return jsonify({'success': False, 'message': 'Usuário não encontrado.'}), 404
-
-    bio_nova = request.form.get('bio')
-    
-    if len(bio_nova) > 125:
-        return jsonify({'success': False, 'message': 'A biografia deve ter no máximo 125 caracteres.'}), 400
-
-    usuario.bio = bio_nova.strip()
-    db.session.commit()
-
-    flash('Biografia atualizada com sucesso!', 'success')
-    return redirect(url_for('settings', bio_salva=True))
-
-
 @app.route('/feed', methods=['GET', 'POST'])
 def feed():
     if not session.get('user_id'):
@@ -474,6 +451,28 @@ def settings():
         return redirect(url_for('settings'))
 
     return render_template('settings.html', usuario=usuario)
+
+@app.route('/perfil/edit', methods=['GET', 'POST'])
+def perfil_edit():
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    usuario = User.query.get(session['user_id'])
+    if not usuario:
+        flash('Usuário não encontrado.', 'danger')
+        return redirect(url_for('feed'))
+
+    if request.method == 'POST':
+        nova_bio = request.form.get('bio', '').strip()
+        if len(nova_bio) > 125:
+            flash('A biografia deve ter no máximo 125 caracteres.', 'danger')
+        else:
+            usuario.bio = nova_bio
+            db.session.commit()
+            flash('Biografia atualizada com sucesso!', 'success')
+            return redirect(url_for('perfil'))
+
+    return render_template('perfil_edit.html', usuario=usuario)
 
 @app.route('/terms')
 def terms():
