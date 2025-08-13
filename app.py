@@ -473,7 +473,7 @@ def settings():
         flash('Biografia atualizada com sucesso!', 'success')
         return redirect(url_for('settings'))
 
-    return render_template('perfil_config.html', usuario=usuario)
+    return render_template('settings.html', usuario=usuario)
 
 @app.route('/terms')
 def terms():
