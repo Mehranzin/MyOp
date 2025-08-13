@@ -186,8 +186,8 @@ def salvar_bio():
 
     bio_nova = request.form.get('bio')
     
-    if len(bio_nova) > 255:
-        return jsonify({'success': False, 'message': 'A biografia deve ter no máximo 255 caracteres.'}), 400
+    if len(bio_nova) > 125:
+        return jsonify({'success': False, 'message': 'A biografia deve ter no máximo 125 caracteres.'}), 400
 
     usuario.bio = bio_nova.strip()
     db.session.commit()
