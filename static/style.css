@@ -1068,6 +1068,9 @@ button:active {
   margin: 0;
   color: #999999;
   font-size: 1em;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .perfil-info .bio-texto {
