@@ -1068,8 +1068,9 @@ button:active {
   margin: 0;
   color: #999999;
   font-size: 1em;
-  overflow-wrap: break-word !important;
+  overflow-wrap: break-word;
   white-space: normal;
+  max-width: 250px;
 }
 
 .perfil-info .bio-texto {
@@ -1079,6 +1080,7 @@ button:active {
   padding-right: 35px;
   overflow-wrap: break-word;
   white-space: normal;
+  max-width: 250px;
 }
 .edit-pen-link {
   position: absolute;
