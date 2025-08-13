@@ -1167,31 +1167,30 @@ button:active {
 }
 
 .option-link {
-  display: block;
-  background-color: #111;
-  color: #ff0000;
-  padding: 15px 20px;
-  border-radius: 8px;
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 10px 0;
   text-align: center;
   text-decoration: none;
   font-weight: bold;
-  border: 1px solid #333;
+  background-color: transparent;
+  border-radius: 8px;
+  border: none;
   transition: background-color 0.3s, color 0.3s;
 }
 
 .option-link:hover {
-  background-color: #000;
-  color: #ff4848;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
 }
 
 .btn-sair {
   color: #d9534f;
-  border-color: #d9534f;
 }
 
 .btn-sair:hover {
-  background-color: #d9534f;
-  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #ff0000;
 }
 
 @media (max-width: 600px) {
