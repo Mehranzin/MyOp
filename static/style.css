@@ -1070,7 +1070,7 @@ button:active {
   font-size: 1em;
   overflow-wrap: break-word !important;
   white-space: normal;
-  max-width: 125px;
+  max-width: 30px;
 }
 
 .perfil-info .bio-texto {
@@ -1080,7 +1080,7 @@ button:active {
   padding-right: 35px;
   overflow-wrap: break-word;
   white-space: normal;
-  max-width: 125px;
+  max-width: 30px;
 }
 .edit-pen-link {
   position: absolute;
