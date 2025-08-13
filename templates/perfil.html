@@ -50,10 +50,7 @@
           </div>
           {% if is_owner %}
           <div style="text-align: right; margin-top: 10px">
-            <a
-              href="{{ url_for('settings', tab='bio') }}"
-              class="edit-pen-link"
-            >
+            <a href="{{ url_for('perfil_edit') }}" class="edit-pen-link">
               <img
                 src="{{ url_for('static', filename='images/edit pen.PNG') }}"
                 alt="Editar biografia"

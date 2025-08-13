@@ -12,23 +12,6 @@
   <body>
     <div class="container config-container">
       <h1>Configurações</h1>
-
-      <form action="{{ url_for('settings') }}" method="POST" class="form-card">
-        <h2>Editar Biografia</h2>
-        <div class="field">
-          <textarea
-            name="bio"
-            rows="5"
-            cols="40"
-            maxlength="255"
-            placeholder="Escreva sua biografia aqui..."
-          >
-{{ usuario.bio or '' }}</textarea
-          >
-        </div>
-        <button type="submit" class="button-name">Salvar Biografia</button>
-      </form>
-
       <div class="options-container">
         <a href="{{ url_for('terms') }}" class="option-link">
           Termos e Diretrizes
