@@ -1130,7 +1130,7 @@ button:active {
 
 .form-card {
   padding: 20px;
-  background-color: #111;
+  background-color: transparent;
   border-radius: 8px;
   border: 1px solid #333;
   margin-bottom: 25px;
@@ -1143,10 +1143,32 @@ button:active {
   border: 1px solid #444;
   border-radius: 8px;
   color: #fff;
-  resize: vertical;
+  resize: none;
   min-height: 100px;
   font-size: 1em;
+  font-family: Arial, sans-serif;
   box-sizing: border-box;
+}
+
+.buttons-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.button-cancel {
+  flex: 1;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  height: 40px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.button-cancel:hover {
+  background-color: #666;
 }
 
 .form-card textarea::placeholder {

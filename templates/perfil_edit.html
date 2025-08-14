@@ -11,7 +11,7 @@
   </head>
   <body>
         <div class="container config-container">
-    <form action="{{ url_for('settings') }}" method="POST">
+    <form action="{{ url_for('settings') }}" method="POST" class="form-card">
       <h2>Editar Biografia</h2>
       <div class="field">
         <textarea
@@ -24,7 +24,17 @@
 {{ usuario.bio or '' }}</textarea
         >
       </div>
+    <div class="buttons-row">
       <button type="submit" class="button-name">Salvar Alterações</button>
+      <button type="button" class="button-cancel" onclick="cancelEdit()">Cancelar</button>
+    </div>
     </form>
+    <script>
+  function cancelEdit() {
+    if (confirm("Tem certeza que deseja cancelar? As alterações não serão salvas.")) {
+      window.location.href = "{{ url_for('perfil', usuario_id=usuario.id) }}";
+    }
+  }
+</script>
   </body>
 </html>
