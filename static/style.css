@@ -380,6 +380,7 @@ button:active {
   padding-bottom: 0;
   box-sizing: border-box;
 }
+
 .container_chat_bot .container-chat-options {
   position: relative;
   display: flex;
@@ -415,7 +416,7 @@ button:active {
 .container_chat_bot .chat .chat-bot {
   position: relative;
   display: flex;
-  padding-top: 15px;
+  padding-top: 5px;
 }
 
 .container_chat_bot .chat .chat-bot textarea {
@@ -423,8 +424,8 @@ button:active {
   border-radius: 16px;
   border: none;
   width: 100%;
-  height: 100px;
-  min-height: 100px;
+  height: 65px;
+  min-height: 65px;
   color: #ffffff;
   font-family: sans-serif;
   font-size: 14px;
