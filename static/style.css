@@ -487,7 +487,6 @@ button:active {
 
 .container_chat_bot .chat .options .btns-add button:hover {
   transform: translateY(-5px);
-  color: #660000;
 }
 
 .container_chat_bot .chat .options .btn-submit {
