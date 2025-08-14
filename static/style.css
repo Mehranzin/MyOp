@@ -1185,12 +1185,12 @@ button:active {
 }
 
 .btn-sair {
-  color: #d9534f;
+  color: #ff0800;
 }
 
 .btn-sair:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-  color: #ff0000;
+  background-color: rgba(255, 0, 0, 0.2);
+  color: #ff4040;
 }
 
 @media (max-width: 600px) {
