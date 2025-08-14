@@ -11,7 +11,7 @@
   </head>
   <body>
         <div class="container config-container">
-    <form action="{{ url_for('settings') }}" method="POST" class="form-card">
+    <form action="{{ url_for('settings') }}" method="POST">
       <h2>Editar Biografia</h2>
       <div class="field">
         <textarea
@@ -24,7 +24,7 @@
 {{ usuario.bio or '' }}</textarea
         >
       </div>
-      <button type="submit" class="button-name">Salvar Biografia</button>
+      <button type="submit" class="button-name">Salvar Alterações</button>
     </form>
   </body>
 </html>
