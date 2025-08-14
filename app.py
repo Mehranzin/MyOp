@@ -448,7 +448,7 @@ def settings():
         usuario.bio = nova_bio.strip()
         db.session.commit()
         flash('Biografia atualizada com sucesso!', 'success')
-        return redirect(url_for('settings'))
+        return redirect(url_for('perfil'))
 
     return render_template('settings.html', usuario=usuario)
 
