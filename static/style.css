@@ -1163,13 +1163,12 @@ button:active {
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
 }
 
 .option-link {
   display: inline-block;
   color: rgba(255, 255, 255, 0.8);
-  padding: 10px 0;
+  padding: 18px 0;
   text-align: center;
   text-decoration: none;
   font-weight: bold;
@@ -1177,6 +1176,10 @@ button:active {
   border-radius: 8px;
   border: none;
   transition: background-color 0.3s, color 0.3s;
+}
+
+.option-link:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .option-link:hover {
