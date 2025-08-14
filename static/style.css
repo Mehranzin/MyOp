@@ -1132,7 +1132,6 @@ button:active {
   padding: 20px;
   background-color: transparent;
   border-radius: 8px;
-  border: 1px solid #333;
   margin-bottom: 25px;
 }
 
@@ -1144,7 +1143,7 @@ button:active {
   border-radius: 8px;
   color: #fff;
   resize: none;
-  min-height: 100px;
+  min-height: 70px;
   font-size: 1em;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
