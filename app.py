@@ -464,8 +464,8 @@ def perfil_edit():
 
     if request.method == 'POST':
         nova_bio = request.form.get('bio', '').strip()
-        if len(nova_bio) > 125:
-            flash('A biografia deve ter no máximo 125 caracteres.', 'danger')
+        if len(nova_bio) > 115:
+            flash('A biografia deve ter no máximo 115 caracteres.', 'danger')
         else:
             usuario.bio = nova_bio
             db.session.commit()
