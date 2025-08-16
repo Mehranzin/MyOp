@@ -28,7 +28,7 @@
         </div>
 
         <div class="post-content">
-          {% if post.user_id == session['user_id'] %}
+          {% if post.user_id|string == session['user_id']|string %}
           <img
             src="{{ url_for('static', filename='images/three points.png') }}"
             onclick="toggleOpcoes({{ post.id }})"
