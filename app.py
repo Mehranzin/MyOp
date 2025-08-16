@@ -274,6 +274,24 @@ def delete_post(post_id):
     flash('Post deletado.', 'info')
     return redirect(url_for('feed'))
 
+@app.route('/delete_comment/<int:comentario_id>')
+def delete_comment(comentario_id):
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+
+    comentario = Comment.query.get_or_404(comentario_id)
+
+    if comentario.user_id != session['user_id']:
+        flash('Você não pode excluir este comentário.', 'danger')
+        return redirect(url_for('feed'))
+
+    post_id = comentario.post_id
+    db.session.delete(comentario)
+    db.session.commit()
+    flash('Comentário deletado.', 'info')
+
+    return redirect(request.referrer or url_for('ver_post', post_id=post_id))
+
 @app.route('/edit_post/<int:post_id>', methods=['POST'])
 def edit_post(post_id):
     if not session.get('user_id'):
