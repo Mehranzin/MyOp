@@ -3,15 +3,134 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faq • Opinion</title>
+    <title>FAQ • Opinion</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
+    <link rel="stylesheet" href="{{ url_for('static', filename='faq.css') }}" />
   </head>
   <body>
-    Opa, eai? Eu sou o Mehran Louksa Mesrob, dono e criador do Opinion, sou
-    Sírio e moro no Brasil Criei o Opinion nas férias com intenção de tentar ter
-    fama reconhecimento ou algo do tipo.
+    <div class="nav-top">FAQ • Opinion</div>
+
+    <div class="faq-container">
+      <div class="faq-header">
+        <h1>Perguntas Frequentes</h1>
+        <p>
+          Olá! Eu sou o <strong>Mehran Louksa Mesrob</strong>, criador do
+          Opinion. Aqui você encontra respostas para as dúvidas mais comuns.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>❓ O que é o Opinion?</h3>
+        <p>
+          O Opinion é uma rede social criada para compartilhar opiniões,
+          descobrir novos grupos e interagir com pessoas de interesses em comum.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>👤 Quem criou o Opinion?</h3>
+        <p>
+          O projeto foi idealizado e desenvolvido por
+          <strong>Mehran Louksa Mesrob</strong>, sírio que mora no Brasil,
+          durante suas férias escolares.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>🔒 Minhas informações estão seguras?</h3>
+        <p>
+          Sim! Trabalhamos para manter seus dados protegidos e seguimos boas
+          práticas de segurança para que você use a plataforma com
+          tranquilidade.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>⚙️ O Opinion é gratuito?</h3>
+        <p>
+          Sim, o uso do Opinion é totalmente gratuito. Futuramente poderemos ter
+          recursos extras opcionais, mas o essencial sempre será livre.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>📩 Como entrar em contato?</h3>
+        <p>
+          Se tiver dúvidas, sugestões ou encontrou algum bug, você pode usar a
+          página de <a href="{{ url_for('help_page') }}">Ajuda</a> para falar
+          diretamente comigo.
+        </p>
+      </div>
+    </div>
+
+    <footer class="nav-footer">
+      <nav>
+        <a href="{{ url_for('feed') }}">
+          <img
+            src="{{ url_for('static', filename='images/home.png') }}"
+            alt="Feed"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('search') }}">
+          <img
+            src="{{ url_for('static', filename='images/search.png') }}"
+            alt="Search"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('trending') }}">
+          <img
+            src="{{ url_for('static', filename='images/trending.PNG') }}"
+            alt="Trending"
+            class="icone bubble-img"
+          />
+        </a>
+        <a href="{{ url_for('groups') }}">
+          <img
+            src="{{ url_for('static', filename='images/groups.PNG') }}"
+            alt="Groups"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('perfil') }}">
+          <img
+            src="{{ url_for('static', filename='images/perfil.png') }}"
+            alt="Perfil"
+            class="icone"
+          />
+        </a>
+      </nav>
+    </footer>
+
+    <script>
+      // Mostrar/esconder respostas ao clicar
+      const items = document.querySelectorAll(".faq-item h3");
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          const p = item.nextElementSibling;
+          p.style.display = p.style.display === "block" ? "none" : "block";
+        });
+      });
+
+      // Animação do menu inferior
+      let lastScroll = 0;
+      const navFooter = document.querySelector(".nav-footer");
+
+      if (navFooter) {
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
+          if (currentScroll > lastScroll) {
+            navFooter.style.transform = "translateY(100%)";
+          } else {
+            navFooter.style.transform = "translateY(0%)";
+          }
+          lastScroll = currentScroll;
+        });
+      }
+    </script>
   </body>
 </html>
