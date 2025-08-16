@@ -121,16 +121,35 @@
       {% for comentario in comentarios %}
       <div class="post-container comentario-box">
         <div class="user-box">
-          <a href="{{ url_for('perfil', usuario=comentario.autor.apelido) }}"
-            >{{ comentario.autor.apelido }}</a
-          >
+          <a href="{{ url_for('perfil', usuario=comentario.autor.apelido) }}">
+            {{ comentario.autor.apelido }}
+          </a>
         </div>
-        <div class="post-content comentario-texto">{{ comentario.texto }}</div>
+
+        <div class="post-content comentario-texto">
+          {% if comentario.user_id|string == session['user_id']|string %}
+          <img
+            src="{{ url_for('static', filename='images/three points.png') }}"
+            onclick="toggleComentarioOpcoes({{ comentario.id }})"
+            class="tres-pontos"
+          />
+          <div id="comentario-opcoes-{{ comentario.id }}" class="post-opcoes">
+            <form
+              method="GET"
+              action="{{ url_for('delete_comment', comentario_id=comentario.id) }}"
+              onsubmit="return confirmarExclusaoComentario()"
+            >
+              <button type="submit">Deletar Comentário</button>
+            </form>
+          </div>
+          {% endif %}
+          {{ comentario.texto }}
+        </div>
       </div>
       {% else %}
       <p>Nenhum comentário ainda.</p>
       {% endfor %}
-    </div>
+
 
     <footer class="nav-footer">
       <nav>
@@ -286,6 +305,24 @@
       function confirmarExclusao() {
         return confirm("Tem certeza que deseja deletar sua Opinião?");
       }
+
+      /*SCRIPT PARA OPÇÕES DE COMENTÁRIOS*/
+      function toggleComentarioOpcoes(comentarioId) {
+        const menu = document.getElementById("comentario-opcoes-" + comentarioId);
+        if (menu.style.display === "block") {
+          menu.style.display = "none";
+        } else {
+          document
+            .querySelectorAll(".post-opcoes")
+            .forEach((el) => (el.style.display = "none"));
+          menu.style.display = "block";
+        }
+      }
+
+      function confirmarExclusaoComentario() {
+        return confirm("Tem certeza que deseja deletar seu comentário?");
+      }
+
     </script>
   </body>
 </html>
