@@ -107,16 +107,7 @@
     </footer>
 
     <script>
-      // Mostrar/esconder respostas ao clicar
-      const items = document.querySelectorAll(".faq-item h3");
-      items.forEach((item) => {
-        item.addEventListener("click", () => {
-          const p = item.nextElementSibling;
-          p.style.display = p.style.display === "block" ? "none" : "block";
-        });
-      });
-
-      // Animação do menu inferior
+      // SCRIPT DE SUMIR A NAV FOOTER
       let lastScroll = 0;
       const navFooter = document.querySelector(".nav-footer");
 
