@@ -500,5 +500,13 @@ def terms():
 def page_not_found(e):
     return render_template('404.html'), 404
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+@app.route('/help')
+def faq():
+    return render_template('help.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
