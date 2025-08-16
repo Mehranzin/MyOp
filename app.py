@@ -505,7 +505,7 @@ def faq():
     return render_template('faq.html')
 
 @app.route('/help')
-def faq():
+def help_page():
     return render_template('help.html')
 
 if __name__ == '__main__':
