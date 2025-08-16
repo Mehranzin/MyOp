@@ -28,7 +28,22 @@
         </div>
 
         <div class="post-content">
-          {{ post.texto }}
+          {% if post.user_id == session['user_id'] %}
+          <img
+            src="{{ url_for('static', filename='images/three points.png') }}"
+            onclick="toggleOpcoes({{ post.id }})"
+            class="tres-pontos"
+          />
+          <div id="opcoes-{{ post.id }}" class="post-opcoes">
+            <form
+              method="GET"
+              action="{{ url_for('delete_post', post_id=post.id) }}"
+              onsubmit="return confirmarExclusao()"
+            >
+              <button type="submit">Deletar Comentário</button>
+            </form>
+          </div>
+          {% endif %} {{ post.texto|e }}
           <br />
           <small>{{ tempo }}</small>
 
@@ -254,6 +269,23 @@
         .addEventListener("click", function () {
           document.getElementById("comment_textarea").focus();
         });
+
+      /*NOVO SCRIPT PARA DELETAR OPINIÃO*/
+      function toggleOpcoes(postId) {
+        const menu = document.getElementById("opcoes-" + postId);
+        if (menu.style.display === "block") {
+          menu.style.display = "none";
+        } else {
+          document
+            .querySelectorAll(".post-opcoes")
+            .forEach((el) => (el.style.display = "none"));
+          menu.style.display = "block";
+        }
+      }
+
+      function confirmarExclusao() {
+        return confirm("Tem certeza que deseja deletar seu comentário?");
+      }
     </script>
   </body>
 </html>
