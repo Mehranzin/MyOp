@@ -504,7 +504,7 @@ def page_not_found(e):
 def faq():
     return render_template('faq.html')
 
-@app.route('/help')
+@app.route('/help', endpoint="help")
 def help_page():
     return render_template('help.html')
 
