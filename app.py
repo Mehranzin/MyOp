@@ -121,7 +121,7 @@ def login():
         usuario = User.query.filter(db.func.lower(User.email) == email.lower()).first()
         if usuario and usuario.checa_senha(senha):
             session.permanent = True
-            session['user_id'] = usuario.id
+            session['user_id'] = int(usuario.id)
             session['user_email'] = usuario.email
             flash('Login bem-sucedido.', 'success')
             return redirect(url_for('feed'))
