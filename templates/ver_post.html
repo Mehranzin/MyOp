@@ -40,7 +40,7 @@
               action="{{ url_for('delete_post', post_id=post.id) }}"
               onsubmit="return confirmarExclusao()"
             >
-              <button type="submit">Deletar Comentário</button>
+              <button type="submit">Deletar Opinião</button>
             </form>
           </div>
           {% endif %} {{ post.texto|e }}
@@ -284,7 +284,7 @@
       }
 
       function confirmarExclusao() {
-        return confirm("Tem certeza que deseja deletar seu comentário?");
+        return confirm("Tem certeza que deseja deletar sua Opinião?");
       }
     </script>
   </body>
