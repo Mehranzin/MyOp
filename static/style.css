@@ -213,14 +213,13 @@ a:hover {
   padding: 4px 12px;
   margin-bottom: 10px;
   border-radius: 12px;
-  max-height: 60px;
+  min-height: 80px;
   box-sizing: border-box;
 }
 
 .comentario-texto {
   font-size: 14px;
   line-height: 1em;
-  max-height: 50px;
   overflow: hidden;
 }
 
