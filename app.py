@@ -321,12 +321,20 @@ def ver_post(post_id):
     comentarios = Comment.query.filter_by(post_id=post.id).order_by(Comment.id.desc()).all()
     liked = Like.query.filter_by(post_id=post.id, user_id=usuario.id).first() is not None
 
+    comentarios_com_tempo = []
+    for comentario in comentarios:
+        tempo_comentario = tempo_relativo(comentario.created_at)
+        comentarios_com_tempo.append({
+            'comentario': comentario,
+            'tempo': tempo_comentario
+        })
+
     return render_template(
         'ver_post.html',
         post=post,
         tempo=tempo,
         likes_count=likes_count,
-        comentarios=comentarios,
+        comentarios=comentarios_com_tempo,
         liked=liked,
         apelido=usuario.apelido
     )

@@ -118,38 +118,40 @@
       <hr />
 
       <h3>Comentários:</h3>
-      {% for comentario in comentarios %}
+      {% for item in comentarios %}
       <div class="post-container comentario-box">
         <div class="user-box">
-          <a href="{{ url_for('perfil', usuario=comentario.autor.apelido) }}">
-            {{ comentario.autor.apelido }}
+          <a href="{{ url_for('perfil', usuario=item.comentario.autor.apelido) }}">
+            {{ item.comentario.autor.apelido }}
           </a>
         </div>
 
         <div class="post-content comentario-texto">
-          {% if comentario.user_id|string == session['user_id']|string %}
+          {% if item.comentario.user_id|string == session['user_id']|string %}
           <img
             src="{{ url_for('static', filename='images/three points.png') }}"
-            onclick="toggleComentarioOpcoes({{ comentario.id }})"
+            onclick="toggleComentarioOpcoes({{ item.comentario.id }})"
             class="tres-pontos"
           />
-          <div id="comentario-opcoes-{{ comentario.id }}" class="post-opcoes">
+          <div id="comentario-opcoes-{{ item.comentario.id }}" class="post-opcoes">
             <form
               method="GET"
-              action="{{ url_for('delete_comment', comentario_id=comentario.id) }}"
+              action="{{ url_for('delete_comment', comentario_id=item.comentario.id) }}"
               onsubmit="return confirmarExclusaoComentario()"
             >
               <button type="submit">Deletar Comentário</button>
             </form>
           </div>
           {% endif %}
-          {{ comentario.texto }}
+          {{ item.comentario.texto|e }}
+          <br />
+          <small>{{ item.tempo }}</small>
         </div>
       </div>
+      <hr />
       {% else %}
       <p>Nenhum comentário ainda.</p>
       {% endfor %}
-
 
     <footer class="nav-footer">
       <nav>
