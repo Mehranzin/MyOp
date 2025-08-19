@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ • Opinion</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='faq.css') }}" />
+  </head>
+  <body>
+    <div class="nav-top">FAQ • Opinion</div>
+
+    <div class="faq-container">
+      <div class="faq-header">
+        <h1>Quem somos?</h1>
+        <p>
+          Opa eai? Eu sou o <strong>Mehran Louksa Mesrob</strong>, criador do
+          Opinion.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>O que é o Opinion?</h3>
+        <p>
+          O Opinion é uma rede social criada para compartilhar opiniões,
+          descobrir novos grupos e interagir com pessoas de interesses em comum.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Criador do Opinion:</h3>
+        <p>
+          O projeto foi idealizado e desenvolvido por
+          <strong>Mehran Louksa Mesrob</strong>, sírio que mora no Brasil,
+          durante suas férias escolares.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>O Opinion é gratuito?</h3>
+        <p>
+          Sim, o uso do Opinion é totalmente gratuito. Futuramente poderemos ter
+          recursos extras opcionais, mas o essencial sempre será livre.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Como dou sugestão?</h3>
+        <p>
+          Se tiver dúvidas, sugestões ou encontrou algum bug, você pode usar a
+          página de <a href="{{ url_for('help') }}">Ajuda</a> para conseguir
+          suporte. E ajudar o Opinion a crescer
+        </p>
+      </div>
+    </div>
+
+    <footer class="nav-footer">
+      <nav>
+        <a href="{{ url_for('feed') }}">
+          <img
+            src="{{ url_for('static', filename='images/home.png') }}"
+            alt="Feed"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('search') }}">
+          <img
+            src="{{ url_for('static', filename='images/search.png') }}"
+            alt="Search"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('trending') }}">
+          <img
+            src="{{ url_for('static', filename='images/trending.PNG') }}"
+            alt="Trending"
+            class="icone bubble-img"
+          />
+        </a>
+        <a href="{{ url_for('groups') }}">
+          <img
+            src="{{ url_for('static', filename='images/groups.PNG') }}"
+            alt="Groups"
+            class="icone"
+          />
+        </a>
+        <a href="{{ url_for('perfil') }}">
+          <img
+            src="{{ url_for('static', filename='images/perfil.png') }}"
+            alt="Perfil"
+            class="icone"
+          />
+        </a>
+      </nav>
+    </footer>
+
+    <script>
+      // SCRIPT DE SUMIR A NAV FOOTER
+      let lastScroll = 0;
+      const navFooter = document.querySelector(".nav-footer");
+
+      if (navFooter) {
+        window.addEventListener("scroll", () => {
+          const currentScroll = window.pageYOffset;
+          if (currentScroll > lastScroll) {
+            navFooter.style.transform = "translateY(100%)";
+          } else {
+            navFooter.style.transform = "translateY(0%)";
+          }
+          lastScroll = currentScroll;
+        });
+      }
+    </script>
+  </body>
+</html>
